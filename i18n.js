@@ -384,19 +384,16 @@
 
   /* ── Crear e inyectar el selector de idioma ──────────────────── */
   function injectSwitcher() {
-    /* Estilos — neutros, heredan el color del nav */
+    /* Estilos — colores explícitos para nav oscuro (verde/dorado) */
     var style = document.createElement('style');
     style.textContent = [
-      '.i18n-switcher{display:inline-flex;align-items:center;gap:3px;margin-left:10px;vertical-align:middle;flex-shrink:0}',
-      '.i18n-btn{font:600 11px/1 inherit;letter-spacing:.06em;padding:4px 7px;border-radius:4px;',
-        'border:1.5px solid rgba(128,128,128,.4);background:transparent;color:inherit;',
-        'cursor:pointer;opacity:.6;transition:opacity .15s,background .15s,border-color .15s;white-space:nowrap}',
-      '.i18n-btn:hover{opacity:1;border-color:rgba(128,128,128,.7)}',
-      '.i18n-active{opacity:1!important;background:rgba(128,128,128,.18);border-color:rgba(128,128,128,.7)}',
-      '@media(max-width:600px){',
-        '.i18n-switcher{gap:2px;margin-left:6px}',
-        '.i18n-btn{font-size:10px;padding:3px 5px}',
-      '}'
+      '.i18n-switcher{display:inline-flex;align-items:center;gap:3px;margin-right:12px;flex-shrink:0}',
+      '.i18n-btn{font:700 10px/1 "Raleway",sans-serif;letter-spacing:.08em;padding:5px 8px;border-radius:3px;',
+        'border:1.5px solid rgba(201,168,76,0.45);background:transparent;color:rgba(255,255,255,0.65);',
+        'cursor:pointer;transition:all .15s;white-space:nowrap}',
+      '.i18n-btn:hover{border-color:rgba(201,168,76,0.9);color:#C9A84C}',
+      '.i18n-active{background:rgba(201,168,76,0.15);border-color:#C9A84C !important;color:#C9A84C !important}',
+      '@media(max-width:768px){.i18n-switcher{display:none}}'
     ].join('');
     document.head.appendChild(style);
 
@@ -421,11 +418,11 @@
       })(LANGS[i]);
     }
 
-    /* Insertar: prioridad → junto al CTA del nav, luego en el nav, luego en el header */
+    /* Insertar ANTES del botón CTA del nav */
     var inserted = false;
-    var ctaBtn = document.querySelector('nav a[href="#turnos"], nav .cta, nav button:not(.i18n-btn)');
+    var ctaBtn = document.querySelector('nav .nav-cta, nav a[href="#turnos"]');
     if (ctaBtn) {
-      ctaBtn.parentNode.insertBefore(switcher, ctaBtn.nextSibling);
+      ctaBtn.parentNode.insertBefore(switcher, ctaBtn); /* ANTES del CTA */
       inserted = true;
     }
     if (!inserted) {
