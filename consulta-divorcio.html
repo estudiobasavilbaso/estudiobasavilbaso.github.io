@@ -217,10 +217,17 @@ button{cursor:pointer}
         <p class="step-label">Paso 3 de 7</p>
         <h1 class="step-title">¿Hay bienes en común?</h1>
         <p class="step-sub">Marcá lo que tengan. Esto nos ayuda a saber si hay que incluir división de bienes en el divorcio.</p>
-        <div class="toggle-row"><div class="copy"><strong>Vivienda familiar propia</strong><span>La casa o departamento donde vivían (o viven).</span></div><label class="switch"><input type="checkbox" id="has_vivienda"><span class="slider"></span></label></div>
-        <div class="toggle-row"><div class="copy"><strong>Vehículos</strong><span>Autos, motos, camionetas.</span></div><label class="switch"><input type="checkbox" id="has_vehiculos"><span class="slider"></span></label></div>
-        <div class="toggle-row"><div class="copy"><strong>Otros inmuebles</strong><span>Terrenos, otra propiedad, local, etc.</span></div><label class="switch"><input type="checkbox" id="has_inmuebles"><span class="slider"></span></label></div>
-        <div class="toggle-row"><div class="copy"><strong>Empresas, sociedades o inversiones</strong><span>SRL, SA, acciones, cuentas de inversión, cripto.</span></div><label class="switch"><input type="checkbox" id="has_empresas"><span class="slider"></span></label></div>
+        <div class="toggle-row"><div class="copy"><strong>Vivienda familiar propia</strong><span>La casa o departamento donde vivían (o viven).</span></div><label class="switch"><input type="checkbox" id="has_vivienda" onchange="toggleAssetBox('vivienda_box',this.checked,'home')"><span class="slider"></span></label></div>
+        <div id="vivienda_box" class="dynamic-box"><div id="vivienda_list"></div></div>
+
+        <div class="toggle-row"><div class="copy"><strong>Vehículos</strong><span>Autos, motos, camionetas.</span></div><label class="switch"><input type="checkbox" id="has_vehiculos" onchange="toggleAssetBox('vehiculos_box',this.checked,'vehicle')"><span class="slider"></span></label></div>
+        <div id="vehiculos_box" class="dynamic-box"><div id="vehiculos_list"></div><button class="add-btn" onclick="addVehicle()" type="button">+ Agregar otro vehículo</button></div>
+
+        <div class="toggle-row"><div class="copy"><strong>Otros inmuebles</strong><span>Terrenos, otra propiedad, local, etc.</span></div><label class="switch"><input type="checkbox" id="has_inmuebles" onchange="toggleAssetBox('inmuebles_box',this.checked,'property')"><span class="slider"></span></label></div>
+        <div id="inmuebles_box" class="dynamic-box"><div id="inmuebles_list"></div><button class="add-btn" onclick="addProperty()" type="button">+ Agregar otro inmueble</button></div>
+
+        <div class="toggle-row"><div class="copy"><strong>Empresas, sociedades o inversiones</strong><span>SRL, SA, acciones, cuentas de inversión, cripto.</span></div><label class="switch"><input type="checkbox" id="has_empresas" onchange="toggleAssetBox('empresas_box',this.checked,'company')"><span class="slider"></span></label></div>
+        <div id="empresas_box" class="dynamic-box"><div id="empresas_list"></div><button class="add-btn" onclick="addCompany()" type="button">+ Agregar otra empresa/inversión</button></div>
         <div class="field" style="margin-top:1rem"><label>¿Querés resolver la división de bienes ahora?</label>
           <select id="liquida_bienes">
             <option value="">Seleccioná...</option>
@@ -254,12 +261,13 @@ button{cursor:pointer}
         <p class="step-sub">Para poder responderte y enviarte tu evaluación. Solo te pedimos lo esencial.</p>
         <div class="grid2">
           <div class="field"><label>Nombre y apellido <span class="required">*</span></label><input id="cli_nombre" type="text" placeholder="Tu nombre"></div>
-          <div class="field"><label>WhatsApp <span class="required">*</span></label><input id="cli_tel" type="tel" placeholder="11 2345-6789"></div>
+          <div class="field"><label>DNI <span class="required">*</span></label><input id="cli_dni" type="text" placeholder="Ej: 28.341.210"></div>
         </div>
         <div class="grid2">
-          <div class="field"><label>Email (opcional)</label><input id="cli_email" type="email" placeholder="tu@email.com"></div>
-          <div class="field"><label>¿Dónde vivís?</label><input id="cli_zona" type="text" placeholder="Ej: CABA, La Plata, Córdoba"></div>
+          <div class="field"><label>WhatsApp <span class="required">*</span></label><input id="cli_tel" type="tel" placeholder="11 2345-6789"></div>
+          <div class="field"><label>Email <span class="required">*</span></label><input id="cli_email" type="email" placeholder="tu@email.com"></div>
         </div>
+        <div class="field"><label>¿Dónde vivís?</label><input id="cli_zona" type="text" placeholder="Ej: CABA, La Plata, Córdoba"></div>
         <div class="field"><label>¿Cómo preferís que te atendamos?</label>
           <select id="cli_modalidad"><option value="">Seleccioná...</option><option>Virtual (videollamada)</option><option>Presencial</option><option>Me da igual</option></select>
         </div>
@@ -272,15 +280,13 @@ button{cursor:pointer}
         <h1 class="step-title">Tu evaluación preliminar</h1>
         <p class="step-sub">Según lo que nos contaste, esto es lo que vemos. Recordá: es una orientación, el detalle lo definimos en la consulta.</p>
         <div id="eval_result"></div>
-        <div class="price-card">
-          <p class="mini-note" style="margin-top:0">Orientación de honorarios</p>
-          <div class="price" id="quote_total"></div>
-          <div id="quote_detail" class="pill-row"></div>
-          <p class="mini-note">Valor orientativo de honorarios profesionales. No incluye tasas de justicia ni gastos. Se confirma en la consulta según tu caso.</p>
+        <div class="summary-card">
+          <strong>Lo que vemos de tu caso</strong>
+          <div id="quote_detail" class="pill-row" style="margin-top:.8rem"></div>
         </div>
-        <div id="pay_section">
-          <div class="section-title">Formas de pago disponibles</div>
-          <div class="pay-grid" id="pay_grid"></div>
+        <div class="price-card" style="text-align:center">
+          <p style="font-family:'Playfair Display',serif;font-size:20px;color:var(--green);margin-bottom:8px">El próximo paso es conversarlo</p>
+          <p class="mini-note" style="margin-top:0">En una consulta personalizada analizamos tu situación en detalle, te explicamos las opciones y te damos un presupuesto claro y a tu medida. La primera orientación no tiene compromiso.</p>
         </div>
         <div class="nav"><button class="btn-back" onclick="prevStep(6)" type="button">← Atrás</button><button class="btn-next" onclick="nextStep(6)" type="button">Finalizar →</button></div>
       </section>
@@ -322,13 +328,11 @@ const PRICES = {
   conjuntoBase: 450000, unilateralBase: 650000, nosabeBase: 550000,
   hijos: 180000, bienes: 220000, sociedad: 180000
 };
-const SURCHARGES = {1:0, 3:.10, 6:.22, 12:.45};
-let state = {tipo:null, hijos:null, payment:null};
+let state = {tipo:null, hijos:null};
 let currentStep = 1;
 const totalSteps = 7;
 
 function $(id){return document.getElementById(id)}
-function money(n){return 'ARS ' + Math.round(n).toLocaleString('es-AR')}
 function val(id){return $(id)?.value?.trim() || ''}
 function checked(id){return !!$(id)?.checked}
 function selectOpt(el){
@@ -339,12 +343,87 @@ function selectOpt(el){
 function toggleBox(id,show){$(id).style.display=show?'block':'none'}
 function updateProgress(){$('prog').style.width=Math.min(100,Math.round((currentStep/totalSteps)*100))+'%'}
 
+let vehicleCount=0, propertyCount=0, companyCount=0, homeCount=0;
+function toggleAssetBox(id,show,type){
+  toggleBox(id,show);
+  if(show){
+    if(type==='home' && homeCount===0) addHome();
+    if(type==='vehicle' && vehicleCount===0) addVehicle();
+    if(type==='property' && propertyCount===0) addProperty();
+    if(type==='company' && companyCount===0) addCompany();
+  }
+}
+function addHome(){
+  homeCount++;
+  $('vivienda_list').insertAdjacentHTML('beforeend', `<div class="asset-card home">
+    <div class="grid2">
+      <div class="field"><label>Dirección de la vivienda</label><input class="home_dir" type="text" placeholder="Calle, número, localidad"></div>
+      <div class="field"><label>¿A nombre de quién está?</label><input class="home_titular" type="text" placeholder="Tuyo, del otro/a, de ambos"></div>
+    </div>
+    <div class="grid2">
+      <div class="field"><label>¿Cuándo la adquirieron? (aprox.)</label><input class="home_fecha" type="text" placeholder="Ej: 2015, antes de casarnos, etc."></div>
+      <div class="field"><label>¿Quién vive ahí ahora?</label><input class="home_uso" type="text" placeholder="Ej: yo con los chicos, ambos, nadie"></div>
+    </div>
+    <div class="field" style="margin-bottom:0"><label>Contanos lo que sepas (opcional)</label><textarea class="home_obs" placeholder="¿Tiene hipoteca? ¿Cómo la compraron? ¿Hay alguna deuda o conflicto?"></textarea></div>
+  </div>`);
+}
+function addVehicle(){
+  vehicleCount++; const id=vehicleCount;
+  $('vehiculos_list').insertAdjacentHTML('beforeend', `<div class="asset-card vehicle">
+    <div class="asset-head"><strong>Vehículo ${id}</strong>${id>1?'<button type="button" class="remove-btn" onclick="this.closest(&quot;.asset-card&quot;).remove()">Quitar</button>':''}</div>
+    <div class="grid2">
+      <div class="field"><label>¿Qué es?</label><input class="veh_desc" type="text" placeholder="Ej: Toyota Corolla 2019"></div>
+      <div class="field"><label>¿A nombre de quién está?</label><input class="veh_titular" type="text" placeholder="Tuyo, del otro/a, de ambos"></div>
+    </div>
+    <div class="field" style="margin-bottom:0"><label>Algo más que quieras agregar (opcional)</label><textarea class="veh_obs" placeholder="¿Cuándo lo compraron? ¿Quién lo usa? ¿Tiene prenda o deuda?"></textarea></div>
+  </div>`);
+}
+function addProperty(){
+  propertyCount++; const id=propertyCount;
+  $('inmuebles_list').insertAdjacentHTML('beforeend', `<div class="asset-card property">
+    <div class="asset-head"><strong>Inmueble ${id}</strong>${id>1?'<button type="button" class="remove-btn" onclick="this.closest(&quot;.asset-card&quot;).remove()">Quitar</button>':''}</div>
+    <div class="grid2">
+      <div class="field"><label>Dirección o descripción</label><input class="prop_dir" type="text" placeholder="Ej: terreno en Pilar, local en CABA"></div>
+      <div class="field"><label>¿A nombre de quién está?</label><input class="prop_titular" type="text" placeholder="Tuyo, del otro/a, de ambos"></div>
+    </div>
+    <div class="grid2">
+      <div class="field"><label>¿Cuándo lo adquirieron? (aprox.)</label><input class="prop_fecha" type="text" placeholder="Ej: 2018, herencia, etc."></div>
+      <div class="field"><label>Uso actual</label><input class="prop_uso" type="text" placeholder="Alquilado, vacío, lo usamos"></div>
+    </div>
+    <div class="field" style="margin-bottom:0"><label>Algo más (opcional)</label><textarea class="prop_obs" placeholder="¿Cómo lo adquirieron? ¿Hay hipoteca, renta o conflicto?"></textarea></div>
+  </div>`);
+}
+function addCompany(){
+  companyCount++; const id=companyCount;
+  $('empresas_list').insertAdjacentHTML('beforeend', `<div class="asset-card company">
+    <div class="asset-head"><strong>Empresa / inversión ${id}</strong>${id>1?'<button type="button" class="remove-btn" onclick="this.closest(&quot;.asset-card&quot;).remove()">Quitar</button>':''}</div>
+    <div class="grid2">
+      <div class="field"><label>Nombre o descripción</label><input class="soc_nombre" type="text" placeholder="Ej: mi SRL, acciones, cuenta de inversión"></div>
+      <div class="field"><label>Tipo</label><select class="soc_tipo"><option value="">Seleccioná...</option><option>SRL</option><option>SA</option><option>SAS</option><option>Sociedad de hecho</option><option>Acciones / cuotas</option><option>Cuenta de inversión</option><option>Cripto</option><option>Otro</option></select></div>
+    </div>
+    <div class="grid2">
+      <div class="field"><label>¿A nombre de quién está?</label><input class="soc_titular" type="text" placeholder="Tuyo, del otro/a, de ambos"></div>
+      <div class="field"><label>¿Genera ingresos?</label><input class="soc_ingresos" type="text" placeholder="Sí, no, no sé"></div>
+    </div>
+    <div class="field" style="margin-bottom:0"><label>Algo más (opcional)</label><textarea class="soc_obs" placeholder="¿Cuándo se constituyó? ¿Tu participación? Lo que sepas."></textarea></div>
+  </div>`);
+}
+function readCards(selector,map){
+  return [...document.querySelectorAll(selector)].map(card=>{
+    const o={}; Object.entries(map).forEach(([k,sel])=>o[k]=card.querySelector(sel)?.value?.trim()||''); return o;
+  });
+}
+
 function validateStep(step){
   if(step===1 && !state.tipo){alert('Elegí una opción para continuar.');return false}
   if(step===2 && !state.hijos){alert('Indicá si tienen hijos en común.');return false}
   if(step===5){
     if(!val('cli_nombre')){$('cli_nombre').focus();alert('Necesitamos tu nombre.');return false}
+    if(!val('cli_dni')){$('cli_dni').focus();alert('Necesitamos tu DNI.');return false}
     if(!val('cli_tel')){$('cli_tel').focus();alert('Necesitamos tu WhatsApp para responderte.');return false}
+    const em=val('cli_email');
+    if(!em){$('cli_email').focus();alert('Necesitamos tu email.');return false}
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){$('cli_email').focus();alert('Revisá tu email: parece incompleto.');return false}
   }
   if(step===7 && !checked('acepta_privacidad')){alert('Para enviar tu consulta, aceptá el uso de tus datos.');return false}
   return true;
@@ -394,31 +473,13 @@ function buildEval(){
   const q=calculateQuote();
   let evalHtml='';
   if(q.requiresReview){
-    evalHtml=`<div class="alert amber"><strong>Tu caso merece atención personalizada.</strong><br>Detectamos puntos que conviene revisar con un abogado antes de avanzar. Esto no es malo: significa que vamos a cuidar bien tus derechos. Por eso no mostramos un precio cerrado todavía.</div>`;
+    evalHtml=`<div class="alert amber"><strong>Tu caso merece atención personalizada.</strong><br>Detectamos puntos importantes que conviene revisar con un abogado. Esto es bueno: significa que vamos a cuidar bien tus derechos desde el primer momento.</div>`;
   } else {
-    evalHtml=`<div class="alert green"><strong>Tu caso parece encuadrar en un trámite estándar.</strong><br>Según lo que nos contaste, es un <strong>${caseType()}</strong>. Te damos una orientación de honorarios abajo.</div>`;
+    evalHtml=`<div class="alert green"><strong>Tu caso parece encuadrar en un trámite estándar.</strong><br>Según lo que nos contaste, es un <strong>${caseType()}</strong>. En la consulta lo confirmamos y avanzamos.</div>`;
   }
   $('eval_result').innerHTML=evalHtml;
-
-  if(q.requiresReview){
-    $('quote_total').innerHTML=`A confirmar <small>en la consulta</small>`;
-    $('quote_detail').innerHTML=q.items.map(i=>`<span class="pill">✓ ${i}</span>`).join('') +
-      q.reasons.map(r=>`<span class="pill warn">⚠ ${r}</span>`).join('');
-    $('pay_section').style.display='none';
-    state.payment=null;
-    return;
-  }
-  $('pay_section').style.display='block';
-  $('quote_total').innerHTML=`${money(q.total)} <small>+ gastos si corresponden</small>`;
-  $('quote_detail').innerHTML=q.items.map(i=>`<span class="pill">✓ ${i}</span>`).join('');
-  $('pay_grid').innerHTML=[1,3,6,12].map(c=>{
-    const total=q.total*(1+SURCHARGES[c]); const cuota=total/c;
-    return `<div class="pay-opt" onclick="selectPayment(this,${c},${total})"><strong>${c} ${c===1?'pago':'cuotas'}</strong><span>${c===1?money(total):money(cuota)+' c/u'}</span></div>`;
-  }).join('');
-}
-function selectPayment(el,cuotas,total){
-  document.querySelectorAll('.pay-opt').forEach(x=>x.classList.remove('selected'));
-  el.classList.add('selected'); state.payment={cuotas,total};
+  $('quote_detail').innerHTML=q.items.map(i=>`<span class="pill">✓ ${i}</span>`).join('') +
+    q.reasons.map(r=>`<span class="pill warn">⚠ ${r}</span>`).join('');
 }
 function buildSummary(){
   const q=calculateQuote();
@@ -428,18 +489,16 @@ function buildSummary(){
   if(checked('has_vehiculos'))bienes.push('vehículos');
   if(checked('has_inmuebles'))bienes.push('otros inmuebles');
   if(checked('has_empresas'))bienes.push('empresas/inversiones');
-  const presupuesto=q.requiresReview?'A confirmar en la consulta':money(q.total);
   $('client_summary').innerHTML=`<div class="summary-card">
     <div class="summary-row"><span class="key">Tipo de divorcio</span><span class="val">${caseType()}</span></div>
     <div class="summary-row"><span class="key">Hijos en común</span><span class="val">${hijosTxt}</span></div>
     <div class="summary-row"><span class="key">Bienes</span><span class="val">${bienes.length?bienes.join(', '):'No informado'}</span></div>
     <div class="summary-row"><span class="key">Contacto</span><span class="val">${val('cli_nombre')||'—'}</span></div>
-    <div class="summary-row"><span class="key">Orientación</span><span class="val">${presupuesto}</span></div>
   </div>`;
 }
-function sendWhatsApp(){
-  if(!checked('acepta_privacidad')){alert('Para enviar tu consulta, aceptá el uso de tus datos.');return}
-  const q=calculateQuote();
+const FORMSPREE = 'https://formspree.io/f/mrevjwoo';
+
+function buildCaseText(){
   const bienes=[];
   if(checked('has_vivienda'))bienes.push('vivienda');
   if(checked('has_vehiculos'))bienes.push('vehículos');
@@ -448,8 +507,9 @@ function sendWhatsApp(){
 
   let msg = `*CONSULTA DE DIVORCIO* (desde la web)\n\n`;
   msg += `👤 *Nombre:* ${val('cli_nombre')}\n`;
+  msg += `🪪 *DNI:* ${val('cli_dni')}\n`;
   msg += `📱 *WhatsApp:* ${val('cli_tel')}\n`;
-  if(val('cli_email')) msg += `✉️ *Email:* ${val('cli_email')}\n`;
+  msg += `✉️ *Email:* ${val('cli_email')}\n`;
   if(val('cli_zona')) msg += `📍 *Zona:* ${val('cli_zona')}\n`;
   if(val('cli_modalidad')) msg += `🖥️ *Modalidad:* ${val('cli_modalidad')}\n`;
   msg += `\n*— Datos del caso —*\n`;
@@ -463,6 +523,23 @@ function sendWhatsApp(){
   msg += `🏠 *Bienes:* ${bienes.length?bienes.join(', '):'No'}\n`;
   if(val('liquida_bienes')) msg += `   División: ${val('liquida_bienes')}\n`;
 
+  if(checked('has_vivienda')){
+    const homes=readCards('.home',{dir:'.home_dir',titular:'.home_titular',fecha:'.home_fecha',uso:'.home_uso',obs:'.home_obs'});
+    homes.forEach(h=>{ if(h.dir||h.titular){ msg += `   🏡 Vivienda: ${h.dir||'(s/dirección)'}${h.titular?' — a nombre de '+h.titular:''}${h.fecha?', adquirida '+h.fecha:''}${h.uso?', vive: '+h.uso:''}${h.obs?'. '+h.obs:''}\n`; }});
+  }
+  if(checked('has_vehiculos')){
+    const vs=readCards('.vehicle',{desc:'.veh_desc',titular:'.veh_titular',obs:'.veh_obs'});
+    vs.forEach(v=>{ if(v.desc){ msg += `   🚗 ${v.desc}${v.titular?' — a nombre de '+v.titular:''}${v.obs?'. '+v.obs:''}\n`; }});
+  }
+  if(checked('has_inmuebles')){
+    const ps=readCards('.property',{dir:'.prop_dir',titular:'.prop_titular',fecha:'.prop_fecha',uso:'.prop_uso',obs:'.prop_obs'});
+    ps.forEach(p=>{ if(p.dir){ msg += `   🏘️ ${p.dir}${p.titular?' — a nombre de '+p.titular:''}${p.fecha?', adquirido '+p.fecha:''}${p.uso?', '+p.uso:''}${p.obs?'. '+p.obs:''}\n`; }});
+  }
+  if(checked('has_empresas')){
+    const cs=readCards('.company',{nombre:'.soc_nombre',tipo:'.soc_tipo',titular:'.soc_titular',ingresos:'.soc_ingresos',obs:'.soc_obs'});
+    cs.forEach(c=>{ if(c.nombre){ msg += `   🏢 ${c.nombre}${c.tipo?' ('+c.tipo+')':''}${c.titular?' — a nombre de '+c.titular:''}${c.ingresos?', ingresos: '+c.ingresos:''}${c.obs?'. '+c.obs:''}\n`; }});
+  }
+
   const alertas=[];
   if(val('riesgo_violencia')==='Sí')alertas.push('violencia/denuncias');
   if(val('riesgo_bienes')==='Sí')alertas.push('riesgo sobre bienes');
@@ -471,10 +548,38 @@ function sendWhatsApp(){
   if(alertas.length) msg += `\n⚠️ *Atención prioritaria:* ${alertas.join(', ')}\n`;
   if(val('riesgos_obs')) msg += `📝 *Nota:* ${val('riesgos_obs')}\n`;
 
-  msg += `\n💰 *Orientación:* ${q.requiresReview?'A confirmar en consulta':money(q.total)}\n`;
-  if(state.payment) msg += `   Pago elegido: ${state.payment.cuotas} ${state.payment.cuotas===1?'pago':'cuotas'}\n`;
   msg += `\n_Enviado desde el formulario de evaluación de la web._`;
+  return msg;
+}
 
+function sendEmail(){
+  const data = {
+    nombre: val('cli_nombre'),
+    dni: val('cli_dni'),
+    whatsapp: val('cli_tel'),
+    email: val('cli_email'),
+    zona: val('cli_zona'),
+    modalidad: val('cli_modalidad'),
+    tipo_divorcio: caseType(),
+    hijos: state.hijos==='si'?'Sí':'No',
+    resumen_completo: buildCaseText(),
+    _subject: `Nueva consulta de divorcio — ${val('cli_nombre')}`
+  };
+  if(state.hijos==='si'){
+    data.cuidado = val('cuidado_modelo');
+    data.alimentos = val('alimentos_modelo');
+  }
+  return fetch(FORMSPREE, {
+    method:'POST',
+    headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body: JSON.stringify(data)
+  });
+}
+
+function sendWhatsApp(){
+  if(!checked('acepta_privacidad')){alert('Para enviar tu consulta, aceptá el uso de tus datos.');return}
+  const msg = buildCaseText();
+  sendEmail().catch(e=>console.warn('Email no enviado:',e));
   const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
   window.open(url,'_blank');
   if(currentStep===7) showStep(8);
