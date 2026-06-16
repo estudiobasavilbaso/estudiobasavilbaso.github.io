@@ -417,7 +417,16 @@
     /* ─── SCROLL FADE IN ─── */
     .fade-in { opacity: 0; transform: translateY(28px); transition: opacity .6s ease, transform .6s ease; }
     .fade-in.visible { opacity: 1; transform: none; }
-  </style>
+.i18n-switcher { display:inline-flex; align-items:center; gap:3px; margin-right:12px; }
+.i18n-btn {
+  font: 700 10px/1 'Raleway', sans-serif; letter-spacing: .08em;
+  padding: 5px 8px; border-radius: 3px; type: button;
+  border: 1.5px solid rgba(201,168,76,0.45); background: transparent;
+  color: rgba(255,255,255,0.65); cursor: pointer; transition: all .15s;
+}
+.i18n-btn:hover { border-color: rgba(201,168,76,0.9); color: #C9A84C; }
+.i18n-active { background: rgba(201,168,76,0.15); border-color: #C9A84C !important; color: #C9A84C !important; }
+@media (max-width: 960px) { .i18n-switcher { display: none; } }  </style>
 </head>
 <body>
 
@@ -433,6 +442,14 @@
     <li><a href="#faq">FAQ</a></li>
     <li><a href="#turnos">Turnos</a></li>
   </ul>
+  <div class="i18n-switcher">
+    <button class="i18n-btn i18n-active" data-lang="es" title="Español" type="button">ES</button>
+    <button class="i18n-btn" data-lang="en" title="English" type="button">EN</button>
+    <button class="i18n-btn" data-lang="pt" title="Português" type="button">PT</button>
+    <button class="i18n-btn" data-lang="de" title="Deutsch" type="button">DE</button>
+    <button class="i18n-btn" data-lang="ru" title="Русский" type="button">RU</button>
+  </div>
+
   <a href="#turnos" class="nav-cta">Agendá tu consulta</a>
 </nav>
 
