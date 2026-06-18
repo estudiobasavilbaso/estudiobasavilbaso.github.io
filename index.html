@@ -149,6 +149,14 @@
       display: inline-flex; align-items: center; gap: 10px;
     }
     .btn-hero-outline:hover { border-color: var(--gold); color: var(--gold); }
+    .btn-hero-wa {
+      background: #25D366; color: #fff;
+      padding: 16px 34px; border-radius: 3px; font-weight: 700; font-size: 13px;
+      letter-spacing: 1.5px; text-transform: uppercase; text-decoration: none; transition: all .2s;
+      display: inline-flex; align-items: center; gap: 10px;
+      box-shadow: 0 4px 16px rgba(37,211,102,0.3);
+    }
+    .btn-hero-wa:hover { background: #1ebe5d; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,211,102,0.45); }
     .hero-scroll {
       position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
       z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 8px;
@@ -172,6 +180,12 @@
     .stat-item:last-child { border-right: none; }
     .stat-num { font-family: 'Playfair Display', serif; font-size: 34px; color: var(--gold); font-weight: 700; line-height: 1; }
     .stat-label { color: rgba(255,255,255,0.55); font-size: 10.5px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-top: 5px; }
+    /* Stat de WhatsApp (contacto destacado) */
+    .stat-wa { text-decoration: none; background: rgba(37,211,102,0.10); transition: background .2s; }
+    .stat-wa:hover { background: rgba(37,211,102,0.20); }
+    .stat-wa .stat-label { color: rgba(255,255,255,0.7); }
+    .stat-wa-num { display: flex; align-items: center; justify-content: center; gap: 8px; font-family: 'Playfair Display', serif; font-weight: 700; font-size: 21px; color: #3BE07A; line-height: 1; }
+    .stat-wa-num .ico { width: 22px; height: 22px; stroke-width: 2; color: #3BE07A; }
 
     /* ─── LINK-IN-BIO ACTIONS ─── */
     .quick-actions {
@@ -387,13 +401,16 @@
 
     /* ─── WA FLOAT ─── */
     .wa-float {
-      position: fixed; bottom: 26px; right: 26px; z-index: 999;
-      width: 58px; height: 58px; border-radius: 50%;
-      background: #25D366; color: #fff; display: flex; align-items: center; justify-content: center;
+      position: fixed; bottom: 24px; right: 24px; z-index: 999;
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 22px; border-radius: 999px;
+      background: #25D366; color: #fff; font-weight: 700; font-size: 14px; letter-spacing: .5px;
       text-decoration: none;
-      box-shadow: 0 4px 20px rgba(37,211,102,0.45);
+      box-shadow: 0 6px 22px rgba(37,211,102,0.5);
       animation: wa-pulse 3s infinite;
     }
+    .wa-float .ico { width: 24px; height: 24px; stroke-width: 2; }
+    @media (max-width: 480px) { .wa-float { padding: 13px 18px; font-size: 13px; bottom: 18px; right: 16px; } }
     @keyframes wa-pulse { 0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.45)} 50%{box-shadow:0 4px 32px rgba(37,211,102,.7)} }
 
     /* ─── RESPONSIVE ─── */
@@ -417,6 +434,8 @@
       .stat-item { max-width: none; padding: 22px 12px; border-bottom: 1px solid rgba(255,255,255,0.07); }
       .stat-item:nth-child(2n) { border-right: none; }
       .stat-num { font-size: 28px; }
+      .stat-wa-num { font-size: 16px; gap: 6px; }
+      .stat-wa-num .ico { width: 18px; height: 18px; }
       .hero { padding: 110px 6% 90px; }
       .hero-actions { flex-direction: column; width: 100%; }
       .btn-hero-primary, .btn-hero-outline { width: 100%; justify-content: center; }
@@ -474,13 +493,15 @@
     }
     .mm-link:hover, .mm-link:active { color: var(--gold); padding-left: 6px; }
     .mm-cta {
-      margin-top: 22px; text-align: center; background: var(--gold); color: var(--green-ink);
+      margin-top: 22px; display: flex; align-items: center; justify-content: center; gap: 10px;
+      background: var(--gold); color: var(--green-ink);
       padding: 15px; border-radius: 6px; text-decoration: none; font-weight: 700;
       font-size: 13.5px; letter-spacing: 1px; transition: background .2s;
     }
     .mm-cta:active { background: var(--gold-lt); }
     .mm-wa {
-      margin-top: 10px; text-align: center; background: #25D366; color: #fff;
+      margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 10px;
+      background: #25D366; color: #fff;
       padding: 15px; border-radius: 6px; text-decoration: none; font-weight: 700;
       font-size: 13.5px; letter-spacing: 1px;
     }
@@ -553,7 +574,8 @@
     @media (max-width: 960px) { .testi-grid { grid-template-columns: 1fr; gap: 16px; } .testi-section { padding: 64px 6%; } }
 
     /* "Accesos rápidos": útil para quien llega del bio de Instagram → solo en mobile */
-    @media (min-width: 961px) { .quick-actions { display: none; } }
+    /* "Accesos rápidos": visibles también en escritorio */
+    .quick-actions .qa-btn .ico, .mm-cta .ico, .mm-wa .ico { width: 18px; height: 18px; flex-shrink: 0; }
 
     /* ─── REDUCED MOTION ─── */
     @media (prefers-reduced-motion: reduce) {
@@ -593,7 +615,13 @@
     <li><a href="#faq">FAQ</a></li>
     <li><a href="#turnos">Turnos</a></li>
   </ul>
-  <!-- El selector de idiomas (desktop) lo inyecta i18n.js aquí -->
+  <div class="i18n-switcher" role="group" aria-label="Seleccionar idioma / Select language">
+    <button class="i18n-btn i18n-active" data-lang="es" title="Español" type="button">ES</button>
+    <button class="i18n-btn" data-lang="en" title="English" type="button">EN</button>
+    <button class="i18n-btn" data-lang="pt" title="Português" type="button">PT</button>
+    <button class="i18n-btn" data-lang="de" title="Deutsch" type="button">DE</button>
+    <button class="i18n-btn" data-lang="ru" title="Русский" type="button">RU</button>
+  </div>
   <a href="#turnos" class="nav-cta nav-cta-desktop">Agendá tu consulta</a>
 
   <!-- Botón hamburguesa (solo móvil) -->
@@ -610,8 +638,8 @@
     <li><a href="#faq" class="mm-link">FAQ</a></li>
     <li><a href="#turnos" class="mm-link">Turnos</a></li>
   </ul>
-  <a href="#turnos" class="mm-cta">📅 Agendá tu consulta</a>
-  <a href="https://wa.me/5491169766772" class="mm-wa" target="_blank" rel="noopener">💬 Consultanos por WhatsApp</a>
+  <a href="#turnos" class="mm-cta"><svg class="ico" aria-hidden="true"><use href="#i-calendar"/></svg><span>Agendá tu consulta</span></a>
+  <a href="https://wa.me/5491169766772" class="mm-wa" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-chat"/></svg><span>Consultanos por WhatsApp</span></a>
   <div class="mm-lang-label">Idioma · Language</div>
   <div class="i18n-switcher-m" role="group" aria-label="Seleccionar idioma">
     <button class="i18n-btn i18n-active" data-lang="es" title="Español" type="button">ES</button>
@@ -636,8 +664,8 @@
       Asesoramiento jurídico profesional, claro y sin vueltas. Atención virtual y presencial en toda la Argentina.
     </p>
     <div class="hero-actions">
-      <a href="#turnos" class="btn-hero-primary">📅 Agendá una consulta</a>
-      <a href="https://wa.me/5491169766772" class="btn-hero-outline" target="_blank" rel="noopener">💬 WhatsApp</a>
+      <a href="#turnos" class="btn-hero-primary"><svg class="ico" aria-hidden="true" style="width:20px;height:20px;stroke-width:2"><use href="#i-calendar"/></svg><span>Agendá una consulta</span></a>
+      <a href="https://wa.me/5491169766772" class="btn-hero-wa" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true" style="width:20px;height:20px;stroke-width:2"><use href="#i-chat"/></svg> WhatsApp</a>
     </div>
   </div>
   <div class="hero-scroll">
@@ -660,21 +688,21 @@
     <div class="stat-num" data-count="24" data-prefix="<" data-suffix="h">&lt;24h</div>
     <div class="stat-label">Respuesta</div>
   </div>
-  <div class="stat-item fade-in">
-    <div class="stat-num" data-count="5" data-suffix="">5</div>
-    <div class="stat-label">Idiomas</div>
-  </div>
+  <a class="stat-item stat-wa fade-in" href="https://wa.me/5491169766772" target="_blank" rel="noopener" aria-label="Escribinos por WhatsApp al 11-6976-6772">
+    <div class="stat-wa-num"><svg class="ico" aria-hidden="true"><use href="#i-chat"/></svg>11-6976-6772</div>
+    <div class="stat-label">WhatsApp directo</div>
+  </a>
 </div>
 
 <!-- QUICK ACTIONS (link-in-bio) -->
 <section class="quick-actions">
   <div class="eyebrow qa-eyebrow">Accesos rápidos</div>
   <div class="qa-buttons">
-    <a href="#turnos" class="qa-btn qa-btn-solid">📅 &nbsp;Agendá tu consulta</a>
-    <a href="consulta-divorcio.html" class="qa-btn qa-btn-gold">📋 &nbsp;Evaluá tu divorcio gratis</a>
-    <a href="https://wa.me/5491169766772" class="qa-btn qa-btn-wa" target="_blank" rel="noopener">💬 &nbsp;Consultanos por WhatsApp</a>
-    <a href="#servicios" class="qa-btn qa-btn-white">⚖️ &nbsp;Nuestros servicios</a>
-    <a href="https://instagram.com/estudiobasavilbaso" class="qa-btn qa-btn-gold" target="_blank" rel="noopener">📸 &nbsp;Seguinos en Instagram</a>
+    <a href="#turnos" class="qa-btn qa-btn-solid"><svg class="ico" aria-hidden="true"><use href="#i-calendar"/></svg><span>Agendá tu consulta</span></a>
+    <a href="consulta-divorcio.html" class="qa-btn qa-btn-gold"><svg class="ico" aria-hidden="true"><use href="#i-file"/></svg><span>Evaluá tu divorcio gratis</span></a>
+    <a href="https://wa.me/5491169766772" class="qa-btn qa-btn-wa" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-chat"/></svg><span>Consultanos por WhatsApp</span></a>
+    <a href="#servicios" class="qa-btn qa-btn-white"><svg class="ico" aria-hidden="true"><use href="#i-scale"/></svg><span>Nuestros servicios</span></a>
+    <a href="https://instagram.com/estudiobasavilbaso" class="qa-btn qa-btn-gold" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-instagram"/></svg><span>Seguinos en Instagram</span></a>
   </div>
   <div class="socials-row">
     <a class="soc-ic" href="https://wa.me/5491169766772" target="_blank" rel="noopener" title="WhatsApp" aria-label="WhatsApp"><svg class="ico" aria-hidden="true"><use href="#i-chat"/></svg></a>
@@ -912,7 +940,7 @@
           <div class="bii-icon"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg></div>
           <div class="bii-text">
             <strong>Duración</strong>
-            <span>30 minutos por consulta</span>
+            <span>60 minutos por consulta</span>
           </div>
         </div>
         <div class="booking-info-item">
@@ -1011,7 +1039,7 @@
 </footer>
 
 <!-- WA FLOAT -->
-<a class="wa-float" href="https://wa.me/5491169766772" target="_blank" rel="noopener" title="WhatsApp" aria-label="Escribinos por WhatsApp"><svg class="ico" aria-hidden="true" style="width:30px;height:30px;stroke-width:1.8"><use href="#i-chat"/></svg></a>
+<a class="wa-float" href="https://wa.me/5491169766772" target="_blank" rel="noopener" title="Escribinos por WhatsApp" aria-label="Escribinos por WhatsApp"><svg class="ico" aria-hidden="true"><use href="#i-chat"/></svg><span>WhatsApp</span></a>
 
 <script>
   /* Scroll fade-in */
@@ -1049,15 +1077,9 @@
   document.querySelectorAll('.mm-link, .mm-cta, .mm-wa').forEach(a => a.addEventListener('click', () => setMenu(false)));
   document.addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
 
-  /* Selector de idioma del menú móvil: delega en el selector que
-     inyecta i18n.js (siempre presente en el DOM, solo oculto en móvil). */
+  /* Cerrar el menú al elegir idioma desde el drawer (la traducción la maneja i18n.js) */
   document.querySelectorAll('.i18n-switcher-m .i18n-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const code = btn.getAttribute('data-lang');
-      const target = document.querySelector('.i18n-switcher .i18n-btn[data-lang="' + code + '"]');
-      if (target) target.click();
-      setMenu(false);
-    });
+    btn.addEventListener('click', () => setMenu(false));
   });
 
   /* Scrollspy: resalta el ítem del nav según la sección visible */

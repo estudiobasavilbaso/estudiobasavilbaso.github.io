@@ -38,7 +38,7 @@
     'Assessoria jurídica profissional, clara e direta. Atendimento virtual e presencial em toda a Argentina.',
     'Professionelle, klare Rechtsberatung – ohne Umwege. Virtuelle und persönliche Betreuung in ganz Argentinien.',
     'Профессиональная, чёткая юридическая помощь без лишних слов. Онлайн и очный приём по всей Аргентине.');
-  t('📅 Agendá una consulta','📅 Book a consultation','📅 Agende uma consulta','📅 Termin buchen','📅 Записаться');
+  t('Agendá una consulta','Book a consultation','Agende uma consulta','Termin buchen','Записаться');
   t('↓ Explorar',         '↓ Explore',         '↓ Explorar',       '↓ Erkunden',         '↓ Листать');
 
   /* Estadísticas */
@@ -56,11 +56,11 @@
 
   /* Accesos rápidos */
   t('Accesos rápidos',    'Quick access',      'Acesso rápido',    'Schnellzugriff',     'Быстрый доступ');
-  t('📅 Agendá tu consulta','📅 Book your consultation','📅 Agende sua consulta','📅 Termin buchen','📅 Записаться');
-  t('📋 Evaluá tu divorcio gratis','📋 Evaluate your divorce for free','📋 Avalie seu divórcio grátis','📋 Scheidung kostenlos bewerten','📋 Оцените ваш развод бесплатно');
-  t('💬 Consultanos por WhatsApp','💬 Contact us on WhatsApp','💬 Fale conosco pelo WhatsApp','💬 WhatsApp-Anfrage','💬 Написать нам в WhatsApp');
-  t('⚖️ Nuestros servicios','⚖️ Our services','⚖️ Nossos serviços','⚖️ Unsere Leistungen','⚖️ Наши услуги');
-  t('📸 Seguinos en Instagram','📸 Follow us on Instagram','📸 Siga-nos no Instagram','📸 Instagram folgen','📸 Подписаться в Instagram');
+  t('Agendá tu consulta','Book your consultation','Agende sua consulta','Termin buchen','Записаться');
+  t('Evaluá tu divorcio gratis','Evaluate your divorce for free','Avalie seu divórcio grátis','Scheidung kostenlos bewerten','Оцените ваш развод бесплатно');
+  t('Consultanos por WhatsApp','Contact us on WhatsApp','Fale conosco pelo WhatsApp','WhatsApp-Anfrage','Написать нам в WhatsApp');
+  t('Nuestros servicios','Our services','Nossos serviços','Unsere Leistungen','Наши услуги');
+  t('Seguinos en Instagram','Follow us on Instagram','Siga-nos no Instagram','Instagram folgen','Подписаться в Instagram');
 
   /* Ubicación */
   t('Buenos Aires · Argentina','Buenos Aires · Argentina','Buenos Aires · Argentina','Buenos Aires · Argentinien','Буэнос-Айрес · Аргентина');
@@ -236,7 +236,7 @@
     'Wählen Sie Tag und Uhrzeit. Wir bestätigen per WhatsApp.',
     'Выберите удобный день и время. Подтверждение придёт в WhatsApp.');
   t('Duración',           'Duration',          'Duração',          'Dauer',              'Продолжительность');
-  t('30 minutos por consulta','30 minutes per consultation','30 minutos por consulta','30 Minuten pro Beratung','30 минут на консультацию');
+  t('60 minutos por consulta','60 minutes per consultation','60 minutos por consulta','60 Minuten pro Beratung','60 минут на консультацию');
   t('Modalidad',          'Format',            'Modalidade',       'Format',             'Формат');
   t('Virtual o presencial — vos elegís','Virtual or in-person — your choice','Virtual ou presencial — você escolhe','Online oder persönlich – Ihre Wahl','Онлайн или очно — ваш выбор');
   t('Horarios',           'Hours',             'Horários',         'Öffnungszeiten',     'Часы работы');
@@ -305,7 +305,9 @@
   };
 
   /* ── Estado ──────────────────────────────────────────────────── */
-  var currentLang = localStorage.getItem('basavilbaso_lang') || 'es';
+  var VALID = { es:1, en:1, pt:1, de:1, ru:1 };
+  var stored = localStorage.getItem('basavilbaso_lang');
+  var currentLang = (stored && VALID[stored]) ? stored : 'es';
   var nodeCache = [];   /* { node, key, originalFull } */
   var htmlCache = [];   /* { el, hKey } */
 
@@ -388,55 +390,20 @@
     }
   }
 
-  /* ── Crear e inyectar el selector de idioma ──────────────────── */
-  function injectSwitcher() {
-    /* Estilos — colores explícitos para nav oscuro (verde/dorado) */
-    var style = document.createElement('style');
-    style.textContent = [
-      '.i18n-switcher{display:inline-flex;align-items:center;gap:3px;margin-right:12px;flex-shrink:0}',
-      '.i18n-btn{font:700 10px/1 "Raleway",sans-serif;letter-spacing:.08em;padding:5px 8px;border-radius:3px;',
-        'border:1.5px solid rgba(201,168,76,0.45);background:transparent;color:rgba(255,255,255,0.65);',
-        'cursor:pointer;transition:all .15s;white-space:nowrap}',
-      '.i18n-btn:hover{border-color:rgba(201,168,76,0.9);color:#C9A84C}',
-      '.i18n-active{background:rgba(201,168,76,0.15);border-color:#C9A84C !important;color:#C9A84C !important}',
-      '@media(max-width:768px){.i18n-switcher{display:none}}'
-    ].join('');
-    document.head.appendChild(style);
-
-    /* Contenedor del selector */
-    var switcher = document.createElement('div');
-    switcher.className = 'i18n-switcher';
-    switcher.setAttribute('role', 'group');
-    switcher.setAttribute('aria-label', 'Seleccionar idioma / Select language');
-
-    for (var i = 0; i < LANGS.length; i++) {
-      (function(lang) {
-        var btn = document.createElement('button');
-        btn.className = 'i18n-btn' + (lang.code === currentLang ? ' i18n-active' : '');
-        btn.setAttribute('data-lang', lang.code);
-        btn.setAttribute('title', lang.name);
-        btn.setAttribute('aria-label', lang.name);
-        btn.setAttribute('aria-pressed', lang.code === currentLang ? 'true' : 'false');
+  /* ── Conectar los selectores de idioma del HTML ──────────────────
+     Los botones (.i18n-btn con data-lang) ya están en el HTML, tanto
+     en el nav de escritorio como en el menú móvil. Acá solo les
+     agregamos el comportamiento. NO se inyecta ningún selector para
+     evitar duplicados.                                                */
+  function bindSwitchers() {
+    var btns = document.querySelectorAll('.i18n-btn[data-lang]');
+    for (var i = 0; i < btns.length; i++) {
+      (function (btn) {
         btn.setAttribute('type', 'button');
-        btn.textContent = lang.label;
-        btn.addEventListener('click', function() { applyLang(lang.code); });
-        switcher.appendChild(btn);
-      })(LANGS[i]);
-    }
-
-    /* Insertar ANTES del botón CTA del nav */
-    var inserted = false;
-    var ctaBtn = document.querySelector('nav .nav-cta, nav a[href="#turnos"]');
-    if (ctaBtn) {
-      ctaBtn.parentNode.insertBefore(switcher, ctaBtn); /* ANTES del CTA */
-      inserted = true;
-    }
-    if (!inserted) {
-      var nav = document.querySelector('nav') || document.querySelector('header');
-      if (nav) { nav.appendChild(switcher); inserted = true; }
-    }
-    if (!inserted) {
-      document.body.insertBefore(switcher, document.body.firstChild);
+        btn.addEventListener('click', function () {
+          applyLang(btn.getAttribute('data-lang'));
+        });
+      })(btns[i]);
     }
   }
 
@@ -444,8 +411,8 @@
   function init() {
     buildNodeCache();
     buildHTMLCache();
-    injectSwitcher();
-    if (currentLang !== 'es') applyLang(currentLang);
+    bindSwitchers();
+    applyLang(currentLang); /* traduce (si no es 'es') y marca el botón activo */
   }
 
   if (document.readyState === 'loading') {
