@@ -424,6 +424,29 @@
     '💬 WhatsApp erneut öffnen',
     '💬 Открыть WhatsApp снова');
 
+  /* ─── MERCADO PAGO BOX ───────────────────────────────────────── */
+  t('💳 Pago de la consulta','💳 Consultation payment','💳 Pagamento da consulta','💳 Beratungszahlung','💳 Оплата консультации');
+  t('💳 Pago de la consulta — $50.000',
+    '💳 Consultation payment — $50,000 ARS',
+    '💳 Pagamento da consulta — $50.000',
+    '💳 Beratungszahlung — $50.000 ARS',
+    '💳 Оплата консультации — $50,000');
+  t('Podés abonar por Mercado Pago al alias:',
+    'You can pay via Mercado Pago to the alias:',
+    'Você pode pagar pelo Mercado Pago no alias:',
+    'Sie können über Mercado Pago an den Alias zahlen:',
+    'Вы можете оплатить через Mercado Pago по алиасу:');
+  t('💸 Pagar $50.000 con Mercado Pago',
+    '💸 Pay $50,000 ARS with Mercado Pago',
+    '💸 Pagar $50.000 com Mercado Pago',
+    '💸 $50.000 ARS mit Mercado Pago zahlen',
+    '💸 Оплатить $50,000 через Mercado Pago');
+  t('💸 Pagar con Mercado Pago',
+    '💸 Pay with Mercado Pago',
+    '💸 Pagar com Mercado Pago',
+    '💸 Mit Mercado Pago zahlen',
+    '💸 Оплатить через Mercado Pago');
+
   /* ── Título de página ────────────────────────────────────────── */
   var PAGE_TITLES = {
     es: 'Evaluá tu divorcio — Estudio Jurídico Basavilbaso',
