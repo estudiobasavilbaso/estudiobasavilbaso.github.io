@@ -47,6 +47,12 @@
   t('Virtual',            'Virtual',           'Virtual',          'Online',             'Онлайн');
   t('y presencial',       'and in-person',     'e presencial',     'und persönlich',     'и очно');
   t('WhatsApp directo',   'Direct WhatsApp',   'WhatsApp direto',  'WhatsApp direkt',    'WhatsApp напрямую');
+  t('Respuesta',          'Response',          'Resposta',         'Antwort',            'Ответ');
+  t('Idiomas',            'Languages',         'Idiomas',          'Sprachen',           'Языки');
+
+  /* Testimonios */
+  t('Lo que dicen',       'What they say',     'O que dizem',      'Was sie sagen',      'Отзывы');
+  t('Clientes que ya confiaron','Clients who already trusted us','Clientes que já confiaram','Mandanten, die uns vertrauten','Клиенты, которые нам доверились');
 
   /* Accesos rápidos */
   t('Accesos rápidos',    'Quick access',      'Acesso rápido',    'Schnellzugriff',     'Быстрый доступ');
