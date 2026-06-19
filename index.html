@@ -353,6 +353,17 @@
     .bii-text strong { display: block; color: var(--white); font-size: 13px; font-weight: 600; }
     .bii-text span { color: rgba(255,255,255,0.5); font-size: 12.5px; font-weight: 300; }
 
+    /* Botón de pago Mercado Pago */
+    .pay-btn {
+      display: inline-flex; align-items: center; gap: 11px; margin-top: 32px;
+      background: #009EE3; color: #fff; padding: 16px 30px; border-radius: 10px;
+      font-weight: 700; font-size: 15px; letter-spacing: .3px; text-decoration: none;
+      box-shadow: 0 6px 22px rgba(0,158,227,0.35); transition: all .2s;
+    }
+    .pay-btn:hover { background: #0089c7; transform: translateY(-2px); box-shadow: 0 10px 28px rgba(0,158,227,0.5); }
+    .pay-btn .ico { width: 22px; height: 22px; stroke-width: 2; }
+    .pay-note { color: rgba(255,255,255,0.5); font-size: 12.5px; line-height: 1.6; font-weight: 300; margin-top: 12px; max-width: 340px; }
+
     /* Calendly embed box */
     .calendly-box {
       background: var(--white); border-radius: 14px;
@@ -404,15 +415,13 @@
     /* ─── WA FLOAT ─── */
     .wa-float {
       position: fixed; bottom: 24px; right: 24px; z-index: 999;
-      display: inline-flex; align-items: center; gap: 10px;
-      padding: 14px 22px; border-radius: 999px;
-      background: #25D366; color: #fff; font-weight: 700; font-size: 14px; letter-spacing: .5px;
-      text-decoration: none;
-      box-shadow: 0 6px 22px rgba(37,211,102,0.5);
+      width: 64px; height: 64px; border-radius: 50%; overflow: hidden;
+      display: block; text-decoration: none;
+      box-shadow: 0 6px 22px rgba(37,211,102,0.4);
       animation: wa-pulse 3s infinite;
     }
-    .wa-float .ico { width: 24px; height: 24px; stroke-width: 2; }
-    @media (max-width: 480px) { .wa-float { padding: 13px 18px; font-size: 13px; bottom: 18px; right: 16px; } }
+    .wa-float img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    @media (max-width: 480px) { .wa-float { width: 56px; height: 56px; bottom: 18px; right: 16px; } }
     @keyframes wa-pulse { 0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.45)} 50%{box-shadow:0 4px 32px rgba(37,211,102,.7)} }
 
     /* ─── RESPONSIVE ─── */
@@ -614,7 +623,7 @@
   <ul class="nav-links">
     <li><a href="#servicios">Servicios</a></li>
     <li><a href="#proceso">Proceso</a></li>
-    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#faq">Preguntas Frecuentes</a></li>
     <li><a href="#turnos">Turnos</a></li>
   </ul>
   <div class="i18n-switcher" role="group" aria-label="Seleccionar idioma / Select language">
@@ -637,7 +646,7 @@
   <ul class="mobile-links">
     <li><a href="#servicios" class="mm-link">Servicios</a></li>
     <li><a href="#proceso" class="mm-link">Proceso</a></li>
-    <li><a href="#faq" class="mm-link">FAQ</a></li>
+    <li><a href="#faq" class="mm-link">Preguntas Frecuentes</a></li>
     <li><a href="#turnos" class="mm-link">Turnos</a></li>
   </ul>
   <a href="#turnos" class="mm-cta"><svg class="ico" aria-hidden="true"><use href="#i-calendar"/></svg><span>Agendá tu consulta</span></a>
@@ -967,6 +976,11 @@
           </div>
         </div>
       </div>
+      <a class="pay-btn" href="https://mpago.la/1YH2JQe" target="_blank" rel="noopener">
+        <svg class="ico" aria-hidden="true"><use href="#i-card"/></svg>
+        <span>Pagar la consulta — $50.000</span>
+      </a>
+      <p class="pay-note">Pago seguro con Mercado Pago. Luego enviá el comprobante por WhatsApp para confirmar tu turno.</p>
     </div>
 
     <!-- CALENDLY EMBED — reemplazá TU-LINK con tu URL real -->
@@ -1041,7 +1055,7 @@
 </footer>
 
 <!-- WA FLOAT -->
-<a class="wa-float" href="https://wa.me/5491169766772" target="_blank" rel="noopener" title="Escribinos por WhatsApp" aria-label="Escribinos por WhatsApp"><svg class="ico" aria-hidden="true"><use href="#i-chat"/></svg><span>WhatsApp</span></a>
+<a class="wa-float" href="https://wa.me/5491169766772" target="_blank" rel="noopener" title="Escribinos por WhatsApp" aria-label="Escribinos por WhatsApp"><img src="whatsapp.png" alt="" width="64" height="64"></a>
 
 <script>
   /* Scroll fade-in */

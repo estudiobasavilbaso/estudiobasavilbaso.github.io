@@ -28,6 +28,7 @@
   t('Servicios',          'Services',          'Serviços',         'Leistungen',         'Услуги');
   t('Proceso',            'Process',           'Processo',         'Ablauf',             'Процесс');
   t('FAQ',                'FAQ',               'FAQ',              'FAQ',                'ЧаВо');
+  t('Preguntas Frecuentes','FAQ',              'Perguntas Frequentes','Häufige Fragen',  'Частые вопросы');
   t('Turnos',             'Appointments',      'Consultas',        'Termine',            'Запись');
   t('Agendá tu consulta', 'Book a consultation','Agende sua consulta','Termin buchen',   'Записаться');
 
