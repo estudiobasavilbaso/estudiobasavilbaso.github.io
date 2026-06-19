@@ -78,11 +78,10 @@
     }
     .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
     .logo-badge {
-      width: 42px; height: 42px; border-radius: 50%;
-      border: 1.5px solid var(--gold);
+      width: 46px; height: 46px;
       display: flex; align-items: center; justify-content: center;
-      background: rgba(255,255,255,0.06);
     }
+    .logo-badge img { width: 100%; height: 100%; object-fit: contain; }
     .logo-badge span { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 15px; font-weight: 700; }
     .nav-name { color: var(--white); font-size: 13px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; }
     .nav-name small { display: block; color: rgba(201,168,76,0.7); font-size: 9px; letter-spacing: 3px; font-weight: 400; }
@@ -134,29 +133,34 @@
       font-weight: 300; line-height: 1.75; margin-bottom: 48px; max-width: 520px; margin-left: auto; margin-right: auto;
     }
     .hero-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-    .btn-hero-primary {
-      background: linear-gradient(135deg, var(--gold-lt), var(--gold));
-      color: var(--green-ink);
-      padding: 18px 40px; border-radius: 12px; font-weight: 700; font-size: 13.5px;
-      letter-spacing: 1.2px; text-transform: uppercase; text-decoration: none;
-      transition: transform .26s cubic-bezier(.2,.7,.3,1), box-shadow .26s, filter .26s;
-      border: none; cursor: pointer; font-family: 'Raleway', sans-serif;
-      display: inline-flex; align-items: center; justify-content: center; gap: 11px;
-      box-shadow: 0 12px 30px rgba(201,168,76,0.4);
+    .btn-hero {
+      position: relative; display: inline-flex; align-items: center; gap: 14px;
+      padding: 12px 30px 12px 12px; border-radius: 18px;
+      font-family: 'Raleway', sans-serif; font-weight: 700; font-size: 13.5px;
+      letter-spacing: 1px; text-transform: uppercase; text-decoration: none; color: #fff;
+      background: linear-gradient(135deg, rgba(255,255,255,0.13), rgba(255,255,255,0.035));
+      border: 1px solid rgba(201,168,76,0.4);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.1);
+      -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+      transition: transform .28s cubic-bezier(.2,.7,.3,1), box-shadow .28s, border-color .28s, background .28s;
     }
-    .btn-hero-primary:hover { transform: translateY(-3px); box-shadow: 0 20px 44px rgba(201,168,76,0.55); filter: brightness(1.04); }
-    .btn-hero-primary:active { transform: translateY(-1px); }
-    .btn-hero-wa {
-      background: linear-gradient(135deg, #2BE36E, #16a94e);
-      color: #fff;
-      padding: 18px 38px; border-radius: 12px; font-weight: 700; font-size: 13.5px;
-      letter-spacing: 1.2px; text-transform: uppercase; text-decoration: none;
-      transition: transform .26s cubic-bezier(.2,.7,.3,1), box-shadow .26s, filter .26s;
-      display: inline-flex; align-items: center; justify-content: center; gap: 11px;
-      box-shadow: 0 12px 30px rgba(37,211,102,0.32);
+    .btn-hero img {
+      width: 54px; height: 54px; border-radius: 50%; object-fit: cover; flex-shrink: 0;
+      border: 1px solid rgba(201,168,76,0.45); box-shadow: 0 4px 14px rgba(0,0,0,0.4);
     }
-    .btn-hero-wa:hover { transform: translateY(-3px); box-shadow: 0 20px 44px rgba(37,211,102,0.45); filter: brightness(1.05); }
-    .btn-hero-wa:active { transform: translateY(-1px); }
+    .btn-hero:hover {
+      transform: translateY(-4px); border-color: var(--gold);
+      background: linear-gradient(135deg, rgba(201,168,76,0.22), rgba(201,168,76,0.06));
+      box-shadow: 0 26px 54px rgba(0,0,0,0.55), 0 0 0 1px rgba(201,168,76,0.35), inset 0 1px 0 rgba(255,255,255,0.14);
+    }
+    .btn-hero:active { transform: translateY(-1px); }
+    .btn-hero.primary {
+      border-color: rgba(201,168,76,0.65);
+      box-shadow: 0 16px 38px rgba(201,168,76,0.3), 0 16px 36px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.14);
+    }
+    .btn-hero.primary:hover {
+      box-shadow: 0 26px 56px rgba(201,168,76,0.45), 0 0 0 1px var(--gold), inset 0 1px 0 rgba(255,255,255,0.16);
+    }
     .hero-scroll {
       position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
       z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 8px;
@@ -455,7 +459,7 @@
       .stat-wa-num .ico { width: 18px; height: 18px; }
       .hero { padding: 110px 6% 90px; }
       .hero-actions { flex-direction: column; width: 100%; }
-      .btn-hero-primary, .btn-hero-wa { width: 100%; justify-content: center; }
+      .btn-hero { width: 100%; }
       .services-section, .faq-section, .booking-section, .process-section { padding: 64px 6%; }
       .about-text { padding: 44px 28px; }
       .contact-strip { padding: 56px 6%; }
@@ -623,7 +627,7 @@
 <!-- NAV -->
 <nav id="mainNav">
   <a href="#home" class="nav-logo">
-    <div class="logo-badge"><span>EB</span></div>
+    <div class="logo-badge"><img src="eb%20dorado%20transparente.png" alt="EB — Estudio Jurídico Basavilbaso"></div>
     <div class="nav-name">Basavilbaso <small>Estudio Jurídico</small></div>
   </a>
   <ul class="nav-links">
@@ -681,8 +685,8 @@
       Asesoramiento jurídico profesional, claro y sin vueltas. Atención virtual y presencial en toda la Argentina.
     </p>
     <div class="hero-actions">
-      <a href="#turnos" class="btn-hero-primary"><svg class="ico" aria-hidden="true" style="width:20px;height:20px;stroke-width:2"><use href="#i-calendar"/></svg><span>Agendá una consulta</span></a>
-      <a href="https://wa.me/5491169766772" class="btn-hero-wa" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true" style="width:20px;height:20px;stroke-width:2"><use href="#i-chat"/></svg> WhatsApp</a>
+      <a href="#turnos" class="btn-hero primary"><img src="agenda.png" alt="" loading="eager" width="54" height="54"><span>Agendá una consulta</span></a>
+      <a href="https://wa.me/5491169766772" class="btn-hero" target="_blank" rel="noopener"><img src="whatsapp.png" alt="" loading="eager" width="54" height="54"><span>WhatsApp</span></a>
     </div>
   </div>
   <div class="hero-scroll">
@@ -1020,7 +1024,7 @@
   <div class="footer-top">
     <div class="f-brand">
       <div class="f-brand-logo">
-        <div class="logo-badge"><span>EB</span></div>
+        <div class="logo-badge"><img src="eb%20dorado%20transparente.png" alt="EB — Estudio Jurídico Basavilbaso"></div>
         <div class="f-brand-name">Basavilbaso <small>Estudio Jurídico</small></div>
       </div>
       <p>Especialistas en Divorcios y Sucesiones en Argentina. Asesoramiento profesional, claro y personalizado. Virtual y presencial.</p>
