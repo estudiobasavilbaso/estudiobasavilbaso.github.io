@@ -143,10 +143,6 @@ button{cursor:pointer}
 /* WhatsApp send */
 .wa-send{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;border:0;background:#25D366;color:#fff;border-radius:14px;padding:1rem;font-weight:700;font-size:15px;letter-spacing:.5px;transition:.2s;box-shadow:0 10px 20px rgba(37,211,102,.25)}
 .wa-send:hover{background:#1ebe5d;transform:translateY(-1px)}
-.mp-send{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;border:0;background:#009EE3;color:#fff;border-radius:14px;padding:1rem;font-weight:700;font-size:15px;letter-spacing:.5px;transition:.2s;box-shadow:0 10px 20px rgba(0,158,227,.25);text-decoration:none}
-.mp-send:hover{background:#0086c4;transform:translateY(-1px)}
-.mp-alias-box{background:rgba(0,158,227,.06);border:1px dashed rgba(0,158,227,.4);border-radius:10px;padding:10px 14px;margin:12px 0;text-align:center}
-.mp-alias-box span{font-family:monospace;font-size:14px;font-weight:700;color:var(--green);letter-spacing:.4px}
 
 /* Success */
 .success{display:grid;place-items:center;text-align:center;padding:2.5rem 1rem}
@@ -324,15 +320,6 @@ button{cursor:pointer}
         </div>
         <button class="wa-send" type="button" onclick="sendWhatsApp()">💬 Enviar mi consulta por WhatsApp</button>
         <p class="mini-note" style="text-align:center;margin-top:14px">o agendá directamente: <a href="index.html#turnos" style="color:var(--green);font-weight:700">elegí día y horario →</a></p>
-
-        <div class="price-card" style="text-align:center; margin-top:1.4rem;">
-          <p style="font-family:'Playfair Display',serif;font-size:18px;color:var(--green);margin-bottom:6px">💳 Pago de la consulta</p>
-          <p class="price" style="font-size:32px;">$50.000</p>
-          <p class="mini-note" style="margin:10px 0 0;">Podés abonar por Mercado Pago al alias:</p>
-          <div class="mp-alias-box"><span>abogado.manuel.mp</span></div>
-          <a href="https://mpago.la/1YH2JQe" target="_blank" class="mp-send">💸 Pagar $50.000 con Mercado Pago</a>
-        </div>
-
         <div class="nav"><button class="btn-back" onclick="prevStep(7)" type="button">← Revisar</button><span></span></div>
       </section>
 
@@ -343,13 +330,6 @@ button{cursor:pointer}
           <h2 class="step-title">¡Listo!</h2>
           <p class="step-sub" style="max-width:440px">Se abrió WhatsApp con tu consulta. Si no se abrió, tocá el botón de abajo. Te respondemos a la brevedad.</p>
           <button class="wa-send" style="max-width:340px" type="button" onclick="sendWhatsApp()">💬 Abrir WhatsApp de nuevo</button>
-
-          <div class="price-card" style="text-align:center; margin-top:1.4rem; max-width:340px;">
-            <p style="font-family:'Playfair Display',serif;font-size:16px;color:var(--green);margin-bottom:6px">💳 Pago de la consulta — $50.000</p>
-            <div class="mp-alias-box"><span>abogado.manuel.mp</span></div>
-            <a href="https://mpago.la/1YH2JQe" target="_blank" class="mp-send">💸 Pagar con Mercado Pago</a>
-          </div>
-
           <p class="mini-note" style="margin-top:18px"><a href="index.html" style="color:var(--green);font-weight:700">← Volver al sitio</a></p>
         </div>
       </section>
