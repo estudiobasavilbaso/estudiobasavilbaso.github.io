@@ -603,5 +603,22 @@ function sendWhatsApp(){
 showStep(1);
 </script>
   <script src="i18n-consulta.js"></script>
+
+  <!-- WA FLOAT -->
+  <style>
+    .wa-float{
+      position:fixed; bottom:24px; right:24px; z-index:9999;
+      width:64px; height:64px; border-radius:50%; overflow:hidden;
+      box-shadow:0 8px 24px rgba(0,0,0,.28);
+      transition:transform .2s ease, box-shadow .2s ease;
+    }
+    .wa-float img{ width:100%; height:100%; object-fit:cover; display:block; }
+    .wa-float:hover{ transform:translateY(-3px) scale(1.04); box-shadow:0 12px 30px rgba(0,0,0,.34); }
+    @media (max-width:480px){ .wa-float{ width:56px; height:56px; bottom:18px; right:16px; } }
+  </style>
+  <a class="wa-float" href="https://wa.me/5491169766772?text=Hola,%20quiero%20hacer%20una%20consulta%20sobre%20mi%20divorcio."
+     target="_blank" rel="noopener" title="Escribinos por WhatsApp" aria-label="Escribinos por WhatsApp">
+    <img src="whatsapp.png" alt="" width="64" height="64">
+  </a>
 </body>
 </html>
