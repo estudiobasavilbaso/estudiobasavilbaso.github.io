@@ -15,7 +15,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://estudiobasavilbaso.com.ar/consulta-divorcio.html">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='13'%20fill='%230D2318'/%3E%3Ccircle%20cx='32'%20cy='32'%20r='23'%20fill='none'%20stroke='%23C9A84C'%20stroke-width='2'/%3E%3Ctext%20x='32'%20y='41'%20font-family='Georgia,serif'%20font-size='25'%20font-weight='700'%20fill='%23C9A84C'%20text-anchor='middle'%3EEB%3C/text%3E%3C/svg%3E">
-<title>Evaluá tu divorcio — Estudio Jurídico Basavilbaso</title>
+<title>Evaluá tu caso — Divorcios y Sucesiones | Estudio Basavilbaso</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -157,7 +157,7 @@ button{cursor:pointer}
 </style>
 </head>
 <body>
-<h1 class="sr-only">Evaluá tu divorcio online — Estudio Jurídico Basavilbaso</h1>
+<h1 class="sr-only">Evaluá tu caso — Divorcios y Sucesiones — Estudio Jurídico Basavilbaso</h1>
 <div class="wrap">
   <div class="topbar">
     <a class="brand" href="index.html">
@@ -170,10 +170,27 @@ button{cursor:pointer}
   <div class="shell">
     <div class="header"><div class="progress-bar"><div class="progress-fill" id="prog"></div></div></div>
 
-    <form id="divorceForm" onsubmit="return false;">
+    <form id="caseForm" onsubmit="return false;">
+
+      <!-- STEP 0: ÁREA -->
+      <section class="step active" id="s0">
+        <p class="step-label">Evaluación de tu caso</p>
+        <h2 class="step-title">¿Qué necesitás resolver?</h2>
+        <p class="step-sub">Elegí el tema de tu consulta y te hacemos unas preguntas simples para entender tu situación.</p>
+        <div class="alert gold"><strong>Tranquilo/a:</strong> esto no inicia ningún trámite ni reemplaza una consulta. Es una evaluación preliminar gratuita y confidencial.</div>
+        <div class="card-grid">
+          <div class="card-opt" data-group="area" data-val="divorcio" onclick="selectOpt(this)">
+            <div class="opt-icon">💍</div><div class="opt-text"><strong>Divorcio</strong><span>Querés divorciarte, de común acuerdo o no, con o sin bienes e hijos.</span></div>
+          </div>
+          <div class="card-opt" data-group="area" data-val="sucesion" onclick="selectOpt(this)">
+            <div class="opt-icon">📜</div><div class="opt-text"><strong>Sucesión / Herencia</strong><span>Falleció un familiar y hay que tramitar la herencia o transferir bienes.</span></div>
+          </div>
+        </div>
+        <div class="nav"><a class="btn-back" href="index.html" style="text-decoration:none">← Volver</a><button class="btn-next" onclick="startFlow()" type="button">Continuar →</button></div>
+      </section>
 
       <!-- STEP 1 -->
-      <section class="step active" id="s1">
+      <section class="step" id="s1">
         <p class="step-label">Paso 1 de 7</p>
         <h2 class="step-title">¿Qué tipo de divorcio necesitás?</h2>
         <p class="step-sub">Esta primera respuesta nos ayuda a entender tu situación. No te preocupes si no estás seguro: lo vemos juntos.</p>
@@ -189,7 +206,7 @@ button{cursor:pointer}
             <div class="opt-icon">🤔</div><div class="opt-text"><strong>No estoy seguro/a</strong><span>No sé bien cómo encarar la situación. Necesito orientación.</span></div>
           </div>
         </div>
-        <div class="nav"><span></span><button class="btn-next" onclick="nextStep(1)" type="button">Continuar →</button></div>
+        <div class="nav"><button class="btn-back" onclick="prevStep()" type="button">← Atrás</button><button class="btn-next" onclick="nextStep()" type="button">Continuar →</button></div>
       </section>
 
       <!-- STEP 2 -->
@@ -270,6 +287,61 @@ button{cursor:pointer}
         <div class="nav"><button class="btn-back" onclick="prevStep(4)" type="button">← Atrás</button><button class="btn-next" onclick="nextStep(4)" type="button">Continuar →</button></div>
       </section>
 
+      <!-- ============ SUCESIÓN ============ -->
+      <!-- SU STEP 1 -->
+      <section class="step" id="su1">
+        <p class="step-label">Paso 1 de 6</p>
+        <h2 class="step-title">Sobre la sucesión</h2>
+        <p class="step-sub">Unos datos básicos para entender la herencia. Si no sabés algo, dejalo en "No lo sé": lo vemos juntos en la consulta.</p>
+        <div class="grid2">
+          <div class="field"><label>¿Cuál es tu relación con la persona fallecida? <span class="required">*</span></label>
+            <select id="su_relacion"><option value="">Seleccioná...</option><option>Hijo/a</option><option>Cónyuge / conviviente</option><option>Padre / Madre</option><option>Hermano/a</option><option>Nieto/a</option><option>Otro familiar</option><option>No soy familiar</option></select></div>
+          <div class="field"><label>¿Dejó testamento?</label>
+            <select id="su_testamento"><option value="">Seleccioná...</option><option>No</option><option>Sí</option><option>No lo sé</option></select></div>
+        </div>
+        <div class="grid2">
+          <div class="field"><label>¿Hace cuánto falleció? (aprox.)</label><input id="su_fecha" type="text" placeholder="Ej: 2023, hace 6 meses"></div>
+          <div class="field"><label>¿Hay otros herederos además de vos?</label>
+            <select id="su_otros_herederos"><option value="">Seleccioná...</option><option>Sí</option><option>No</option><option>No estoy seguro/a</option></select></div>
+        </div>
+        <div class="field"><label>¿La sucesión ya se inició ante un juzgado?</label>
+          <select id="su_iniciada"><option value="">Seleccioná...</option><option>No, todavía no</option><option>Sí, está en trámite</option><option>No lo sé</option></select></div>
+        <div class="nav"><button class="btn-back" onclick="prevStep()" type="button">← Atrás</button><button class="btn-next" onclick="nextStep()" type="button">Continuar →</button></div>
+      </section>
+
+      <!-- SU STEP 2 -->
+      <section class="step" id="su2">
+        <p class="step-label">Paso 2 de 6</p>
+        <h2 class="step-title">¿Qué bienes hay que transferir?</h2>
+        <p class="step-sub">Marcá lo que tenga la herencia. Si no sabés el detalle, no importa: marcá lo que sepas.</p>
+        <div class="toggle-row"><div class="copy"><strong>Inmuebles</strong><span>Casa, departamento, terreno, local.</span></div><label class="switch"><input type="checkbox" id="su_has_inmuebles" onchange="toggleBox('su_inmuebles_box',this.checked)"><span class="slider"></span></label></div>
+        <div id="su_inmuebles_box" class="dynamic-box"><div class="field" style="margin-bottom:0"><label>Contanos lo que sepas</label><textarea id="su_inmuebles_obs" placeholder="¿Cuántos? ¿Dónde? ¿A nombre de quién figuran?"></textarea></div></div>
+
+        <div class="toggle-row"><div class="copy"><strong>Vehículos</strong><span>Autos, motos, camionetas.</span></div><label class="switch"><input type="checkbox" id="su_has_vehiculos" onchange="toggleBox('su_vehiculos_box',this.checked)"><span class="slider"></span></label></div>
+        <div id="su_vehiculos_box" class="dynamic-box"><div class="field" style="margin-bottom:0"><label>Detalle</label><textarea id="su_vehiculos_obs" placeholder="¿Qué vehículos? ¿A nombre de quién?"></textarea></div></div>
+
+        <div class="toggle-row"><div class="copy"><strong>Cuentas, plazos fijos o inversiones</strong><span>Bancos, inversiones, acciones, cripto.</span></div><label class="switch"><input type="checkbox" id="su_has_cuentas" onchange="toggleBox('su_cuentas_box',this.checked)"><span class="slider"></span></label></div>
+        <div id="su_cuentas_box" class="dynamic-box"><div class="field" style="margin-bottom:0"><label>Detalle</label><textarea id="su_cuentas_obs" placeholder="¿Qué entidades o tipo de inversión?"></textarea></div></div>
+
+        <div class="toggle-row"><div class="copy"><strong>Empresa o sociedad</strong><span>SRL, SA, fondo de comercio, participaciones.</span></div><label class="switch"><input type="checkbox" id="su_has_empresa" onchange="toggleBox('su_empresa_box',this.checked)"><span class="slider"></span></label></div>
+        <div id="su_empresa_box" class="dynamic-box"><div class="field" style="margin-bottom:0"><label>Detalle</label><textarea id="su_empresa_obs" placeholder="¿Qué empresa? ¿Qué participación tenía?"></textarea></div></div>
+
+        <div class="nav"><button class="btn-back" onclick="prevStep()" type="button">← Atrás</button><button class="btn-next" onclick="nextStep()" type="button">Continuar →</button></div>
+      </section>
+
+      <!-- SU STEP 3 -->
+      <section class="step" id="su3">
+        <p class="step-label">Paso 3 de 6</p>
+        <h2 class="step-title">Algunas situaciones a tener en cuenta</h2>
+        <p class="step-sub">Esto nos ayuda a anticipar la complejidad. Si marcás "Sí" en alguna, tu caso necesita una mirada más atenta — y eso está perfectamente bien.</p>
+        <div class="grid2">
+          <div class="field"><label>¿Hay conflicto o desacuerdo entre los herederos?</label><select id="su_conflicto"><option>No</option><option>Sí</option><option>No estoy seguro/a</option></select></div>
+          <div class="field"><label>¿Hay deudas del fallecido o de la sucesión?</label><select id="su_deudas"><option>No</option><option>Sí</option><option>No lo sé</option></select></div>
+        </div>
+        <div class="field"><label>¿Querés contarnos algo más de tu situación? (opcional)</label><textarea id="su_obs" placeholder="Lo que quieras agregar nos ayuda a entender mejor tu caso."></textarea></div>
+        <div class="nav"><button class="btn-back" onclick="prevStep()" type="button">← Atrás</button><button class="btn-next" onclick="nextStep()" type="button">Continuar →</button></div>
+      </section>
+
       <!-- STEP 5 -->
       <section class="step" id="s5">
         <p class="step-label">Paso 5 de 7</p>
@@ -344,9 +416,13 @@ const PRICES = {
   conjuntoBase: 450000, unilateralBase: 650000, nosabeBase: 550000,
   hijos: 180000, bienes: 220000, sociedad: 180000
 };
-let state = {tipo:null, hijos:null};
-let currentStep = 1;
-const totalSteps = 7;
+let state = {tipo:null, hijos:null, area:null};
+let currentId = 's0';
+const FLOWS = {
+  divorcio: ['s1','s2','s3','s4','s5','s6','s7'],
+  sucesion: ['su1','su2','su3','s5','s6','s7']
+};
+let flow = [], idx = 0;
 
 function $(id){return document.getElementById(id)}
 function val(id){return $(id)?.value?.trim() || ''}
@@ -357,7 +433,17 @@ function selectOpt(el){
   el.classList.add('selected'); state[g]=el.dataset.val;
 }
 function toggleBox(id,show){$(id).style.display=show?'block':'none'}
-function updateProgress(){$('prog').style.width=Math.min(100,Math.round((currentStep/totalSteps)*100))+'%'}
+function updateProgress(id){
+  const prog=$('prog');
+  if(id==='s0'){prog.style.width='8%';return;}
+  if(id==='s8'){prog.style.width='100%';return;}
+  const i=flow.indexOf(id), total=flow.length;
+  if(i>=0){
+    prog.style.width=Math.round(((i+1)/total)*100)+'%';
+    const lbl=$(id).querySelector('.step-label');
+    if(lbl) lbl.textContent='Paso '+(i+1)+' de '+total;
+  }
+}
 
 let vehicleCount=0, propertyCount=0, companyCount=0, homeCount=0;
 function toggleAssetBox(id,show,type){
@@ -430,10 +516,11 @@ function readCards(selector,map){
   });
 }
 
-function validateStep(step){
-  if(step===1 && !state.tipo){alert('Elegí una opción para continuar.');return false}
-  if(step===2 && !state.hijos){alert('Indicá si tienen hijos en común.');return false}
-  if(step===5){
+function validateById(id){
+  if(id==='s1' && !state.tipo){alert('Elegí una opción para continuar.');return false}
+  if(id==='s2' && !state.hijos){alert('Indicá si tienen hijos en común.');return false}
+  if(id==='su1' && !val('su_relacion')){$('su_relacion').focus();alert('Contanos cuál es tu relación con la persona fallecida.');return false}
+  if(id==='s5'){
     if(!val('cli_nombre')){$('cli_nombre').focus();alert('Necesitamos tu nombre.');return false}
     if(!val('cli_dni')){$('cli_dni').focus();alert('Necesitamos tu DNI.');return false}
     if(!val('cli_tel')){$('cli_tel').focus();alert('Necesitamos tu WhatsApp para responderte.');return false}
@@ -441,21 +528,35 @@ function validateStep(step){
     if(!em){$('cli_email').focus();alert('Necesitamos tu email.');return false}
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){$('cli_email').focus();alert('Revisá tu email: parece incompleto.');return false}
   }
-  if(step===7 && !checked('acepta_privacidad')){alert('Para enviar tu consulta, aceptá el uso de tus datos.');return false}
+  if(id==='s7' && !checked('acepta_privacidad')){alert('Para enviar tu consulta, aceptá el uso de tus datos.');return false}
   return true;
 }
-function showStep(n){
+function beforeShow(id){
+  if(id==='s6') buildEval();
+  if(id==='s7') buildSummary();
+}
+function showStepId(id){
   document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
-  $('s'+n)?.classList.add('active'); currentStep=n; updateProgress();
+  $(id)?.classList.add('active'); currentId=id; updateProgress(id);
   window.scrollTo({top:0,behavior:'smooth'});
 }
-function nextStep(from){
-  if(!validateStep(from))return;
-  if(from===5) buildEval();
-  if(from===6) buildSummary();
-  showStep(from<7?from+1:8);
+function startFlow(){
+  if(!state.area){alert('Elegí una opción para continuar.');return}
+  flow=FLOWS[state.area]; idx=0;
+  showStepId(flow[0]);
 }
-function prevStep(from){showStep(Math.max(1,from-1))}
+function nextStep(){
+  const cur=flow[idx];
+  if(!validateById(cur))return;
+  if(idx<flow.length-1){
+    idx++; const nx=flow[idx];
+    beforeShow(nx); showStepId(nx);
+  }
+}
+function prevStep(){
+  if(idx>0){ idx--; showStepId(flow[idx]); }
+  else { showStepId('s0'); }
+}
 
 function hasRisk(){
   return ['riesgo_violencia','riesgo_bienes','riesgo_alimentos','riesgo_vivienda']
@@ -481,11 +582,13 @@ function calculateQuote(){
   return d;
 }
 function caseType(){
+  if(state.area==='sucesion') return 'Sucesión / Declaratoria de herederos';
   if(state.tipo==='unilateral') return 'Divorcio por presentación unilateral';
   if(state.tipo==='conjunto') return 'Divorcio de común acuerdo';
   return 'A definir en la consulta';
 }
 function buildEval(){
+  if(state.area==='sucesion'){buildEvalSucesion();return;}
   const q=calculateQuote();
   let evalHtml='';
   if(q.requiresReview){
@@ -497,7 +600,77 @@ function buildEval(){
   $('quote_detail').innerHTML=q.items.map(i=>`<span class="pill">✓ ${i}</span>`).join('') +
     q.reasons.map(r=>`<span class="pill warn">⚠ ${r}</span>`).join('');
 }
+function sucesionBienes(){
+  const b=[];
+  if(checked('su_has_inmuebles'))b.push('inmuebles');
+  if(checked('su_has_vehiculos'))b.push('vehículos');
+  if(checked('su_has_cuentas'))b.push('cuentas/inversiones');
+  if(checked('su_has_empresa'))b.push('empresa/sociedad');
+  return b;
+}
+function sucesionReasons(){
+  const r=[];
+  if(val('su_conflicto')==='Sí')r.push('posible conflicto entre herederos');
+  if(checked('su_has_empresa'))r.push('empresa o sociedad a transferir');
+  if(val('su_testamento')==='Sí')r.push('hay testamento a considerar');
+  if(val('su_deudas')==='Sí')r.push('deudas a analizar');
+  return r;
+}
+function buildEvalSucesion(){
+  const items=['declaratoria de herederos'];
+  if(val('su_relacion')) items.push(val('su_relacion').toLowerCase());
+  const bienes=sucesionBienes();
+  if(bienes.length) items.push(bienes.join(', '));
+  const reasons=sucesionReasons();
+  let html;
+  if(reasons.length){
+    html=`<div class="alert amber"><strong>Tu caso merece atención personalizada.</strong><br>Detectamos puntos que conviene revisar con un abogado para cuidar bien tu herencia desde el inicio.</div>`;
+  } else {
+    html=`<div class="alert green"><strong>Tu caso parece una sucesión de trámite estándar.</strong><br>Se trataría de una <strong>declaratoria de herederos</strong>. En la consulta lo confirmamos y avanzamos.</div>`;
+  }
+  $('eval_result').innerHTML=html;
+  $('quote_detail').innerHTML=items.map(i=>`<span class="pill">✓ ${i}</span>`).join('')+
+    reasons.map(r=>`<span class="pill warn">⚠ ${r}</span>`).join('');
+}
+function buildSummarySucesion(){
+  const bienes=sucesionBienes();
+  $('client_summary').innerHTML=`<div class="summary-card">
+    <div class="summary-row"><span class="key">Tipo de caso</span><span class="val">Sucesión / Herencia</span></div>
+    <div class="summary-row"><span class="key">Tu relación</span><span class="val">${val('su_relacion')||'—'}</span></div>
+    <div class="summary-row"><span class="key">Bienes</span><span class="val">${bienes.length?bienes.join(', '):'No informado'}</span></div>
+    <div class="summary-row"><span class="key">Contacto</span><span class="val">${val('cli_nombre')||'—'}</span></div>
+  </div>`;
+}
+function buildCaseTextSucesion(){
+  const bienes=sucesionBienes();
+  let msg = `*CONSULTA DE SUCESIÓN* (desde la web)\n\n`;
+  msg += `👤 *Nombre:* ${val('cli_nombre')}\n`;
+  msg += `🪪 *DNI:* ${val('cli_dni')}\n`;
+  msg += `📱 *WhatsApp:* ${val('cli_tel')}\n`;
+  msg += `✉️ *Email:* ${val('cli_email')}\n`;
+  if(val('cli_zona')) msg += `📍 *Zona:* ${val('cli_zona')}\n`;
+  if(val('cli_modalidad')) msg += `🖥️ *Modalidad:* ${val('cli_modalidad')}\n`;
+  msg += `\n*— Datos de la sucesión —*\n`;
+  if(val('su_relacion')) msg += `👪 *Relación:* ${val('su_relacion')}\n`;
+  if(val('su_testamento')) msg += `📜 *Testamento:* ${val('su_testamento')}\n`;
+  if(val('su_fecha')) msg += `🗓️ *Fallecimiento:* ${val('su_fecha')}\n`;
+  if(val('su_otros_herederos')) msg += `👥 *Otros herederos:* ${val('su_otros_herederos')}\n`;
+  if(val('su_iniciada')) msg += `⚖️ *Sucesión iniciada:* ${val('su_iniciada')}\n`;
+  msg += `🏠 *Bienes:* ${bienes.length?bienes.join(', '):'No informado'}\n`;
+  if(checked('su_has_inmuebles') && val('su_inmuebles_obs')) msg += `   🏡 Inmuebles: ${val('su_inmuebles_obs')}\n`;
+  if(checked('su_has_vehiculos') && val('su_vehiculos_obs')) msg += `   🚗 Vehículos: ${val('su_vehiculos_obs')}\n`;
+  if(checked('su_has_cuentas') && val('su_cuentas_obs')) msg += `   🏦 Cuentas: ${val('su_cuentas_obs')}\n`;
+  if(checked('su_has_empresa') && val('su_empresa_obs')) msg += `   🏢 Empresa: ${val('su_empresa_obs')}\n`;
+  const alertas=[];
+  if(val('su_conflicto')==='Sí')alertas.push('conflicto entre herederos');
+  if(val('su_deudas')==='Sí')alertas.push('deudas');
+  if(alertas.length) msg += `\n⚠️ *Atención:* ${alertas.join(', ')}\n`;
+  if(val('su_obs')) msg += `📝 *Nota:* ${val('su_obs')}\n`;
+  msg += `\n_Enviado desde el formulario de evaluación de la web._`;
+  return msg;
+}
 function buildSummary(){
+  if(state.area==='sucesion'){buildSummarySucesion();return;}
   const q=calculateQuote();
   const hijosTxt=state.hijos==='si'?'Sí':'No';
   const bienes=[];
@@ -515,6 +688,7 @@ function buildSummary(){
 const FORMSPREE = 'https://formspree.io/f/mrevjwoo';
 
 function buildCaseText(){
+  if(state.area==='sucesion') return buildCaseTextSucesion();
   const bienes=[];
   if(checked('has_vivienda'))bienes.push('vivienda');
   if(checked('has_vehiculos'))bienes.push('vehículos');
@@ -576,12 +750,13 @@ function sendEmail(){
     email: val('cli_email'),
     zona: val('cli_zona'),
     modalidad: val('cli_modalidad'),
-    tipo_divorcio: caseType(),
-    hijos: state.hijos==='si'?'Sí':'No',
+    area: state.area,
+    tipo: caseType(),
+    hijos: state.area==='sucesion' ? '' : (state.hijos==='si'?'Sí':'No'),
     resumen_completo: buildCaseText(),
-    _subject: `Nueva consulta de divorcio — ${val('cli_nombre')}`
+    _subject: `Nueva consulta (${state.area==='sucesion'?'Sucesión':'Divorcio'}) — ${val('cli_nombre')}`
   };
-  if(state.hijos==='si'){
+  if(state.area!=='sucesion' && state.hijos==='si'){
     data.cuidado = val('cuidado_modelo');
     data.alimentos = val('alimentos_modelo');
   }
@@ -598,9 +773,9 @@ function sendWhatsApp(){
   sendEmail().catch(e=>console.warn('Email no enviado:',e));
   const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
   window.open(url,'_blank');
-  if(currentStep===7) showStep(8);
+  showStepId('s8');
 }
-showStep(1);
+showStepId('s0');
 </script>
   <script src="i18n-consulta.js"></script>
 
