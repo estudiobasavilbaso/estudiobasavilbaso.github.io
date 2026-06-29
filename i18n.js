@@ -63,6 +63,19 @@
   t('Nuestros servicios','Our services','Nossos serviços','Unsere Leistungen','Наши услуги');
   t('Seguinos en Instagram','Follow us on Instagram','Siga-nos no Instagram','Instagram folgen','Подписаться в Instagram');
 
+  /* Instagram CTA */
+  t('Estudio Jurídico · Divorcios y Sucesiones','Law Firm · Divorces & Successions','Escritório Jurídico · Divórcios e Sucessões','Anwaltskanzlei · Scheidungen & Erbschaften','Юридическая фирма · Разводы и наследство');
+  t('Seguinos y mirá los','Follow us and see the','Siga-nos e veja os','Folgen Sie uns und sehen Sie die','Подпишитесь и смотрите');
+  t('casos reales','real cases','casos reais','echten Fälle','реальные дела');
+  t('del estudio','of the firm','do escritório','der Kanzlei','нашей фирмы');
+  t('Divorcios resueltos, sucesiones en marcha y todo lo que hacemos día a día. Sumate a nuestra comunidad.',
+    'Resolved divorces, successions in progress and everything we do day to day. Join our community.',
+    'Divórcios resolvidos, sucessões em andamento e tudo o que fazemos no dia a dia. Junte-se à nossa comunidade.',
+    'Gelöste Scheidungen, laufende Erbschaften und alles, was wir Tag für Tag tun. Werden Sie Teil unserer Community.',
+    'Завершённые разводы, текущие наследственные дела и всё, что мы делаем каждый день. Присоединяйтесь к нашему сообществу.');
+  t('Años de práctica','Years of practice','Anos de prática','Jahre Praxis','Лет практики');
+  t('Casos reales','Real cases','Casos reais','Echte Fälle','Реальные дела');
+
   /* Ubicación */
   t('Buenos Aires · Argentina','Buenos Aires · Argentina','Buenos Aires · Argentina','Buenos Aires · Argentinien','Буэнос-Айрес · Аргентина');
 
