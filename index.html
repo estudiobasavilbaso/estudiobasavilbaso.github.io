@@ -203,7 +203,18 @@
     }
     .qa-eyebrow { margin-bottom: 30px; }
     .qa-buttons { display: flex; flex-direction: column; gap: 14px; width: 100%; max-width: 540px; }
-    .hero-qa { margin: 36px auto 0; }
+    /* Accesos integrados en el hero: grilla compacta */
+    .hero-qa { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; max-width: 600px; margin: 30px auto 0; }
+    .hero-qa .qa-btn { padding: 12px 16px 12px 12px; }
+    .hero-qa .qa-btn::after { font-size: 16px; }
+    .hero-qa .qa-ico { width: 42px; height: 42px; }
+    .hero-qa .qa-btn span { font-size: 12.5px; letter-spacing: .6px; }
+    .hero-qa .qa-btn.primary { grid-column: 1 / -1; background: linear-gradient(135deg, rgba(201,168,76,0.28), rgba(201,168,76,0.08)); border-color: var(--gold); }
+    .hero-qa .qa-btn.primary:hover { background: linear-gradient(135deg, rgba(201,168,76,0.4), rgba(201,168,76,0.14)); }
+    @media (max-width: 540px) {
+      .hero-qa { grid-template-columns: 1fr; gap: 10px; }
+      .hero-qa .qa-btn.primary { grid-column: auto; }
+    }
     .qa-btn {
       position: relative; display: flex; align-items: center; gap: 18px;
       padding: 14px 22px 14px 14px; border-radius: 16px; font-family: 'Raleway', sans-serif;
@@ -785,11 +796,11 @@
       Asesoramiento jurídico profesional, claro y sin vueltas. Atención virtual y presencial en toda la Argentina.
     </p>
     <div class="qa-buttons hero-qa">
-      <a href="#turnos" class="qa-btn"><img class="qa-ico" src="agenda.png" alt="" loading="eager" width="58" height="58"><span>Agendá tu consulta</span></a>
-      <a href="consulta-divorcio.html" class="qa-btn"><img class="qa-ico" src="formulario.png" alt="" loading="eager" width="58" height="58"><span>Evaluá tu caso gratis</span></a>
-      <a href="https://wa.me/5491169766772" class="qa-btn" target="_blank" rel="noopener"><img class="qa-ico" src="whatsapp.png" alt="" loading="eager" width="58" height="58"><span>Consultanos por WhatsApp</span></a>
-      <a href="#servicios" class="qa-btn"><img class="qa-ico" src="servicios.png" alt="" loading="lazy" width="58" height="58"><span>Nuestros servicios</span></a>
-      <a href="https://instagram.com/estudiobasavilbaso" class="qa-btn" target="_blank" rel="noopener"><img class="qa-ico" src="instagram.png" alt="" loading="lazy" width="58" height="58"><span>Seguinos en Instagram</span></a>
+      <a href="#turnos" class="qa-btn primary"><img class="qa-ico" src="agenda.png" alt="" loading="eager" width="58" height="58"><span>Agendá tu consulta</span></a>
+      <a href="consulta-divorcio.html" class="qa-btn"><img class="qa-ico" src="formulario.png" alt="" loading="eager" width="58" height="58"><span>Evaluá tu caso</span></a>
+      <a href="https://wa.me/5491169766772" class="qa-btn" target="_blank" rel="noopener"><img class="qa-ico" src="whatsapp.png" alt="" loading="eager" width="58" height="58"><span>WhatsApp</span></a>
+      <a href="#servicios" class="qa-btn"><img class="qa-ico" src="servicios.png" alt="" loading="lazy" width="58" height="58"><span>Servicios</span></a>
+      <a href="https://instagram.com/estudiobasavilbaso" class="qa-btn" target="_blank" rel="noopener"><img class="qa-ico" src="instagram.png" alt="" loading="lazy" width="58" height="58"><span>Instagram</span></a>
     </div>
   </div>
   <div class="hero-scroll">
