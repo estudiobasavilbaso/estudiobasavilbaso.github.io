@@ -595,7 +595,7 @@
 .i18n-switcher-m .i18n-btn:hover { border-color:#C9A84C; }
 .i18n-switcher-m .i18n-active { background:rgba(201,168,76,0.16) !important; border-color:#C9A84C !important; color:#fff !important; }
 .i18n-switcher-m .i18n-active .lang-code { background:var(--gold); color:var(--green-ink); }
-@media (max-width: 960px) { .i18n-switcher { display: none; } }
+@media (max-width: 960px) { .i18n-switcher { display: block; margin-left: auto; margin-right: 10px; } }
 
     /* ─── HAMBURGER + MOBILE MENU ─── */
     .nav-toggle {
@@ -781,14 +781,6 @@
   </ul>
   <a href="#turnos" class="mm-cta"><svg class="ico" aria-hidden="true"><use href="#i-calendar"/></svg><span>Agendá tu consulta</span></a>
   <a href="https://wa.me/5491169766772" class="mm-wa" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-chat"/></svg><span>Consultanos por WhatsApp</span></a>
-  <div class="mm-lang-label">Idioma · Language</div>
-  <div class="i18n-switcher-m" role="group" aria-label="Seleccionar idioma">
-    <button class="i18n-btn i18n-active" data-lang="es" title="Español" type="button"><span class="lang-code">ES</span>Español</button>
-    <button class="i18n-btn" data-lang="en" title="English" type="button"><span class="lang-code">EN</span>English</button>
-    <button class="i18n-btn" data-lang="pt" title="Português" type="button"><span class="lang-code">PT</span>Português</button>
-    <button class="i18n-btn" data-lang="de" title="Deutsch" type="button"><span class="lang-code">DE</span>Deutsch</button>
-    <button class="i18n-btn" data-lang="ru" title="Русский" type="button"><span class="lang-code">RU</span>Русский</button>
-  </div>
 </div>
 <div class="mobile-menu-overlay" id="mobileOverlay"></div>
 
