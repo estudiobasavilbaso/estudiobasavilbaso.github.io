@@ -233,14 +233,13 @@
 
     /* ─── ABOUT / PROFILE ─── */
     .about-section {
-      display: grid; grid-template-columns: 1fr 1fr;
-      min-height: 520px;
+      display: grid; grid-template-columns: 0.85fr 1.15fr;
+      align-items: stretch; background: var(--cream);
     }
     .about-img {
-      background-image: url('https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=900&q=80&auto=format&fit=crop');
-      background-size: cover; background-position: center;
-      position: relative; min-height: 420px;
+      position: relative; background: var(--green-deep);
     }
+    .about-photo { display: block; width: 100%; height: auto; }
     .about-img::after {
       content: ''; position: absolute; inset: 0;
       background: linear-gradient(to right, rgba(13,35,24,0.15), transparent);
@@ -264,6 +263,13 @@
     .about-text .gold-line { margin-bottom: 24px; }
     .about-text p { color: var(--muted); font-size: 15px; line-height: 1.85; font-weight: 300; margin-bottom: 16px; }
     .about-text strong { color: var(--text); font-weight: 600; }
+    .about-pills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+    .about-pill { display: inline-flex; align-items: center; gap: 8px; background: var(--white); border: 1px solid var(--cream-dk); border-radius: 999px; padding: 9px 16px; font-size: 13px; font-weight: 600; color: var(--green); }
+    .about-pill .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); }
+    @media (max-width: 820px) {
+      .about-section { grid-template-columns: 1fr; }
+      .about-text { padding: 48px 28px; }
+    }
 
     /* ─── SERVICES ─── */
     .services-section { padding: 100px 6%; background: var(--white); }
@@ -379,7 +385,34 @@
       background: var(--white); border-radius: 14px;
       overflow: hidden; min-height: 600px;
       box-shadow: 0 24px 80px rgba(0,0,0,0.4);
+      scroll-margin-top: 90px;
     }
+
+    /* Tarjeta de consulta — 3 pasos (estilo honorarios) */
+    .consult-card { background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015)); border: 1px solid rgba(201,168,76,0.25); border-radius: 20px; padding: 34px 30px; }
+    .consult-card .eyebrow { margin-bottom: 14px; }
+    .consult-card h2 { font-family: 'Playfair Display', serif; font-size: 30px; color: var(--white); line-height: 1.15; margin-bottom: 12px; }
+    .consult-sub { color: rgba(255,255,255,0.55); font-size: 14px; line-height: 1.7; font-weight: 300; margin-bottom: 24px; }
+    .honorarios { background: rgba(201,168,76,0.10); border: 1px solid rgba(201,168,76,0.3); border-radius: 14px; padding: 18px 22px; text-align: center; margin-bottom: 24px; }
+    .honorarios .h-label { color: var(--gold); font-size: 10.5px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; }
+    .honorarios .h-amount { font-family: 'Playfair Display', serif; font-size: 40px; font-weight: 900; color: var(--white); line-height: 1.1; margin-top: 4px; }
+    .honorarios .h-detail { color: rgba(255,255,255,0.5); font-size: 12.5px; font-weight: 300; margin-top: 2px; }
+    .step-btns { display: flex; flex-direction: column; gap: 12px; }
+    .step-btn { display: flex; align-items: center; gap: 14px; width: 100%; text-decoration: none; padding: 15px 18px; border-radius: 12px; font-weight: 700; font-size: 14.5px; transition: all .2s; }
+    .step-btn .step-n { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
+    .step-btn .step-n svg { width: 15px; height: 15px; stroke-width: 2; }
+    .step-btn .step-arrow { margin-left: auto; opacity: .7; font-size: 17px; }
+    .step-btn.s1 { background: var(--green-mid); color: #fff; }
+    .step-btn.s1 .step-n { background: rgba(255,255,255,0.18); }
+    .step-btn.s1:hover { background: var(--green-lt); transform: translateY(-2px); }
+    .step-btn.s2 { background: var(--gold); color: var(--green-ink); }
+    .step-btn.s2 .step-n { background: rgba(13,35,24,0.15); }
+    .step-btn.s2:hover { background: var(--gold-lt); transform: translateY(-2px); }
+    .step-btn.s3 { background: var(--cream); color: var(--green); }
+    .step-btn.s3 .step-n { background: #25D366; color: #fff; }
+    .step-btn.s3:hover { background: #fff; transform: translateY(-2px); }
+    .consult-warning { display: flex; gap: 10px; align-items: flex-start; background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.25); border-radius: 12px; padding: 13px 15px; margin-top: 18px; color: rgba(255,255,255,0.72); font-size: 12.5px; line-height: 1.55; }
+    .consult-warning strong { color: var(--gold-lt); }
 
     /* ─── CONTACT STRIP ─── */
     .contact-strip {
@@ -780,8 +813,7 @@
 <section class="about-section" id="nosotros">
   <div class="about-img">
     <img src="dr-basavilbaso.jpg" alt="Dr. Manuel F. E. Basavilbaso — abogado de familia" loading="lazy"
-         style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 20%;z-index:1;"
-         onerror="this.style.display='none'">
+         class="about-photo" onerror="this.style.display='none'">
     <div class="about-img-overlay">
       <span class="about-img-tag">Dr. Manuel F. E. Basavilbaso</span>
     </div>
@@ -793,6 +825,11 @@
     <p><strong>Abogado especializado en Derecho de Familia y Sucesiones.</strong> Egresado de la <strong>Universidad Católica Argentina (UCA)</strong>, con más de <strong>7 años de práctica</strong> dedicados a divorcios, sucesiones y conflictos familiares.</p>
     <p>Creo que el asesoramiento jurídico tiene que ser <strong>accesible, humano y efectivo</strong>. Por eso atiendo de manera virtual y presencial, con comunicación directa y personalizada en cada caso.</p>
     <p>Mi objetivo es que atravieses cada proceso de la forma más <strong>simple, rápida y clara</strong> posible, cuidando tus derechos en cada paso.</p>
+    <div class="about-pills">
+      <span class="about-pill"><span class="dot"></span>Trato cercano</span>
+      <span class="about-pill"><span class="dot"></span>Criterio técnico</span>
+      <span class="about-pill"><span class="dot"></span>Acompañamiento real</span>
+    </div>
   </div>
 </section>
 
@@ -1000,49 +1037,25 @@
 <!-- BOOKING / CALENDLY -->
 <section class="booking-section" id="turnos">
   <div class="booking-inner">
-    <div class="booking-text fade-in">
-      <div class="eyebrow">Reservá tu turno</div>
-      <h2>Agendá tu consulta online</h2>
-      <p class="booking-sub">Elegí el día y horario que más te convenga. Respondemos con la confirmación por WhatsApp.</p>
-      <div class="booking-info-list">
-        <div class="booking-info-item">
-          <div class="bii-icon"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg></div>
-          <div class="bii-text">
-            <strong>Duración</strong>
-            <span>60 minutos por consulta</span>
-          </div>
-        </div>
-        <div class="booking-info-item">
-          <div class="bii-icon"><svg class="ico" aria-hidden="true"><use href="#i-globe"/></svg></div>
-          <div class="bii-text">
-            <strong>Modalidad</strong>
-            <span>Virtual o presencial — vos elegís</span>
-          </div>
-        </div>
-        <div class="booking-info-item">
-          <div class="bii-icon"><svg class="ico" aria-hidden="true"><use href="#i-calendar"/></svg></div>
-          <div class="bii-text">
-            <strong>Horarios</strong>
-            <span>Lunes a viernes, 10:00 – 18:00 hs</span>
-          </div>
-        </div>
-        <div class="booking-info-item">
-          <div class="bii-icon"><svg class="ico" aria-hidden="true"><use href="#i-card"/></svg></div>
-          <div class="bii-text">
-            <strong>Confirmación</strong>
-            <span>El turno se confirma con el pago previo</span>
-          </div>
-        </div>
+    <div class="consult-card fade-in">
+      <div class="eyebrow">Consulta profesional</div>
+      <h2>Consultá con el Dr. Basavilbaso</h2>
+      <p class="consult-sub">Sesión de 1 hora. Reservá tu día y horario, aboná la consulta y enviá el comprobante por WhatsApp para confirmar el turno. Atención virtual o presencial.</p>
+      <div class="honorarios">
+        <div class="h-label">Honorarios</div>
+        <div class="h-amount">$50.000</div>
+        <div class="h-detail">por consulta · 1 hora</div>
       </div>
-      <a class="pay-btn" href="https://mpago.la/1YH2JQe" target="_blank" rel="noopener">
-        <svg class="ico" aria-hidden="true"><use href="#i-card"/></svg>
-        <span>Pagar la consulta — $50.000</span>
-      </a>
-      <p class="pay-note">Pago seguro con Mercado Pago. Luego enviá el comprobante por WhatsApp para confirmar tu turno.</p>
+      <div class="step-btns">
+        <a class="step-btn s1" href="#agenda"><span class="step-n">1</span><span>Agendá tu día y hora</span><span class="step-arrow">→</span></a>
+        <a class="step-btn s2" href="https://mpago.la/1YH2JQe" target="_blank" rel="noopener"><span class="step-n">2</span><span>Pagar la consulta</span><span class="step-arrow">→</span></a>
+        <a class="step-btn s3" href="https://wa.me/5491169766772?text=Hola,%20te%20env%C3%ADo%20el%20comprobante%20de%20pago%20de%20mi%20consulta." target="_blank" rel="noopener"><span class="step-n"><svg class="ico" aria-hidden="true"><use href="#i-chat"/></svg></span><span>Enviá el comprobante</span><span class="step-arrow">→</span></a>
+      </div>
+      <div class="consult-warning"><span aria-hidden="true">⚠️</span><span>Si no enviás el comprobante de pago al <strong>11 6976-6772</strong>, la consulta no queda confirmada y se da de baja automáticamente.</span></div>
     </div>
 
-    <!-- CALENDLY EMBED — reemplazá TU-LINK con tu URL real -->
-    <div class="calendly-box">
+    <!-- CALENDLY EMBED -->
+    <div class="calendly-box" id="agenda">
       <!-- Calendly inline widget begin -->
       <div class="calendly-inline-widget" data-url="https://calendly.com/estudiobasavilbaso/" style="min-width:320px;height:600px;"></div>
       <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
