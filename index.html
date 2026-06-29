@@ -506,15 +506,22 @@
 }
 .lang-item.i18n-active { background:var(--gold-soft) !important; color:var(--green) !important; border-color:transparent !important; }
 .lang-item.i18n-active .lang-code { background:var(--gold); color:var(--green-ink); }
-/* Botones del switcher móvil (se mantienen en fila dentro del drawer) */
-.i18n-btn {
-  font: 700 10px/1 'Raleway', sans-serif; letter-spacing: .08em;
-  padding: 5px 8px; border-radius: 3px;
-  border: 1.5px solid rgba(201,168,76,0.45); background: transparent;
-  color: rgba(255,255,255,0.65); cursor: pointer; transition: all .15s;
+/* Switcher móvil: lista con código + nombre, dentro del drawer oscuro */
+.i18n-switcher-m .i18n-btn {
+  display:flex; align-items:center; gap:10px; width:100%; justify-content:flex-start;
+  font:600 14px/1 'Raleway', sans-serif; letter-spacing:.04em;
+  padding:11px 12px; border-radius:8px;
+  border:1px solid rgba(201,168,76,0.25); background:rgba(255,255,255,0.04);
+  color:#fff; cursor:pointer; transition:all .15s;
 }
-.i18n-switcher-m .i18n-btn:hover { border-color: rgba(201,168,76,0.9); color: #C9A84C; }
-.i18n-switcher-m .i18n-active { background: rgba(201,168,76,0.15); border-color: #C9A84C !important; color: #C9A84C !important; }
+.i18n-switcher-m .i18n-btn .lang-code {
+  display:inline-flex; align-items:center; justify-content:center; min-width:28px;
+  padding:3px 5px; border-radius:5px; background:rgba(201,168,76,0.2);
+  color:var(--gold); font-size:10px; font-weight:700; letter-spacing:.06em;
+}
+.i18n-switcher-m .i18n-btn:hover { border-color:#C9A84C; }
+.i18n-switcher-m .i18n-active { background:rgba(201,168,76,0.16) !important; border-color:#C9A84C !important; color:#fff !important; }
+.i18n-switcher-m .i18n-active .lang-code { background:var(--gold); color:var(--green-ink); }
 @media (max-width: 960px) { .i18n-switcher { display: none; } }
 
     /* ─── HAMBURGER + MOBILE MENU ─── */
@@ -566,8 +573,7 @@
       margin-top: 28px; margin-bottom: 12px; color: rgba(201,168,76,0.7);
       font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
     }
-    .i18n-switcher-m { display: flex; flex-wrap: wrap; gap: 8px; }
-    .i18n-switcher-m .i18n-btn { font-size: 12px; padding: 9px 14px; border-radius: 5px; }
+    .i18n-switcher-m { display: flex; flex-direction: column; gap: 6px; }
     .mobile-menu-overlay {
       position: fixed; inset: 0; z-index: 204; background: rgba(8,18,12,0.55);
       backdrop-filter: blur(2px); opacity: 0; visibility: hidden; transition: opacity .35s, visibility .35s;
@@ -706,11 +712,11 @@
   <a href="https://wa.me/5491169766772" class="mm-wa" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-chat"/></svg><span>Consultanos por WhatsApp</span></a>
   <div class="mm-lang-label">Idioma · Language</div>
   <div class="i18n-switcher-m" role="group" aria-label="Seleccionar idioma">
-    <button class="i18n-btn i18n-active" data-lang="es" title="Español" type="button">ES</button>
-    <button class="i18n-btn" data-lang="en" title="English" type="button">EN</button>
-    <button class="i18n-btn" data-lang="pt" title="Português" type="button">PT</button>
-    <button class="i18n-btn" data-lang="de" title="Deutsch" type="button">DE</button>
-    <button class="i18n-btn" data-lang="ru" title="Русский" type="button">RU</button>
+    <button class="i18n-btn i18n-active" data-lang="es" title="Español" type="button"><span class="lang-code">ES</span>Español</button>
+    <button class="i18n-btn" data-lang="en" title="English" type="button"><span class="lang-code">EN</span>English</button>
+    <button class="i18n-btn" data-lang="pt" title="Português" type="button"><span class="lang-code">PT</span>Português</button>
+    <button class="i18n-btn" data-lang="de" title="Deutsch" type="button"><span class="lang-code">DE</span>Deutsch</button>
+    <button class="i18n-btn" data-lang="ru" title="Русский" type="button"><span class="lang-code">RU</span>Русский</button>
   </div>
 </div>
 <div class="mobile-menu-overlay" id="mobileOverlay"></div>
