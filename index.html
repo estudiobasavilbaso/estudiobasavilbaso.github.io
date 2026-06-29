@@ -218,10 +218,15 @@
     @keyframes waPulse { 0%,100%{ box-shadow: 0 14px 34px rgba(37,211,102,0.30), 0 0 0 0 rgba(37,211,102,0.45); } 50%{ box-shadow: 0 14px 34px rgba(37,211,102,0.30), 0 0 0 10px rgba(37,211,102,0); } }
     @media (prefers-reduced-motion: reduce){ .hero-qa .qa-btn.wa-primary { animation: none; } }
     @media (max-width: 540px) {
-      .hero { padding-top: 84px; padding-bottom: 44px; }
-      .hero-qa { gap: 10px; margin-top: 20px; }
+      .hero { padding-top: 92px; padding-bottom: 40px; }
+      .hero-eyebrow { margin-bottom: 16px; letter-spacing: 3px; font-size: 10px; }
+      .hero-title { font-size: 37px; letter-spacing: -0.5px; margin-bottom: 16px; }
+      .hero-subtitle { font-size: 14px; line-height: 1.6; margin-bottom: 22px; max-width: 340px; }
+      .hero-qa { gap: 10px; margin-top: 4px; }
       .hero-qa .qa-ico { width: 38px; height: 38px; }
+      .hero-qa .qa-btn { padding: 11px 14px 11px 11px; }
       .hero-qa .qa-btn span { font-size: 11.5px; letter-spacing: .3px; }
+      .hero-qa .qa-btn.wa-primary { padding: 15px 18px 15px 12px; }
       .hero-qa .qa-btn.wa-primary span { font-size: 13.5px; }
     }
     .qa-btn {
@@ -293,7 +298,7 @@
     .about-author .aa-role { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
     .about-ig-btn { display: inline-flex; align-self: flex-start; align-items: center; gap: 11px; margin-top: 22px; background: linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); border: none; border-radius: 999px; padding: 15px 30px; font-size: 15.5px; font-weight: 700; color: #fff; text-decoration: none; box-shadow: 0 10px 26px rgba(220,39,67,0.28); transition: .2s; }
     .about-ig-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(220,39,67,0.4); }
-    .about-ig-btn svg { width: 21px; height: 21px; }
+    .about-ig-btn svg { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
     @media (max-width: 820px) {
       .about-section { grid-template-columns: 1fr; }
       .about-text { padding: 48px 28px; }
