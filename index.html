@@ -359,7 +359,7 @@
       bottom: -120px; left: -60px; width: 500px; height: 500px; border-radius: 50%;
       border: 1px solid rgba(201,168,76,0.05);
     }
-    .booking-inner { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 1.6fr; gap: 72px; align-items: start; }
+    .booking-inner { position: relative; z-index: 2; max-width: 1080px; margin: 0 auto; display: flex; flex-direction: column; gap: 32px; }
     .booking-text .eyebrow { margin-bottom: 14px; }
     .booking-text h2 { font-family: 'Playfair Display', serif; font-size: 38px; color: var(--white); line-height: 1.15; margin-bottom: 12px; }
     .booking-text .booking-sub { color: rgba(255,255,255,0.55); font-size: 14px; line-height: 1.8; font-weight: 300; margin-bottom: 32px; }
@@ -388,12 +388,13 @@
       scroll-margin-top: 90px;
     }
 
-    /* Tarjeta de consulta — 3 pasos (estilo honorarios) */
-    .consult-card { background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015)); border: 1px solid rgba(201,168,76,0.25); border-radius: 20px; padding: 34px 30px; }
-    .consult-card .eyebrow { margin-bottom: 14px; }
-    .consult-card h2 { font-family: 'Playfair Display', serif; font-size: 30px; color: var(--white); line-height: 1.15; margin-bottom: 12px; }
-    .consult-sub { color: rgba(255,255,255,0.55); font-size: 14px; line-height: 1.7; font-weight: 300; margin-bottom: 24px; }
-    .honorarios { background: rgba(201,168,76,0.10); border: 1px solid rgba(201,168,76,0.3); border-radius: 14px; padding: 18px 22px; text-align: center; margin-bottom: 24px; }
+    /* Tarjeta de consulta — estilo honorarios (2 columnas) */
+    .consult-card { background: var(--green); border: 1px solid rgba(201,168,76,0.22); border-radius: 24px; padding: 42px 44px; box-shadow: 0 24px 70px rgba(0,0,0,0.35); display: grid; grid-template-columns: 1.25fr 0.85fr; gap: 44px; align-items: start; }
+    .consult-badge { display: inline-block; background: rgba(201,168,76,0.16); border: 1px solid rgba(201,168,76,0.35); color: var(--gold-lt); font-size: 10.5px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; padding: 7px 14px; border-radius: 999px; margin-bottom: 18px; }
+    .consult-card h2 { font-family: 'Playfair Display', serif; font-size: 32px; color: var(--white); line-height: 1.15; margin-bottom: 14px; }
+    .consult-sub { color: rgba(255,255,255,0.6); font-size: 14.5px; line-height: 1.7; font-weight: 300; margin-bottom: 22px; }
+    .consult-right { display: flex; flex-direction: column; }
+    .honorarios { background: rgba(201,168,76,0.10); border: 1px solid rgba(201,168,76,0.3); border-radius: 14px; padding: 18px 22px; text-align: center; margin-bottom: 16px; }
     .honorarios .h-label { color: var(--gold); font-size: 10.5px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; }
     .honorarios .h-amount { font-family: 'Playfair Display', serif; font-size: 40px; font-weight: 900; color: var(--white); line-height: 1.1; margin-top: 4px; }
     .honorarios .h-detail { color: rgba(255,255,255,0.5); font-size: 12.5px; font-weight: 300; margin-top: 2px; }
@@ -411,8 +412,19 @@
     .step-btn.s3 { background: var(--cream); color: var(--green); }
     .step-btn.s3 .step-n { background: #25D366; color: #fff; }
     .step-btn.s3:hover { background: #fff; transform: translateY(-2px); }
-    .consult-warning { display: flex; gap: 10px; align-items: flex-start; background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.25); border-radius: 12px; padding: 13px 15px; margin-top: 18px; color: rgba(255,255,255,0.72); font-size: 12.5px; line-height: 1.55; }
+    .consult-warning { display: flex; gap: 10px; align-items: flex-start; background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.25); border-radius: 12px; padding: 13px 15px; margin-top: 0; color: rgba(255,255,255,0.72); font-size: 12.5px; line-height: 1.55; }
     .consult-warning strong { color: var(--gold-lt); }
+
+    /* Tarjeta del calendario (debajo) */
+    .calendly-card { background: var(--white); border-radius: 20px; padding: 28px 28px 8px; box-shadow: 0 24px 70px rgba(0,0,0,0.35); scroll-margin-top: 90px; }
+    .calendly-head { text-align: center; max-width: 520px; margin: 0 auto 8px; }
+    .calendly-logo { width: 56px; height: 56px; border-radius: 50%; background: var(--green); border: 1.5px solid var(--gold); display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; }
+    .calendly-logo span { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 18px; font-weight: 700; }
+    .calendly-head h3 { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--green); margin-bottom: 6px; }
+    .calendly-head p { color: var(--muted); font-size: 13.5px; line-height: 1.6; font-weight: 300; }
+    @media (max-width: 760px) {
+      .consult-card { grid-template-columns: 1fr; gap: 28px; padding: 30px 24px; }
+    }
 
     /* ─── CONTACT STRIP ─── */
     .contact-strip {
@@ -903,25 +915,35 @@
 <!-- BOOKING / CALENDLY -->
 <section class="booking-section" id="turnos">
   <div class="booking-inner">
+    <!-- Tarjeta principal: texto + honorarios y pasos -->
     <div class="consult-card fade-in">
-      <div class="eyebrow">Consulta profesional</div>
-      <h2>Consultá con el Dr. Basavilbaso</h2>
-      <p class="consult-sub">Sesión de 1 hora. Reservá tu día y horario, aboná la consulta y enviá el comprobante por WhatsApp para confirmar el turno. Atención virtual o presencial.</p>
-      <div class="honorarios">
-        <div class="h-label">Honorarios</div>
-        <div class="h-amount">$50.000</div>
-        <div class="h-detail">por consulta · 1 hora</div>
+      <div class="consult-left">
+        <span class="consult-badge">Consulta profesional</span>
+        <h2>Consultá con el Dr. Basavilbaso</h2>
+        <p class="consult-sub">Sesión de 1 hora. Reservá tu día y horario, aboná la consulta y enviá el comprobante por WhatsApp para confirmar el turno. Atención virtual o presencial.</p>
+        <div class="consult-warning"><span aria-hidden="true">⚠️</span><span>Si no enviás el comprobante de pago al <strong>11 6976-6772</strong>, la consulta no queda confirmada y se da de baja automáticamente.</span></div>
       </div>
-      <div class="step-btns">
-        <a class="step-btn s1" href="#agenda"><span class="step-n">1</span><span>Agendá tu día y hora</span><span class="step-arrow">→</span></a>
-        <a class="step-btn s2" href="https://mpago.la/1YH2JQe" target="_blank" rel="noopener"><span class="step-n">2</span><span>Pagar la consulta</span><span class="step-arrow">→</span></a>
-        <a class="step-btn s3" href="https://wa.me/5491169766772?text=Hola,%20te%20env%C3%ADo%20el%20comprobante%20de%20pago%20de%20mi%20consulta." target="_blank" rel="noopener"><span class="step-n"><svg class="ico" aria-hidden="true"><use href="#i-chat"/></svg></span><span>Enviá el comprobante</span><span class="step-arrow">→</span></a>
+      <div class="consult-right">
+        <div class="honorarios">
+          <div class="h-label">Honorarios</div>
+          <div class="h-amount">$50.000</div>
+          <div class="h-detail">por consulta · 1 hora</div>
+        </div>
+        <div class="step-btns">
+          <a class="step-btn s1" href="#agenda"><span class="step-n">1</span><span>Agendá tu día y hora</span><span class="step-arrow">→</span></a>
+          <a class="step-btn s2" href="https://mpago.la/1YH2JQe" target="_blank" rel="noopener"><span class="step-n">2</span><span>Pagar la consulta</span><span class="step-arrow">→</span></a>
+          <a class="step-btn s3" href="https://wa.me/5491169766772?text=Hola,%20te%20env%C3%ADo%20el%20comprobante%20de%20pago%20de%20mi%20consulta." target="_blank" rel="noopener"><span class="step-n"><svg class="ico" aria-hidden="true"><use href="#i-chat"/></svg></span><span>Enviá el comprobante</span><span class="step-arrow">→</span></a>
+        </div>
       </div>
-      <div class="consult-warning"><span aria-hidden="true">⚠️</span><span>Si no enviás el comprobante de pago al <strong>11 6976-6772</strong>, la consulta no queda confirmada y se da de baja automáticamente.</span></div>
     </div>
 
-    <!-- CALENDLY EMBED -->
-    <div class="calendly-box" id="agenda">
+    <!-- Tarjeta del calendario (Calendly) -->
+    <div class="calendly-card" id="agenda">
+      <div class="calendly-head">
+        <div class="calendly-logo"><span>EB</span></div>
+        <h3>Estudio Jurídico Basavilbaso</h3>
+        <p>Agendá tu consulta con el Dr. Basavilbaso, en el día y horario que más te convenga.</p>
+      </div>
       <!-- Calendly inline widget begin -->
       <div class="calendly-inline-widget" data-url="https://calendly.com/estudiobasavilbaso/" style="min-width:320px;height:600px;"></div>
       <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
