@@ -471,15 +471,50 @@
     /* ─── SCROLL FADE IN ─── */
     .fade-in { opacity: 0; transform: translateY(28px); transition: opacity .6s ease, transform .6s ease; }
     .fade-in.visible { opacity: 1; transform: none; }
-.i18n-switcher { display:inline-flex; align-items:center; gap:3px; margin-right:12px; }
+.i18n-switcher { position:relative; margin-right:12px; }
+/* Trigger con globo (estilo dropdown) */
+.lang-trigger {
+  display:inline-flex; align-items:center; gap:7px;
+  font: 600 12px/1 'Raleway', sans-serif; letter-spacing:.06em;
+  padding:7px 11px; border-radius:8px;
+  border:1px solid rgba(201,168,76,0.35); background:rgba(255,255,255,0.05);
+  color:rgba(255,255,255,0.9); cursor:pointer; transition:all .18s;
+}
+.lang-trigger:hover { border-color:#C9A84C; color:#fff; }
+.lang-trigger .globe { width:16px; height:16px; flex:0 0 auto; }
+.lang-trigger .chev { width:11px; height:11px; opacity:.7; transition:transform .2s; }
+.i18n-switcher.open .lang-trigger .chev { transform:rotate(180deg); }
+/* Menú desplegable */
+.lang-menu {
+  position:absolute; top:calc(100% + 8px); right:0; min-width:178px;
+  background:#fff; border:1px solid var(--cream-dk); border-radius:12px;
+  box-shadow:0 16px 44px rgba(13,35,24,.22); padding:6px; z-index:300;
+  display:none;
+}
+.i18n-switcher.open .lang-menu { display:block; animation:langfade .16s ease; }
+@keyframes langfade { from{opacity:0; transform:translateY(-4px)} to{opacity:1; transform:none} }
+.lang-item {
+  display:flex; align-items:center; gap:10px; width:100%; text-align:left;
+  background:none; border:0; padding:9px 10px; border-radius:8px;
+  color:var(--green); font:600 13px/1 'Raleway', sans-serif; cursor:pointer; transition:.15s;
+}
+.lang-item:hover { background:var(--cream); }
+.lang-item .lang-code {
+  display:inline-flex; align-items:center; justify-content:center; min-width:28px;
+  padding:3px 5px; border-radius:5px; background:var(--cream-dk);
+  color:var(--green); font-size:10px; font-weight:700; letter-spacing:.06em;
+}
+.lang-item.i18n-active { background:var(--gold-soft) !important; color:var(--green) !important; border-color:transparent !important; }
+.lang-item.i18n-active .lang-code { background:var(--gold); color:var(--green-ink); }
+/* Botones del switcher móvil (se mantienen en fila dentro del drawer) */
 .i18n-btn {
   font: 700 10px/1 'Raleway', sans-serif; letter-spacing: .08em;
   padding: 5px 8px; border-radius: 3px;
   border: 1.5px solid rgba(201,168,76,0.45); background: transparent;
   color: rgba(255,255,255,0.65); cursor: pointer; transition: all .15s;
 }
-.i18n-btn:hover { border-color: rgba(201,168,76,0.9); color: #C9A84C; }
-.i18n-active { background: rgba(201,168,76,0.15); border-color: #C9A84C !important; color: #C9A84C !important; }
+.i18n-switcher-m .i18n-btn:hover { border-color: rgba(201,168,76,0.9); color: #C9A84C; }
+.i18n-switcher-m .i18n-active { background: rgba(201,168,76,0.15); border-color: #C9A84C !important; color: #C9A84C !important; }
 @media (max-width: 960px) { .i18n-switcher { display: none; } }
 
     /* ─── HAMBURGER + MOBILE MENU ─── */
@@ -637,12 +672,19 @@
     <li><a href="#faq">Preguntas Frecuentes</a></li>
     <li><a href="#turnos">Turnos</a></li>
   </ul>
-  <div class="i18n-switcher" role="group" aria-label="Seleccionar idioma / Select language">
-    <button class="i18n-btn i18n-active" data-lang="es" title="Español" type="button">ES</button>
-    <button class="i18n-btn" data-lang="en" title="English" type="button">EN</button>
-    <button class="i18n-btn" data-lang="pt" title="Português" type="button">PT</button>
-    <button class="i18n-btn" data-lang="de" title="Deutsch" type="button">DE</button>
-    <button class="i18n-btn" data-lang="ru" title="Русский" type="button">RU</button>
+  <div class="i18n-switcher" aria-label="Seleccionar idioma / Select language">
+    <button class="lang-trigger" id="langTrigger" type="button" aria-haspopup="true" aria-expanded="false">
+      <svg class="globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 2.5 15.4 0 18M12 3c-2.5 2.6-2.5 15.4 0 18"/></svg>
+      <span id="i18nCurrent">ES</span>
+      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <div class="lang-menu" id="langMenu" role="menu">
+      <button class="i18n-btn lang-item i18n-active" data-lang="es" type="button"><span class="lang-code">ES</span>Español</button>
+      <button class="i18n-btn lang-item" data-lang="en" type="button"><span class="lang-code">EN</span>English</button>
+      <button class="i18n-btn lang-item" data-lang="pt" type="button"><span class="lang-code">PT</span>Português</button>
+      <button class="i18n-btn lang-item" data-lang="de" type="button"><span class="lang-code">DE</span>Deutsch</button>
+      <button class="i18n-btn lang-item" data-lang="ru" type="button"><span class="lang-code">RU</span>Русский</button>
+    </div>
   </div>
   <a href="#turnos" class="nav-cta nav-cta-desktop">Agendá tu consulta</a>
 
@@ -699,7 +741,7 @@
 <!-- STATS BAR -->
 <div class="stats-bar">
   <a class="stat-item fade-in stat-ig" href="https://instagram.com/estudiobasavilbaso" target="_blank" rel="noopener" aria-label="Seguinos en Instagram">
-    <div class="stat-num" id="statSeguidores" data-count="21" data-prefix="+" data-suffix="K">+21K</div>
+    <div class="stat-num" id="statSeguidores" data-count="15" data-prefix="+" data-suffix="K">+15K</div>
     <div class="stat-label">Seguidores</div>
   </a>
   <div class="stat-item fade-in">
@@ -1014,7 +1056,7 @@
   <div class="cs-item fade-in">
     <div class="cs-icon"><svg class="ico" aria-hidden="true"><use href="#i-instagram"/></svg></div>
     <h3>Instagram</h3>
-    <p><a href="https://instagram.com/estudiobasavilbaso" target="_blank" rel="noopener">@estudiobasavilbaso</a><br>21K seguidores</p>
+    <p><a href="https://instagram.com/estudiobasavilbaso" target="_blank" rel="noopener">@estudiobasavilbaso</a><br>15K seguidores</p>
   </div>
   <div class="cs-item fade-in">
     <div class="cs-icon"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg></div>
@@ -1175,5 +1217,33 @@
   }
 </script>
   <script src="i18n.js"></script>
+  <script>
+  /* Dropdown del selector de idioma (desktop). La traducción la maneja i18n.js;
+     acá solo controlamos abrir/cerrar y el texto del globo. */
+  (function(){
+    var LABELS={es:'ES',en:'EN',pt:'PT',de:'DE',ru:'RU'};
+    var sw=document.querySelector('.i18n-switcher');
+    var trigger=document.getElementById('langTrigger');
+    var current=document.getElementById('i18nCurrent');
+    if(!sw||!trigger||!current) return;
+    var stored=localStorage.getItem('basavilbaso_lang');
+    if(stored&&LABELS[stored]) current.textContent=LABELS[stored];
+    trigger.addEventListener('click',function(e){
+      e.stopPropagation();
+      var open=sw.classList.toggle('open');
+      trigger.setAttribute('aria-expanded', open?'true':'false');
+    });
+    sw.querySelectorAll('.i18n-btn[data-lang]').forEach(function(b){
+      b.addEventListener('click',function(){
+        current.textContent=LABELS[b.getAttribute('data-lang')]||'ES';
+        sw.classList.remove('open');
+        trigger.setAttribute('aria-expanded','false');
+      });
+    });
+    document.addEventListener('click',function(e){
+      if(!sw.contains(e.target)){ sw.classList.remove('open'); trigger.setAttribute('aria-expanded','false'); }
+    });
+  })();
+  </script>
 </body>
 </html>
