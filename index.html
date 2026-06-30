@@ -483,10 +483,16 @@
     }
 
     /* ─── CONTACT STRIP ─── */
-    .contact-strip {
-      background: var(--cream); padding: 80px 6%;
-      display: grid; grid-template-columns: repeat(3,1fr); gap: 40px; text-align: center;
-    }
+    .contacto { background: var(--cream); padding: 84px 6%; }
+    .contacto-inner { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 0.82fr 1fr; gap: 54px; align-items: center; }
+    .cto-title { font-family: 'Playfair Display', serif; font-size: clamp(28px,4.4vw,40px); color: var(--green); line-height: 1.12; margin-bottom: 14px; }
+    .cto-lead { color: var(--muted); font-size: 15px; font-weight: 300; line-height: 1.65; margin-bottom: 30px; max-width: 400px; }
+    .cto-row { display: flex; align-items: center; gap: 18px; background: var(--white); border: 1px solid var(--cream-dk); border-radius: 16px; padding: 18px 20px; margin-bottom: 14px; text-decoration: none; transition: .2s; }
+    a.cto-row:hover { border-color: var(--gold); transform: translateY(-2px); box-shadow: 0 14px 34px rgba(13,35,24,0.08); }
+    .cto-ic { width: 50px; height: 50px; flex: 0 0 auto; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center; color: var(--gold-lt); }
+    .cto-row strong { display: block; font-family: 'Playfair Display', serif; font-size: 17px; color: var(--green); font-weight: 700; }
+    .cto-row span { display: block; color: var(--muted); font-size: 13px; font-weight: 300; margin-top: 3px; }
+    .contacto .ig-card { max-width: none; margin: 0; }
     /* ─── INSTAGRAM COMMUNITY (tarjeta) ─── */
     .ig-community { background: var(--cream); padding: 84px 6%; }
     .ig-card {
@@ -583,7 +589,7 @@
       .process-steps::before { display: none; }
       .faq-inner { grid-template-columns: 1fr; gap: 48px; }
       .booking-inner { grid-template-columns: 1fr; gap: 40px; }
-      .contact-strip { grid-template-columns: 1fr; gap: 28px; }
+      .contacto-inner { grid-template-columns: 1fr; gap: 38px; }
       .footer-top { grid-template-columns: 1fr 1fr; }
       .nav-links { display: none; }
       .process-section { background-attachment: scroll; }
@@ -603,7 +609,7 @@
       .btn-hero { width: 100%; }
       .services-section, .faq-section, .booking-section, .process-section { padding: 64px 6%; }
       .about-text { padding: 44px 28px; }
-      .contact-strip { padding: 56px 6%; }
+      .contacto { padding: 56px 6%; }
       .footer-top { grid-template-columns: 1fr; }
       .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
     }
@@ -612,8 +618,8 @@
     .fade-in { opacity: 0; transform: translateY(28px); transition: opacity .7s cubic-bezier(.2,.7,.3,1), transform .7s cubic-bezier(.2,.7,.3,1); }
     .fade-in.visible { opacity: 1; transform: none; }
     /* Revelado escalonado elegante en grillas */
-    .services-grid > .fade-in:nth-child(2), .contact-strip > .fade-in:nth-child(2) { transition-delay: .07s; }
-    .services-grid > .fade-in:nth-child(3), .contact-strip > .fade-in:nth-child(3) { transition-delay: .14s; }
+    .services-grid > .fade-in:nth-child(2), .contacto-inner > .fade-in:nth-child(2) { transition-delay: .07s; }
+    .services-grid > .fade-in:nth-child(3) { transition-delay: .14s; }
     .services-grid > .fade-in:nth-child(4) { transition-delay: .21s; }
     .services-grid > .fade-in:nth-child(5) { transition-delay: .28s; }
     .services-grid > .fade-in:nth-child(6) { transition-delay: .35s; }
@@ -1054,42 +1060,38 @@
   </div>
 </section>
 
-<!-- CONTACT STRIP -->
-<div class="contact-strip">
-  <div class="cs-item fade-in">
-    <div class="cs-icon"><svg class="ico" aria-hidden="true"><use href="#i-chat"/></svg></div>
-    <h3>WhatsApp</h3>
-    <p><a href="https://wa.me/5491169766772?text=Hola%2C%20quiero%20hacer%20una%20consulta." target="_blank" rel="noopener">11-6976-6772</a><br>Respondemos en menos de 24 hs</p>
-  </div>
-  <div class="cs-item fade-in">
-    <div class="cs-icon"><svg class="ico" aria-hidden="true"><use href="#i-instagram"/></svg></div>
-    <h3>Instagram</h3>
-    <p><a href="https://instagram.com/estudiobasavilbaso" target="_blank" rel="noopener">@estudiobasavilbaso</a><br>15K seguidores</p>
-  </div>
-  <div class="cs-item fade-in">
-    <div class="cs-icon"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg></div>
-    <h3>Horario</h3>
-    <p>Lunes a viernes<br>10:00 – 18:00 hs</p>
-  </div>
-</div>
-
-<!-- INSTAGRAM COMMUNITY -->
-<section class="ig-community">
-  <div class="ig-card fade-in">
-    <div class="ig-head">
-      <div class="ig-avatar"><svg aria-hidden="true"><use href="#i-instagram"/></svg></div>
-      <div>
-        <div class="ig-handle">@estudiobasavilbaso</div>
-        <div class="ig-sub">Estudio Jurídico · Divorcios y Sucesiones</div>
+<!-- CONTACTO + COMUNIDAD -->
+<section class="contacto" id="contacto">
+  <div class="contacto-inner">
+    <div class="cto-info fade-in">
+      <h2 class="cto-title">Hablemos</h2>
+      <p class="cto-lead">Estamos para ayudarte. Escribinos y te respondemos a la brevedad, de forma confidencial.</p>
+      <a class="cto-row" href="https://wa.me/5491169766772?text=Hola%2C%20quiero%20hacer%20una%20consulta." target="_blank" rel="noopener">
+        <div class="cto-ic"><svg class="ico" aria-hidden="true"><use href="#i-chat"/></svg></div>
+        <div><strong>WhatsApp · 11-6976-6772</strong><span>Respondemos en menos de 24 hs</span></div>
+      </a>
+      <div class="cto-row">
+        <div class="cto-ic"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg></div>
+        <div><strong>Horario de atención</strong><span>Lunes a viernes · 10:00 – 18:00 hs</span></div>
       </div>
     </div>
-    <h2>Seguinos y conocé el estudio <em>por dentro</em></h2>
-    <p>Novedades legales y todo lo que hacemos día a día. Sumate a nuestra comunidad.</p>
-    <div class="ig-stats">
-      <div class="ig-stat"><div class="ig-num">+15K</div><div class="ig-lbl">Seguidores</div></div>
-      <div class="ig-stat"><div class="ig-num">+150</div><div class="ig-lbl">Publicaciones</div></div>
+
+    <div class="ig-card fade-in">
+      <div class="ig-head">
+        <div class="ig-avatar"><svg aria-hidden="true"><use href="#i-instagram"/></svg></div>
+        <div>
+          <div class="ig-handle">@estudiobasavilbaso</div>
+          <div class="ig-sub">Estudio Jurídico · Divorcios y Sucesiones</div>
+        </div>
+      </div>
+      <h2>Seguinos y conocé el estudio <em>por dentro</em></h2>
+      <p>Novedades legales y todo lo que hacemos día a día. Sumate a nuestra comunidad.</p>
+      <div class="ig-stats">
+        <div class="ig-stat"><div class="ig-num">+15K</div><div class="ig-lbl">Seguidores</div></div>
+        <div class="ig-stat"><div class="ig-num">+150</div><div class="ig-lbl">Publicaciones</div></div>
+      </div>
+      <a class="ig-cta" href="https://instagram.com/estudiobasavilbaso" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-instagram"/></svg>Seguinos en Instagram</a>
     </div>
-    <a class="ig-cta" href="https://instagram.com/estudiobasavilbaso" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-instagram"/></svg>Seguinos en Instagram</a>
   </div>
 </section>
 
