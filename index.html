@@ -473,12 +473,14 @@
       padding: 48px 44px; box-shadow: 0 30px 70px rgba(13,35,24,0.28);
     }
     .ig-head { display: flex; align-items: center; gap: 18px; margin-bottom: 34px; }
-    .ig-avatar {
-      width: 66px; height: 66px; border-radius: 50%; flex: 0 0 auto;
-      overflow: hidden; display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 8px 22px rgba(13,35,24,0.4);
+    /* Emblema reutilizable: logo verde/dorado recortado en círculo con anillo nítido */
+    .ig-emblem {
+      border-radius: 50%; overflow: hidden; flex: 0 0 auto;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--green-deep); border: 2px solid var(--gold);
     }
-    .ig-avatar img { width: 142%; height: 142%; object-fit: contain; display: block; }
+    .ig-emblem img { width: 200%; height: 200%; object-fit: contain; display: block; }
+    .ig-avatar { width: 64px; height: 64px; box-shadow: 0 6px 18px rgba(13,35,24,0.45); }
     .ig-handle { font-family: 'Playfair Display', serif; font-size: 23px; color: var(--white); font-weight: 700; line-height: 1.1; }
     .ig-sub { color: rgba(255,255,255,0.55); font-size: 13px; font-weight: 300; margin-top: 5px; }
     .ig-card h2 { font-family: 'Playfair Display', serif; font-size: clamp(26px,4.4vw,38px); color: var(--white); line-height: 1.18; margin-bottom: 18px; }
@@ -902,7 +904,7 @@
       </div>
     </div>
     <a class="about-ig-btn" href="https://instagram.com/estudiobasavilbaso" target="_blank" rel="noopener">
-      <svg aria-hidden="true"><use href="#i-instagram"/></svg>Seguinos en Instagram
+      <span class="ig-emblem" style="width:26px;height:26px"><img src="instagram.png" alt="" loading="lazy" width="26" height="26"></span>Seguinos en Instagram
     </a>
   </div>
 </section>
@@ -1029,7 +1031,7 @@
     <p><a href="https://wa.me/5491169766772" target="_blank" rel="noopener">11-6976-6772</a><br>Respondemos en menos de 24 hs</p>
   </div>
   <div class="cs-item fade-in">
-    <div class="cs-icon"><svg class="ico" aria-hidden="true"><use href="#i-instagram"/></svg></div>
+    <div class="cs-icon ig-emblem"><img src="instagram.png" alt="Instagram" loading="lazy" width="60" height="60"></div>
     <h3>Instagram</h3>
     <p><a href="https://instagram.com/estudiobasavilbaso" target="_blank" rel="noopener">@estudiobasavilbaso</a><br>15K seguidores</p>
   </div>
@@ -1044,7 +1046,7 @@
 <section class="ig-community">
   <div class="ig-card fade-in">
     <div class="ig-head">
-      <div class="ig-avatar"><img src="instagram.png" alt="Instagram" loading="lazy" width="66" height="66"></div>
+      <div class="ig-avatar ig-emblem"><img src="instagram.png" alt="Instagram" loading="lazy" width="64" height="64"></div>
       <div>
         <div class="ig-handle">@estudiobasavilbaso</div>
         <div class="ig-sub">Estudio Jurídico · Divorcios y Sucesiones</div>
@@ -1057,7 +1059,7 @@
       <div class="ig-stat"><div class="ig-num">+150</div><div class="ig-lbl">Publicaciones</div></div>
       <div class="ig-stat"><div class="ig-num">100%</div><div class="ig-lbl">Casos reales</div></div>
     </div>
-    <a class="ig-cta" href="https://instagram.com/estudiobasavilbaso" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-instagram"/></svg>Seguinos en Instagram</a>
+    <a class="ig-cta" href="https://instagram.com/estudiobasavilbaso" target="_blank" rel="noopener"><span class="ig-emblem" style="width:26px;height:26px"><img src="instagram.png" alt="" loading="lazy" width="26" height="26"></span>Seguinos en Instagram</a>
   </div>
 </section>
 
@@ -1096,7 +1098,7 @@
   <div class="footer-bottom">
     <p>© 2026 Estudio Jurídico Basavilbaso — Divorcios y Sucesiones</p>
     <div class="f-socials">
-      <a href="https://instagram.com/estudiobasavilbaso" target="_blank" rel="noopener" aria-label="Instagram"><svg class="ico" aria-hidden="true" style="width:16px;height:16px"><use href="#i-instagram"/></svg></a>
+      <a href="https://instagram.com/estudiobasavilbaso" class="ig-emblem" target="_blank" rel="noopener" aria-label="Instagram"><img src="instagram.png" alt="" loading="lazy" width="36" height="36"></a>
       <a href="https://wa.me/5491169766772" target="_blank" rel="noopener" aria-label="WhatsApp"><svg class="ico" aria-hidden="true" style="width:16px;height:16px"><use href="#i-chat"/></svg></a>
     </div>
   </div>
