@@ -34,11 +34,11 @@
 
   /* Hero */
   t('Divorcios y Sucesiones','Divorces & Successions','Divórcios e Sucessões','Scheidungen & Erbschaften','Разводы и наследство');
-  t('Asesoramiento jurídico profesional, claro y sin vueltas. Atención virtual y presencial en toda la Argentina.',
-    'Professional, clear legal advice — no complications. Virtual and in-person service throughout Argentina.',
-    'Assessoria jurídica profissional, clara e direta. Atendimento virtual e presencial em toda a Argentina.',
-    'Professionelle, klare Rechtsberatung – ohne Umwege. Virtuelle und persönliche Betreuung in ganz Argentinien.',
-    'Профессиональная, чёткая юридическая помощь без лишних слов. Онлайн и очный приём по всей Аргентине.');
+  t('Asesoramiento jurídico profesional, claro y sin vueltas. Atención virtual y presencial en Buenos Aires.',
+    'Professional, clear legal advice — no complications. Virtual and in-person service in Buenos Aires.',
+    'Assessoria jurídica profissional, clara e direta. Atendimento virtual e presencial em Buenos Aires.',
+    'Professionelle, klare Rechtsberatung – ohne Umwege. Virtuelle und persönliche Betreuung in Buenos Aires.',
+    'Профессиональная, чёткая юридическая помощь без лишних слов. Онлайн и очный приём в Буэнос-Айресе.');
   t('Agendá una consulta','Book a consultation','Agende uma consulta','Termin buchen','Записаться');
   t('↓ Explorar',         '↓ Explore',         '↓ Explorar',       '↓ Erkunden',         '↓ Листать');
 
@@ -250,11 +250,11 @@
   t('10:00 – 18:00 hs',   '10:00 AM – 6:00 PM','10:00 – 18:00 h',  '10:00 – 18:00 Uhr',  '10:00 – 18:00');
 
   /* Footer */
-  t('Especialistas en Divorcios y Sucesiones en Argentina. Asesoramiento profesional, claro y personalizado. Virtual y presencial.',
-    'Specialists in Divorces and Successions in Argentina. Professional, clear, and personalized advice. Virtual and in-person.',
-    'Especialistas em Divórcios e Sucessões na Argentina. Assessoria profissional, clara e personalizada. Virtual e presencial.',
-    'Spezialisten für Scheidungen und Erbschaften in Argentinien. Professionelle, klare und persönliche Beratung. Online und persönlich.',
-    'Специалисты по разводам и наследству в Аргентине. Профессиональная, чёткая и персональная консультация. Онлайн и очно.');
+  t('Especialistas en Divorcios y Sucesiones en Buenos Aires. Asesoramiento profesional, claro y personalizado. Virtual y presencial.',
+    'Specialists in Divorces and Successions in Buenos Aires. Professional, clear, and personalized advice. Virtual and in-person.',
+    'Especialistas em Divórcios e Sucessões em Buenos Aires. Assessoria profissional, clara e personalizada. Virtual e presencial.',
+    'Spezialisten für Scheidungen und Erbschaften in Buenos Aires. Professionelle, klare und persönliche Beratung. Online und persönlich.',
+    'Специалисты по разводам и наследству в Буэнос-Айресе. Профессиональная, чёткая и персональная консультация. Онлайн и очно.');
   t('Contacto',           'Contact',           'Contato',          'Kontakt',            'Контакты');
   t('Agendar consulta',   'Book consultation', 'Agendar consulta', 'Termin buchen',      'Записаться');
   t('Política de privacidad','Privacy policy', 'Política de privacidade','Datenschutzrichtlinie','Политика конфиденциальности');
