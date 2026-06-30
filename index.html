@@ -467,6 +467,9 @@
     .step-btn.s3:hover { background: #fff; transform: translateY(-2px); }
     .consult-warning { display: flex; gap: 10px; align-items: flex-start; background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.25); border-radius: 12px; padding: 13px 15px; margin-top: 0; color: rgba(255,255,255,0.72); font-size: 12.5px; line-height: 1.55; }
     .consult-warning strong { color: var(--gold-lt); }
+    .consult-warning a { color: var(--gold-lt); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; white-space: nowrap; }
+    .consult-warning a:hover { color: var(--gold); }
+    .consult-warning .cw-note { display: block; margin-top: 4px; color: rgba(255,255,255,0.5); font-size: 11.5px; }
 
     /* Tarjeta del calendario (debajo) */
     .calendly-card { background: var(--white); border-radius: 20px; padding: 28px 28px 8px; box-shadow: 0 24px 70px rgba(0,0,0,0.35); scroll-margin-top: 90px; }
@@ -1013,7 +1016,7 @@
         <span class="consult-badge">Consulta profesional</span>
         <h2>Consultá con el Dr. Basavilbaso</h2>
         <p class="consult-sub">Sesión de 1 hora. Reservá tu día y horario, aboná la consulta y enviá el comprobante por WhatsApp para confirmar el turno. Atención virtual o presencial.</p>
-        <div class="consult-warning"><span aria-hidden="true">⚠️</span><span>Si no enviás el comprobante de pago al <strong>11 6976-6772</strong>, la consulta no queda confirmada y se da de baja automáticamente.</span></div>
+        <div class="consult-warning"><span aria-hidden="true">✅</span><span><strong>Último paso para confirmar:</strong> enviá el comprobante de pago por WhatsApp al <a href="https://wa.me/5491169766772?text=Hola,%20te%20env%C3%ADo%20el%20comprobante%20de%20pago%20de%20mi%20consulta." target="_blank" rel="noopener">11-6976-6772</a> y tu turno queda confirmado. <span class="cw-note">Los turnos sin comprobante se liberan automáticamente para otra persona.</span></span></div>
         <a class="pay-btn" href="https://mpago.la/1YH2JQe" target="_blank" rel="noopener">
           <svg class="ico" aria-hidden="true"><use href="#i-card"/></svg>
           <span>Pagar por Mercado Pago — $50.000</span>
