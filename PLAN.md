@@ -74,7 +74,13 @@ cambio es solo "lindo" pero no mueve la aguja, va al final de la cola.
 ---
 
 ## Estado / progreso
-- [ ] Fase 1 — Performance
-- [ ] Fase 2 — Confianza / Credibilidad
-- [ ] Fase 3 — Conversión a WhatsApp
-- [ ] Fase 4 — Copy empático + SEO local
+- [x] **Fase 1 — Performance** ✅ Imágenes a WebP (8.8 MB → 219 KB, −97%); hero auto-contenido sin Unsplash.
+- [~] **Fase 2 — Confianza** — Parcial: se usa la prueba social REAL existente (+15K seguidores en la barra de stats).
+      Testimonios y matrícula quedan pendientes: **requieren datos del cliente** y no se inventan.
+- [x] **Fase 3 — Conversión a WhatsApp** ✅ Mensajes contextuales por servicio + saludo en todos los CTA;
+      hero mobile con título/subtítulo/CTAs sobre el pliegue.
+- [~] **Fase 4 — Copy + SEO local** — Bloqueado en lo que requiere datos (dirección/GBP, matrícula).
+      Copy actual ya equilibra profesionalismo y cercanía ("accesible, humano y efectivo", "Trato cercano").
+
+> Nota: Fases 2 y 4 quedan abiertas a la espera de datos verificables del cliente.
+> No se agregan testimonios, matrícula ni dirección inventados.
