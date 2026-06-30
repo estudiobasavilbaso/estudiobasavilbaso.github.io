@@ -342,6 +342,22 @@
     .svc-card-body .svc-link { display: inline-block; margin-top: 14px; font-size: 12px; font-weight: 700; color: var(--gold); letter-spacing: 1.5px; text-transform: uppercase; text-decoration: none; }
     .svc-card-body .svc-link:hover { color: var(--green); }
 
+    /* ─── BLOG EN HOME ─── */
+    .blog-home { background: var(--white); padding: 96px 6%; }
+    .blog-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; max-width: 1120px; margin: 0 auto; }
+    .bh-card { display: flex; flex-direction: column; background: var(--cream); border: 1px solid var(--cream-dk); border-radius: 12px; overflow: hidden; text-decoration: none; transition: all .28s; }
+    .bh-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(21,46,31,.13); border-color: rgba(201,168,76,0.4); }
+    .bh-card img { width: 100%; height: 184px; object-fit: cover; display: block; }
+    .bh-body { padding: 24px 26px 28px; display: flex; flex-direction: column; flex: 1; }
+    .bh-tag { font-size: 10.5px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+    .bh-body h3 { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--green); line-height: 1.25; margin-bottom: 10px; }
+    .bh-body p { color: var(--muted); font-size: 13.5px; line-height: 1.7; font-weight: 300; flex: 1; }
+    .bh-link { display: inline-block; margin-top: 16px; font-size: 12px; font-weight: 700; color: var(--gold); letter-spacing: 1.5px; text-transform: uppercase; }
+    .bh-card:hover .bh-link { color: var(--green); }
+    .blog-home-cta { text-align: center; margin-top: 48px; }
+    .bh-btn { display: inline-flex; align-items: center; gap: 10px; background: var(--green); color: var(--white); border-radius: 999px; padding: 16px 36px; font-size: 14px; font-weight: 600; letter-spacing: .5px; text-decoration: none; transition: .2s; }
+    .bh-btn:hover { background: var(--green-ink); transform: translateY(-2px); box-shadow: 0 14px 34px rgba(13,35,24,.2); }
+
     /* ─── PROCESS (steps with image bg) ─── */
     .process-section {
       position: relative; padding: 100px 6%;
@@ -589,6 +605,7 @@
       .process-steps::before { display: none; }
       .faq-inner { grid-template-columns: 1fr; gap: 48px; }
       .booking-inner { grid-template-columns: 1fr; gap: 40px; }
+      .blog-grid { grid-template-columns: 1fr 1fr; }
       .contacto-inner { grid-template-columns: 1fr; gap: 38px; }
       .footer-top { grid-template-columns: 1fr 1fr; }
       .nav-links { display: none; }
@@ -597,6 +614,8 @@
     @media (max-width: 580px) {
       nav { padding: 0 5%; height: 62px; }
       .services-grid { grid-template-columns: 1fr; }
+      .blog-grid { grid-template-columns: 1fr; }
+      .blog-home { padding: 64px 6%; }
       .stats-bar { display: grid; grid-template-columns: 1fr 1fr; padding: 0; }
       .stat-item { max-width: none; padding: 22px 12px; border-bottom: 1px solid rgba(255,255,255,0.07); }
       .stat-item:nth-child(2n) { border-right: none; }
@@ -1057,6 +1076,47 @@
       <!-- Calendly inline widget end -->
     </div>
 
+  </div>
+</section>
+
+<!-- DEL BLOG -->
+<section class="blog-home" id="blog">
+  <div class="section-header fade-in">
+    <span class="eyebrow">Del blog</span>
+    <h2>Artículos para entender mejor</h2>
+    <div class="gold-line"></div>
+  </div>
+  <div class="blog-grid">
+    <a class="bh-card fade-in" href="blog-divorcio-hoy-argentina.html">
+      <img src="img-divorcio-hoy.webp" alt="Escritorio con pluma sobre documentos" width="600" height="184" loading="lazy">
+      <div class="bh-body">
+        <div class="bh-tag">Divorcio</div>
+        <h3>Qué es el divorcio hoy en Argentina</h3>
+        <p>Ya no hay que demostrar culpas ni convencer a nadie. Cómo funciona el divorcio actual y qué cambió.</p>
+        <span class="bh-link">Leer artículo →</span>
+      </div>
+    </a>
+    <a class="bh-card fade-in" href="blog-divorcio-unilateral.html">
+      <img src="img-unilateral.webp" alt="Persona mirando por la ventana" width="600" height="184" loading="lazy">
+      <div class="bh-body">
+        <div class="bh-tag">Divorcio</div>
+        <h3>¿Puedo divorciarme si mi pareja no quiere?</h3>
+        <p>Una sola persona puede pedirlo: no hace falta el acuerdo ni la firma del otro. Hasta dónde llega.</p>
+        <span class="bh-link">Leer artículo →</span>
+      </div>
+    </a>
+    <a class="bh-card fade-in" href="blog-hijos-en-la-separacion.html">
+      <img src="img-hijos.webp" alt="Padre e hijo caminando de la mano" width="600" height="184" loading="lazy">
+      <div class="bh-body">
+        <div class="bh-tag">Hijos</div>
+        <h3>Los hijos en la separación: ni premio ni castigo</h3>
+        <p>Los hijos no son un premio ni un castigo. Qué necesitan y qué mira la ley cuando hay chicos.</p>
+        <span class="bh-link">Leer artículo →</span>
+      </div>
+    </a>
+  </div>
+  <div class="blog-home-cta">
+    <a class="bh-btn" href="blog.html">Ver todos los artículos →</a>
   </div>
 </section>
 
