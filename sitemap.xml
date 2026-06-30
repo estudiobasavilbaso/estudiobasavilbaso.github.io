@@ -11,6 +11,41 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://estudiobasavilbaso.com.ar/blog.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://estudiobasavilbaso.com.ar/blog-divorcio-hoy-argentina.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://estudiobasavilbaso.com.ar/blog-pensar-en-separarse.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://estudiobasavilbaso.com.ar/blog-divorcio-unilateral.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://estudiobasavilbaso.com.ar/blog-divorcio-comun-acuerdo.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://estudiobasavilbaso.com.ar/blog-mitos-del-divorcio.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://estudiobasavilbaso.com.ar/blog-hijos-en-la-separacion.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://estudiobasavilbaso.com.ar/privacidad.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
