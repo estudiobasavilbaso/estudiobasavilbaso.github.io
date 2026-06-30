@@ -54,10 +54,13 @@ body{font-family:'Raleway',sans-serif;background:var(--cream);color:var(--text);
 .brand-txt small{display:block;color:var(--gold-lt);font-size:9px;letter-spacing:2px;text-transform:uppercase}
 .back-link{border:1px solid rgba(255,255,255,.25);background:transparent;border-radius:999px;padding:.5rem 1rem;color:#fff;font-size:12px;text-decoration:none;transition:.2s;white-space:nowrap}
 .back-link:hover{border-color:var(--gold);color:var(--gold)}
-.a-hero{background:linear-gradient(180deg,var(--green) 0%,var(--green-deep) 100%);padding:54px 6% 46px;text-align:center}
+.a-hero{position:relative;background:var(--green-ink);text-align:center;overflow:hidden}
+.a-hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
+.a-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,35,24,.5) 0%,rgba(13,35,24,.82) 100%)}
+.a-hero-inner{position:relative;z-index:2;padding:74px 6% 60px}
 .a-hero .cat{display:inline-block;color:var(--gold);font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:18px}
 .a-hero h1{font-family:'Playfair Display',serif;color:#fff;font-size:clamp(28px,5.2vw,46px);line-height:1.16;max-width:760px;margin:0 auto}
-.a-hero .meta{color:rgba(255,255,255,.55);font-size:13px;margin-top:18px;display:flex;gap:18px;justify-content:center;flex-wrap:wrap}
+.a-hero .meta{color:rgba(255,255,255,.62);font-size:13px;margin-top:18px;display:flex;gap:18px;justify-content:center;flex-wrap:wrap}
 .crumb{max-width:720px;margin:0 auto;padding:18px 6% 0;font-size:12.5px;color:var(--muted)}
 .crumb a{color:var(--green-mid);text-decoration:none}
 .crumb a:hover{color:var(--gold)}
@@ -98,7 +101,7 @@ footer .copy{font-size:11px;opacity:.5;margin-top:14px;border-top:1px solid rgba
 @media(max-width:600px){
   .topbar{padding:0 5%;height:62px}
   .brand-txt small{display:none}
-  .a-hero{padding:40px 5% 36px}
+  .a-hero-inner{padding:50px 5% 40px}
   .article,.related,.crumb{padding-left:5%;padding-right:5%}
   .related-grid{grid-template-columns:1fr}
   .cta-btns{flex-direction:column}
@@ -116,9 +119,12 @@ footer .copy{font-size:11px;opacity:.5;margin-top:14px;border-top:1px solid rgba
 </div>
 
 <header class="a-hero">
-  <span class="cat">Divorcio</span>
-  <h1>Qué es el divorcio hoy en Argentina</h1>
-  <div class="meta"><span>9 de junio de 2026</span><span>·</span><span>7 min de lectura</span></div>
+  <img class="a-hero-img" src="img-divorcio-hoy.webp" alt="Escritorio sobrio con una pluma sobre documentos, lentes de lectura y una planta" width="1200" height="800" fetchpriority="high">
+  <div class="a-hero-inner">
+    <span class="cat">Divorcio</span>
+    <h1>Qué es el divorcio hoy en Argentina</h1>
+    <div class="meta"><span>9 de junio de 2026</span><span>·</span><span>7 min de lectura</span></div>
+  </div>
 </header>
 
 <nav class="crumb"><a href="index.html">Inicio</a> › <a href="blog.html">Blog</a> › Qué es el divorcio hoy en Argentina</nav>
