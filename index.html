@@ -322,6 +322,52 @@
       .about-text { padding: 48px 28px; }
     }
 
+    /* ─── INSTAGRAM CTA ─── */
+    .ig-section {
+      background: radial-gradient(120% 100% at 50% 0%, var(--green) 0%, var(--green-deep) 45%, var(--green-ink) 100%);
+      padding: 90px 6%;
+    }
+    .ig-card {
+      max-width: 760px; margin: 0 auto; text-align: center;
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015));
+      border: 1px solid rgba(201,168,76,0.22);
+      border-radius: 24px; padding: 56px 40px;
+      box-shadow: 0 30px 70px rgba(0,0,0,0.35);
+    }
+    .ig-head { display: inline-flex; align-items: center; gap: 14px; margin-bottom: 26px; }
+    .ig-head-ico {
+      width: 52px; height: 52px; flex: 0 0 auto; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);
+    }
+    .ig-head-ico svg { width: 26px; height: 26px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .ig-head-txt { text-align: left; }
+    .ig-handle { display: block; font-family: 'Playfair Display', serif; font-size: 21px; font-weight: 700; color: var(--white); line-height: 1.1; }
+    .ig-sub { display: block; font-size: 12px; color: rgba(255,255,255,0.55); letter-spacing: 0.5px; margin-top: 3px; }
+    .ig-card h2 { font-family: 'Playfair Display', serif; font-size: clamp(28px,4vw,42px); color: var(--white); line-height: 1.12; margin-bottom: 18px; }
+    .ig-card h2 em { color: var(--gold-lt); font-style: italic; }
+    .ig-card .ig-lead { color: rgba(255,255,255,0.7); font-size: 15.5px; line-height: 1.75; font-weight: 300; max-width: 540px; margin: 0 auto 38px; }
+    .ig-stats { display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; margin-bottom: 40px; }
+    .ig-stat { min-width: 130px; padding: 0 14px; }
+    .ig-stat + .ig-stat { border-left: 1px solid rgba(255,255,255,0.12); }
+    .ig-stat-num { font-family: 'Playfair Display', serif; font-size: 40px; font-weight: 700; color: var(--gold); line-height: 1; }
+    .ig-stat-label { font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-top: 10px; }
+    .ig-cta-btn {
+      display: inline-flex; align-items: center; gap: 11px;
+      background: linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);
+      border: none; border-radius: 999px; padding: 16px 34px;
+      font-size: 15.5px; font-weight: 700; color: #fff; text-decoration: none;
+      box-shadow: 0 12px 30px rgba(220,39,67,0.32); transition: .2s;
+    }
+    .ig-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 16px 36px rgba(220,39,67,0.45); }
+    .ig-cta-btn svg { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    @media (max-width: 560px) {
+      .ig-card { padding: 44px 22px; }
+      .ig-stats { gap: 0; }
+      .ig-stat { min-width: 33%; padding: 0 6px; }
+      .ig-stat-num { font-size: 30px; }
+    }
+
     /* ─── SERVICES ─── */
     .services-section { padding: 100px 6%; background: var(--white); }
     .section-header { text-align: center; margin-bottom: 60px; }
@@ -1154,6 +1200,38 @@
   </div>
 </section>
 
+<!-- INSTAGRAM CTA -->
+<section class="ig-section" id="instagram">
+  <div class="ig-card fade-in">
+    <a class="ig-head" href="https://instagram.com/estudiobasavilbaso" target="_blank" rel="noopener" style="text-decoration:none">
+      <span class="ig-head-ico"><svg aria-hidden="true"><use href="#i-instagram"/></svg></span>
+      <span class="ig-head-txt">
+        <span class="ig-handle">@estudiobasavilbaso</span>
+        <span class="ig-sub">Estudio Jurídico · Divorcios y Sucesiones</span>
+      </span>
+    </a>
+    <h2>Seguinos y mirá los <em>casos reales</em> del estudio</h2>
+    <p class="ig-lead">Divorcios resueltos, sucesiones en marcha y todo lo que hacemos día a día. Sumate a nuestra comunidad.</p>
+    <div class="ig-stats">
+      <div class="ig-stat">
+        <div class="ig-stat-num" id="igSeguidores" data-count="15" data-prefix="+" data-suffix="K">+15K</div>
+        <div class="ig-stat-label">Seguidores</div>
+      </div>
+      <div class="ig-stat">
+        <div class="ig-stat-num"><span style="color:rgba(255,255,255,0.9)">7+</span></div>
+        <div class="ig-stat-label">Años de práctica</div>
+      </div>
+      <div class="ig-stat">
+        <div class="ig-stat-num">100%</div>
+        <div class="ig-stat-label">Casos reales</div>
+      </div>
+    </div>
+    <a class="ig-cta-btn" href="https://instagram.com/estudiobasavilbaso" target="_blank" rel="noopener">
+      <svg aria-hidden="true"><use href="#i-instagram"/></svg>Seguinos en Instagram
+    </a>
+  </div>
+</section>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-top">
@@ -1273,19 +1351,21 @@
       if (e.isIntersecting) { animateCount(e.target); countObserver.unobserve(e.target); }
     });
   }, { threshold: 0.5 });
-  document.querySelectorAll('.stat-num[data-count]').forEach(el => countObserver.observe(el));
+  document.querySelectorAll('.stat-num[data-count], .ig-stat-num[data-count]').forEach(el => countObserver.observe(el));
 
   /* Seguidores de Instagram (actualizados por GitHub Action en followers.json) */
   fetch('followers.json', { cache: 'no-store' })
     .then(r => r.ok ? r.json() : null)
     .then(d => {
       if (!d || !d.followers) return;
-      const el = document.getElementById('statSeguidores');
-      if (!el) return;
       const n = Number(d.followers);
-      if (n >= 1000) { el.dataset.count = Math.round(n / 1000); el.dataset.prefix = '+'; el.dataset.suffix = 'K'; }
-      else { el.dataset.count = n; el.dataset.prefix = ''; el.dataset.suffix = ''; }
-      animateCount(el);
+      ['statSeguidores', 'igSeguidores'].forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (n >= 1000) { el.dataset.count = Math.round(n / 1000); el.dataset.prefix = '+'; el.dataset.suffix = 'K'; }
+        else { el.dataset.count = n; el.dataset.prefix = ''; el.dataset.suffix = ''; }
+        animateCount(el);
+      });
     })
     .catch(() => {}); /* si falla, queda el valor por defecto (+21K) */
 
