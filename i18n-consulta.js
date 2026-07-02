@@ -176,6 +176,7 @@
     'Es gibt Streit über den Unterhalt',
     'Есть конфликт по поводу алиментов');
   t('No estoy seguro/a',  "I'm not sure",      'Não tenho certeza', 'Ich bin nicht sicher','Я не уверен/а');
+  t('(opcional)', '(optional)', '(opcional)', '(optional)', '(необязательно)');
   t('Edades de los hijos (opcional)',
     'Ages of children (optional)',
     'Idades dos filhos (opcional)',
@@ -572,10 +573,10 @@
       })(LANGS[i]);
     }
 
-    /* Insertar junto al link "← Volver al sitio" o en el header */
-    var backLink = document.querySelector('a[href*="index.html"]');
-    if (backLink) {
-      backLink.parentNode.insertBefore(switcher, backLink.nextSibling);
+    /* Insertar al final del topbar (o junto al header como fallback) */
+    var topbar = document.querySelector('.topbar');
+    if (topbar) {
+      topbar.appendChild(switcher);
     } else {
       var header = document.querySelector('header') || document.body;
       header.insertBefore(switcher, header.firstChild);

@@ -117,6 +117,18 @@ footer .copy{font-size:11px;opacity:.5;margin-top:14px;border-top:1px solid rgba
 .sheen::before{content:'';position:absolute;top:0;left:-130%;width:55%;height:100%;z-index:1;background:linear-gradient(105deg,transparent 0%,rgba(255,255,255,.32) 50%,transparent 100%);transform:skewX(-20deg);transition:left .7s ease;pointer-events:none}
 .sheen:hover::before{left:150%}
 @media (prefers-reduced-motion: reduce){.sheen::before{display:none}.article .lead::first-letter{font-size:inherit;float:none;padding:0;font-family:inherit;color:inherit;font-weight:inherit;line-height:inherit}}
+
+/* Compartir la nota */
+.share{margin:34px 0 8px;text-align:center;padding:28px 22px;background:var(--white);border:1px solid var(--border);border-radius:16px}
+.share .sh-title{font-family:'Playfair Display',serif;font-size:19px;color:var(--green);margin-bottom:6px}
+.share .sh-sub{color:var(--muted);font-size:13.5px;margin-bottom:18px}
+.share-btns{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.share-btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:.72rem 1.3rem;font-family:'Raleway',sans-serif;font-size:13.5px;font-weight:600;cursor:pointer;text-decoration:none;transition:.2s;border:1.5px solid var(--border);background:var(--cream);color:var(--green)}
+.share-btn:hover{border-color:var(--gold);transform:translateY(-1px)}
+.share-btn.wa{background:#25D366;border-color:#25D366;color:#0a3d1f}
+.share-btn.wa:hover{background:#2bea73}
+.share-btn svg{width:17px;height:17px;fill:currentColor}
+.share-btn.copied{background:var(--green);border-color:var(--green);color:#fff}
 </style>
 </head>
 <body>
@@ -183,6 +195,16 @@ footer .copy{font-size:11px;opacity:.5;margin-top:14px;border-top:1px solid rgba
     </div>
     <p class="cta-fine">Te respondemos en menos de 24 h. Confidencial.</p>
   </div>
+
+  <div class="share">
+    <p class="sh-title">¿Conocés a alguien que está pasando por esto?</p>
+    <p class="sh-sub">Compartile esta nota: a veces una lectura llega en el momento justo.</p>
+    <div class="share-btns">
+      <a class="share-btn wa" id="shareWa" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.519 5.26l-.999 3.648 3.97-1.207zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>Compartir por WhatsApp</a>
+      <button class="share-btn" id="shareCopy" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>Copiar link</button>
+      <button class="share-btn" id="shareNative" type="button" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>Más opciones</button>
+    </div>
+  </div>
 </article>
 
 <section class="related">
@@ -205,6 +227,27 @@ footer .copy{font-size:11px;opacity:.5;margin-top:14px;border-top:1px solid rgba
   var bar = document.getElementById('readProgress');
   function up(){ var m = document.documentElement.scrollHeight - innerHeight; if(bar) bar.style.width = (m>0? (scrollY/m*100) : 0) + '%'; }
   addEventListener('scroll', up, {passive:true}); up();
+})();
+</script>
+<script>
+(function(){
+  var url = (document.querySelector('link[rel="canonical"]')||{}).href || location.href;
+  var title = (document.querySelector('.a-hero h1')||{}).textContent || document.title;
+  var text = 'Te comparto esta nota: ' + title.trim();
+  var wa = document.getElementById('shareWa');
+  if(wa) wa.href = 'https://wa.me/?text=' + encodeURIComponent(text + '\n' + url);
+  var cp = document.getElementById('shareCopy');
+  if(cp) cp.addEventListener('click', function(){
+    function done(){ cp.classList.add('copied'); cp.lastChild.textContent = '¡Copiado!'; setTimeout(function(){ cp.classList.remove('copied'); cp.lastChild.textContent = 'Copiar link'; }, 2200); }
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(url).then(done).catch(function(){ fallback(); }); }
+    else fallback();
+    function fallback(){ var t=document.createElement('textarea'); t.value=url; document.body.appendChild(t); t.select(); try{ document.execCommand('copy'); done(); }catch(e){} document.body.removeChild(t); }
+  });
+  var nt = document.getElementById('shareNative');
+  if(nt && navigator.share){
+    nt.hidden = false;
+    nt.addEventListener('click', function(){ navigator.share({title:title.trim(), text:text, url:url}).catch(function(){}); });
+  }
 })();
 </script>
 </body>
