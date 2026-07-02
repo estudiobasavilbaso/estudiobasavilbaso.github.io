@@ -38,10 +38,10 @@ button{cursor:pointer}
 .wrap{max-width:780px;margin:0 auto;padding:1.4rem 1rem 4rem}
 
 /* Topbar */
-.topbar{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1.2rem}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:.8rem 1rem;margin-bottom:1.2rem;flex-wrap:wrap}
 .brand{display:flex;align-items:center;gap:.7rem;text-decoration:none}
-.logo-badge{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--gold);background:var(--green);display:grid;place-items:center}
-.logo-badge span{font-family:'Playfair Display',serif;color:var(--gold);font-size:16px;font-weight:700}
+.logo-badge{width:44px;height:44px;display:flex;align-items:center;justify-content:center}
+.logo-badge img{width:100%;height:100%;object-fit:contain}
 .brand-txt strong{display:block;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--green)}
 .brand-txt small{display:block;color:var(--muted);font-size:10px;letter-spacing:2px;text-transform:uppercase}
 .back-link{border:1px solid var(--border);background:var(--white);border-radius:999px;padding:.5rem .9rem;color:var(--muted);font-size:12px;text-decoration:none;transition:.2s}
@@ -68,6 +68,10 @@ button{cursor:pointer}
 .field textarea{min-height:84px;resize:vertical;line-height:1.5}
 .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.18)}
 .required{color:var(--red)}
+.err-msg{color:#8a2f20;background:var(--red-soft);border:1px solid rgba(201,74,56,.35);border-radius:10px;padding:.65rem .95rem;font-size:13px;font-weight:600;margin-top:1rem}
+.input-bad{border-color:var(--red)!important;box-shadow:0 0 0 3px rgba(201,74,56,.12)}
+.card-opt:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.opt-note{color:var(--muted2);font-weight:400;font-size:12px}
 .mini-note{font-size:12.5px;color:var(--muted);line-height:1.5;margin-top:6px}
 
 /* Cards */
@@ -161,7 +165,7 @@ button{cursor:pointer}
 <div class="wrap">
   <div class="topbar">
     <a class="brand" href="index.html">
-      <div class="logo-badge"><span>EB</span></div>
+      <div class="logo-badge"><img src="eb%20dorado%20transparente.webp" alt="Estudio Jurídico Basavilbaso"></div>
       <div class="brand-txt"><strong>Basavilbaso</strong><small>Estudio Jurídico</small></div>
     </a>
     <a class="back-link" href="index.html">← Volver al sitio</a>
@@ -348,12 +352,12 @@ button{cursor:pointer}
         <h2 class="step-title">Tus datos de contacto</h2>
         <p class="step-sub">Para poder responderte y enviarte tu evaluación. Solo te pedimos lo esencial.</p>
         <div class="grid2">
-          <div class="field"><label>Nombre y apellido <span class="required">*</span></label><input id="cli_nombre" type="text" placeholder="Tu nombre"></div>
-          <div class="field"><label>DNI <span class="required">*</span></label><input id="cli_dni" type="text" placeholder="Ej: 28.341.210"></div>
+          <div class="field"><label>Nombre y apellido <span class="required">*</span></label><input id="cli_nombre" type="text" autocomplete="name" placeholder="Tu nombre"></div>
+          <div class="field"><label>DNI <span class="opt-note">(opcional)</span></label><input id="cli_dni" type="text" inputmode="numeric" placeholder="Ej: 28.341.210"></div>
         </div>
         <div class="grid2">
-          <div class="field"><label>WhatsApp <span class="required">*</span></label><input id="cli_tel" type="tel" placeholder="11 2345-6789"></div>
-          <div class="field"><label>Email <span class="required">*</span></label><input id="cli_email" type="email" placeholder="tu@email.com"></div>
+          <div class="field"><label>WhatsApp <span class="required">*</span></label><input id="cli_tel" type="tel" autocomplete="tel" placeholder="11 2345-6789"></div>
+          <div class="field"><label>Email <span class="required">*</span></label><input id="cli_email" type="email" autocomplete="email" placeholder="tu@email.com"></div>
         </div>
         <div class="field"><label>¿Dónde vivís?</label><input id="cli_zona" type="text" placeholder="Ej: CABA, La Plata, Córdoba"></div>
         <div class="field"><label>¿Cómo preferís que te atendamos?</label>
@@ -412,10 +416,6 @@ button{cursor:pointer}
 
 <script>
 const WHATSAPP = '5491169766772';
-const PRICES = {
-  conjuntoBase: 450000, unilateralBase: 650000, nosabeBase: 550000,
-  hijos: 180000, bienes: 220000, sociedad: 180000
-};
 let state = {tipo:null, hijos:null, area:null};
 let currentId = 's0';
 const FLOWS = {
@@ -429,9 +429,16 @@ function val(id){return $(id)?.value?.trim() || ''}
 function checked(id){return !!$(id)?.checked}
 function selectOpt(el){
   const g=el.dataset.group;
-  document.querySelectorAll(`[data-group="${g}"]`).forEach(x=>x.classList.remove('selected'));
-  el.classList.add('selected'); state[g]=el.dataset.val;
+  document.querySelectorAll(`[data-group="${g}"]`).forEach(x=>{x.classList.remove('selected');x.setAttribute('aria-checked','false')});
+  el.classList.add('selected'); el.setAttribute('aria-checked','true'); state[g]=el.dataset.val;
+  saveDraft();
 }
+document.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('.card-opt').forEach(c=>{
+    c.setAttribute('role','radio'); c.setAttribute('tabindex','0'); c.setAttribute('aria-checked', c.classList.contains('selected')?'true':'false');
+    c.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); selectOpt(c); } });
+  });
+});
 function toggleBox(id,show){$(id).style.display=show?'block':'none'}
 function updateProgress(id){
   const prog=$('prog');
@@ -516,19 +523,28 @@ function readCards(selector,map){
   });
 }
 
+function stepError(id,msg){
+  const st=$(id); if(!st){return}
+  let e=st.querySelector('.err-msg');
+  if(!e){ e=document.createElement('div'); e.className='err-msg'; const nav=st.querySelector('.nav'); nav?st.insertBefore(e,nav):st.appendChild(e); }
+  e.textContent='⚠ '+msg;
+  e.scrollIntoView({block:'center',behavior:'smooth'});
+}
+function clearError(id){ const st=$(id); const e=st&&st.querySelector('.err-msg'); if(e) e.remove(); }
+function markBad(el){ el.classList.add('input-bad'); el.addEventListener('input',function h(){el.classList.remove('input-bad')},{once:true}); el.focus(); }
 function validateById(id){
-  if(id==='s1' && !state.tipo){alert('Elegí una opción para continuar.');return false}
-  if(id==='s2' && !state.hijos){alert('Indicá si tienen hijos en común.');return false}
-  if(id==='su1' && !val('su_relacion')){$('su_relacion').focus();alert('Contanos cuál es tu relación con la persona fallecida.');return false}
+  clearError(id);
+  if(id==='s1' && !state.tipo){stepError('s1','Elegí una opción para continuar.');return false}
+  if(id==='s2' && !state.hijos){stepError('s2','Indicá si tienen hijos en común.');return false}
+  if(id==='su1' && !val('su_relacion')){markBad($('su_relacion'));stepError('su1','Contanos cuál es tu relación con la persona fallecida.');return false}
   if(id==='s5'){
-    if(!val('cli_nombre')){$('cli_nombre').focus();alert('Necesitamos tu nombre.');return false}
-    if(!val('cli_dni')){$('cli_dni').focus();alert('Necesitamos tu DNI.');return false}
-    if(!val('cli_tel')){$('cli_tel').focus();alert('Necesitamos tu WhatsApp para responderte.');return false}
+    if(!val('cli_nombre')){markBad($('cli_nombre'));stepError('s5','Necesitamos tu nombre.');return false}
+    if(!val('cli_tel')){markBad($('cli_tel'));stepError('s5','Necesitamos tu WhatsApp para responderte.');return false}
     const em=val('cli_email');
-    if(!em){$('cli_email').focus();alert('Necesitamos tu email.');return false}
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){$('cli_email').focus();alert('Revisá tu email: parece incompleto.');return false}
+    if(!em){markBad($('cli_email'));stepError('s5','Necesitamos tu email.');return false}
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){markBad($('cli_email'));stepError('s5','Revisá tu email: parece incompleto.');return false}
   }
-  if(id==='s7' && !checked('acepta_privacidad')){alert('Para enviar tu consulta, aceptá el uso de tus datos.');return false}
+  if(id==='s7' && !checked('acepta_privacidad')){stepError('s7','Para enviar tu consulta, aceptá el uso de tus datos.');return false}
   return true;
 }
 function beforeShow(id){
@@ -541,7 +557,8 @@ function showStepId(id){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 function startFlow(){
-  if(!state.area){alert('Elegí una opción para continuar.');return}
+  if(!state.area){stepError('s0','Elegí una opción para continuar.');return}
+  clearError('s0');
   flow=FLOWS[state.area]; idx=0;
   showStepId(flow[0]);
 }
@@ -570,13 +587,13 @@ function reviewReasons(){
   return r;
 }
 function calculateQuote(){
-  const d={total:0,items:[],requiresReview:false,reasons:[]};
-  if(state.tipo==='unilateral'){d.total=PRICES.unilateralBase;d.items.push('divorcio unilateral')}
-  else if(state.tipo==='conjunto'){d.total=PRICES.conjuntoBase;d.items.push('divorcio de común acuerdo')}
-  else {d.total=PRICES.nosabeBase;d.items.push('evaluación de caso')}
-  if(state.hijos==='si'){d.total+=PRICES.hijos;d.items.push('hijos y alimentos')}
-  if(checked('has_vivienda')||checked('has_vehiculos')||checked('has_inmuebles')){d.total+=PRICES.bienes;d.items.push('división de bienes')}
-  if(checked('has_empresas')){d.total+=PRICES.sociedad;d.items.push('sociedades/inversiones')}
+  const d={items:[],requiresReview:false,reasons:[]};
+  if(state.tipo==='unilateral'){d.items.push('divorcio unilateral')}
+  else if(state.tipo==='conjunto'){d.items.push('divorcio de común acuerdo')}
+  else {d.items.push('evaluación de caso')}
+  if(state.hijos==='si'){d.items.push('hijos y alimentos')}
+  if(checked('has_vivienda')||checked('has_vehiculos')||checked('has_inmuebles')){d.items.push('división de bienes')}
+  if(checked('has_empresas')){d.items.push('sociedades/inversiones')}
   d.reasons=reviewReasons();
   d.requiresReview=d.reasons.length>0;
   return d;
@@ -645,7 +662,7 @@ function buildCaseTextSucesion(){
   const bienes=sucesionBienes();
   let msg = `*CONSULTA DE SUCESIÓN* (desde la web)\n\n`;
   msg += `👤 *Nombre:* ${val('cli_nombre')}\n`;
-  msg += `🪪 *DNI:* ${val('cli_dni')}\n`;
+  if(val('cli_dni')) msg += `🪪 *DNI:* ${val('cli_dni')}\n`;
   msg += `📱 *WhatsApp:* ${val('cli_tel')}\n`;
   msg += `✉️ *Email:* ${val('cli_email')}\n`;
   if(val('cli_zona')) msg += `📍 *Zona:* ${val('cli_zona')}\n`;
@@ -697,7 +714,7 @@ function buildCaseText(){
 
   let msg = `*CONSULTA DE DIVORCIO* (desde la web)\n\n`;
   msg += `👤 *Nombre:* ${val('cli_nombre')}\n`;
-  msg += `🪪 *DNI:* ${val('cli_dni')}\n`;
+  if(val('cli_dni')) msg += `🪪 *DNI:* ${val('cli_dni')}\n`;
   msg += `📱 *WhatsApp:* ${val('cli_tel')}\n`;
   msg += `✉️ *Email:* ${val('cli_email')}\n`;
   if(val('cli_zona')) msg += `📍 *Zona:* ${val('cli_zona')}\n`;
@@ -768,13 +785,44 @@ function sendEmail(){
 }
 
 function sendWhatsApp(){
-  if(!checked('acepta_privacidad')){alert('Para enviar tu consulta, aceptá el uso de tus datos.');return}
+  if(!checked('acepta_privacidad')){stepError('s7','Para enviar tu consulta, aceptá el uso de tus datos.');return}
+  clearError('s7');
   const msg = buildCaseText();
   sendEmail().catch(e=>console.warn('Email no enviado:',e));
   const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
   window.open(url,'_blank');
+  try{sessionStorage.removeItem(DRAFT_KEY)}catch(e){}
   showStepId('s8');
 }
+/* ── Autoguardado (retomá donde quedaste) ── */
+const DRAFT_KEY='eb_consulta_draft';
+function saveDraft(){
+  try{
+    const d={state:state, vals:{}};
+    document.querySelectorAll('input[id],select[id],textarea[id]').forEach(el=>{
+      if(el.type==='checkbox') d.vals[el.id]=el.checked; else if(el.value) d.vals[el.id]=el.value;
+    });
+    sessionStorage.setItem(DRAFT_KEY,JSON.stringify(d));
+  }catch(e){}
+}
+document.addEventListener('input',saveDraft);
+document.addEventListener('change',saveDraft);
+(function restoreDraft(){
+  try{
+    const d=JSON.parse(sessionStorage.getItem(DRAFT_KEY)||'null'); if(!d) return;
+    Object.entries(d.vals||{}).forEach(([id,v])=>{
+      const el=$(id); if(!el) return;
+      if(el.type==='checkbox'){ if(v && !el.checked){ el.checked=true; el.dispatchEvent(new Event('change')); } }
+      else if(v) el.value=v;
+    });
+    if(d.state){
+      state=Object.assign(state,d.state);
+      ['area','tipo','hijos'].forEach(g=>{
+        if(state[g]){ const el=document.querySelector(`[data-group="${g}"][data-val="${state[g]}"]`); if(el){el.classList.add('selected');el.setAttribute('aria-checked','true');} }
+      });
+    }
+  }catch(e){}
+})();
 showStepId('s0');
 </script>
   <script src="i18n-consulta.js"></script>
