@@ -49,7 +49,9 @@
   t('y presencial',       'and in-person',     'e presencial',     'und persönlich',     'и очно');
   t('WhatsApp directo',   'Direct WhatsApp',   'WhatsApp direto',  'WhatsApp direkt',    'WhatsApp напрямую');
   t('Respuesta',          'Response',          'Resposta',         'Antwort',            'Ответ');
+  t('Años de práctica',   'Years in practice', 'Anos de prática',  'Jahre Praxis',       'Лет практики');
   t('Idiomas',            'Languages',         'Idiomas',          'Sprachen',           'Языки');
+  t('Abrir el calendario','Open the calendar', 'Abrir o calendário','Kalender öffnen',   'Открыть календарь');
 
   /* Testimonios */
   t('Lo que dicen',       'What they say',     'O que dizem',      'Was sie sagen',      'Отзывы');
