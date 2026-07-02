@@ -97,6 +97,28 @@ body{font-family:'Raleway',sans-serif;background:var(--cream);color:var(--text);
 .btn-ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.4)}
 .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
 
+/* Barra de progreso de lectura */
+.read-progress{position:fixed;top:0;left:0;z-index:100;height:2.5px;width:0;background:linear-gradient(90deg,var(--gold),var(--gold-lt));box-shadow:0 0 8px rgba(201,168,76,.5);pointer-events:none}
+
+/* Filtros por categoría */
+.filters{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;max-width:980px;margin:0 auto;padding:34px 6% 0}
+.chip{border:1px solid var(--border);background:var(--white);border-radius:999px;padding:.55rem 1.25rem;font-family:'Raleway',sans-serif;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:.2s}
+.chip:hover{border-color:var(--gold);color:var(--green)}
+.chip.active{background:var(--green);border-color:var(--green);color:#fff}
+
+/* Revelado al entrar en pantalla */
+.fade-in{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.2,.7,.3,1),transform .7s cubic-bezier(.2,.7,.3,1)}
+.fade-in.visible{opacity:1;transform:none}
+.grid>.fade-in:nth-child(2){transition-delay:.07s}
+.grid>.fade-in:nth-child(3){transition-delay:.14s}
+@media (prefers-reduced-motion: reduce){.fade-in{opacity:1;transform:none;transition:none}}
+
+/* Sheen en CTAs */
+.sheen{position:relative;overflow:hidden}
+.sheen::before{content:'';position:absolute;top:0;left:-130%;width:55%;height:100%;z-index:1;background:linear-gradient(105deg,transparent 0%,rgba(255,255,255,.32) 50%,transparent 100%);transform:skewX(-20deg);transition:left .7s ease;pointer-events:none}
+.sheen:hover::before{left:150%}
+@media (prefers-reduced-motion: reduce){.sheen::before{display:none}}
+
 footer{background:var(--green-ink);color:rgba(255,255,255,.5);text-align:center;padding:46px 6% 40px;font-size:13px;margin-top:54px}
 footer a{color:var(--gold-lt);text-decoration:none}
 footer a:hover{color:var(--gold)}
@@ -122,6 +144,7 @@ footer .copy{font-size:11px;opacity:.5;margin-top:14px;border-top:1px solid rgba
 </style>
 </head>
 <body>
+<div class="read-progress" id="readProgress" aria-hidden="true"></div>
 <div class="topbar">
   <a class="brand" href="index.html">
     <div class="logo-badge"><img src="eb%20dorado%20transparente.webp" alt="Estudio Jurídico Basavilbaso"></div>
@@ -139,10 +162,17 @@ footer .copy{font-size:11px;opacity:.5;margin-top:14px;border-top:1px solid rgba
   </div>
 </header>
 
+<nav class="filters" aria-label="Filtrar por tema">
+  <button class="chip active" data-cat="all" type="button">Todos</button>
+  <button class="chip" data-cat="divorcio" type="button">Divorcio</button>
+  <button class="chip" data-cat="hijos" type="button">Hijos</button>
+  <button class="chip" data-cat="reflexion" type="button">Reflexión</button>
+</nav>
+
 <main class="wrap">
 
   <!-- Artículo destacado -->
-  <a class="feat" href="blog-divorcio-hoy-argentina.html">
+  <a class="feat fade-in" data-cat="divorcio" href="blog-divorcio-hoy-argentina.html">
     <div class="feat-art">
       <span class="tag">Destacado · Divorcio</span>
       <h2>Qué es el divorcio hoy en Argentina</h2>
@@ -157,7 +187,7 @@ footer .copy{font-size:11px;opacity:.5;margin-top:14px;border-top:1px solid rgba
   <!-- Grilla de artículos -->
   <div class="grid">
 
-    <a class="card" href="blog-pensar-en-separarse.html">
+    <a class="card fade-in" data-cat="reflexion" href="blog-pensar-en-separarse.html">
       <img class="card-img" src="img-pensar.webp" alt="Taza de café ya frío sobre la mesa por la noche" width="600" height="178" loading="lazy">
       <span class="tag">Reflexión</span>
       <h3>Cuando empezás a pensar en separarte</h3>
@@ -165,7 +195,7 @@ footer .copy{font-size:11px;opacity:.5;margin-top:14px;border-top:1px solid rgba
       <div class="meta">2 jun 2026 <span class="dot">·</span> 6 min</div>
     </a>
 
-    <a class="card" href="blog-divorcio-unilateral.html">
+    <a class="card fade-in" data-cat="divorcio" href="blog-divorcio-unilateral.html">
       <img class="card-img" src="img-unilateral.webp" alt="Persona mirando por la ventana hacia la luz de la mañana" width="600" height="178" loading="lazy">
       <span class="tag">Divorcio</span>
       <h3>¿Puedo divorciarme si mi pareja no quiere?</h3>
@@ -173,7 +203,7 @@ footer .copy{font-size:11px;opacity:.5;margin-top:14px;border-top:1px solid rgba
       <div class="meta">13 jun 2026 <span class="dot">·</span> 6 min</div>
     </a>
 
-    <a class="card" href="blog-divorcio-comun-acuerdo.html">
+    <a class="card fade-in" data-cat="divorcio" href="blog-divorcio-comun-acuerdo.html">
       <img class="card-img" src="img-comun-acuerdo.webp" alt="Dos tazas de café y un cuaderno abierto entre dos personas conversando" width="600" height="178" loading="lazy">
       <span class="tag">Divorcio</span>
       <h3>Divorcio de común acuerdo: el valor del convenio</h3>
@@ -181,7 +211,7 @@ footer .copy{font-size:11px;opacity:.5;margin-top:14px;border-top:1px solid rgba
       <div class="meta">18 jun 2026 <span class="dot">·</span> 7 min</div>
     </a>
 
-    <a class="card" href="blog-mitos-del-divorcio.html">
+    <a class="card fade-in" data-cat="divorcio" href="blog-mitos-del-divorcio.html">
       <img class="card-img" src="img-mitos.webp" alt="Manos sosteniendo un libro abierto junto a una ventana iluminada" width="600" height="178" loading="lazy">
       <span class="tag">Divorcio</span>
       <h3>Los mitos más comunes sobre el divorcio</h3>
@@ -189,7 +219,7 @@ footer .copy{font-size:11px;opacity:.5;margin-top:14px;border-top:1px solid rgba
       <div class="meta">23 jun 2026 <span class="dot">·</span> 6 min</div>
     </a>
 
-    <a class="card" href="blog-hijos-en-la-separacion.html">
+    <a class="card fade-in" data-cat="hijos" href="blog-hijos-en-la-separacion.html">
       <img class="card-img" src="img-hijos.webp" alt="Padre e hijo caminando de la mano al atardecer" width="600" height="178" loading="lazy">
       <span class="tag">Hijos</span>
       <h3>Los hijos en la separación: ni premio ni castigo</h3>
@@ -205,7 +235,7 @@ footer .copy{font-size:11px;opacity:.5;margin-top:14px;border-top:1px solid rgba
     <h2>¿Tu caso necesita algo más que un artículo?</h2>
     <p>Cada historia es distinta. Si querés entender qué corresponde en tu situación concreta, escribinos: te respondemos con claridad, en privado y sin presiones.</p>
     <div class="cta-btns">
-      <a class="btn btn-wa" href="https://wa.me/5491169766772?text=Hola%2C%20le%C3%AD%20el%20blog%20y%20quiero%20hacer%20una%20consulta." target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.519 5.26l-.999 3.648 3.97-1.207zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>Consultar por WhatsApp</a>
+      <a class="btn btn-wa sheen" href="https://wa.me/5491169766772?text=Hola%2C%20le%C3%AD%20el%20blog%20y%20quiero%20hacer%20una%20consulta." target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.519 5.26l-.999 3.648 3.97-1.207zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>Consultar por WhatsApp</a>
       <a class="btn btn-ghost" href="consulta-divorcio.html">Evaluá tu caso gratis</a>
     </div>
   </section>
@@ -219,5 +249,33 @@ footer .copy{font-size:11px;opacity:.5;margin-top:14px;border-top:1px solid rgba
 </footer>
 
 <a class="wa-float" href="https://wa.me/5491169766772?text=Hola%2C%20quiero%20hacer%20una%20consulta." target="_blank" rel="noopener" aria-label="Escribinos por WhatsApp"><svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.519 5.26l-.999 3.648 3.97-1.207zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg></a>
+<script>
+(function(){
+  /* Progreso de lectura */
+  var bar = document.getElementById('readProgress');
+  function up(){ var m = document.documentElement.scrollHeight - innerHeight; if(bar) bar.style.width = (m>0? (scrollY/m*100) : 0) + '%'; }
+  addEventListener('scroll', up, {passive:true}); up();
+
+  /* Revelado al scroll */
+  var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } }); }, {threshold:.12});
+  document.querySelectorAll('.fade-in').forEach(function(el){ io.observe(el); });
+
+  /* Filtros por categoría */
+  var chips = document.querySelectorAll('.chip');
+  chips.forEach(function(ch){
+    ch.addEventListener('click', function(){
+      chips.forEach(function(c){ c.classList.remove('active'); });
+      ch.classList.add('active');
+      var cat = ch.dataset.cat;
+      document.querySelectorAll('[data-cat]').forEach(function(el){
+        if(el.classList.contains('chip')) return;
+        var show = (cat==='all' || el.dataset.cat===cat);
+        el.style.display = show ? '' : 'none';
+        if(show) el.classList.add('visible');
+      });
+    });
+  });
+})();
+</script>
 </body>
 </html>

@@ -589,12 +589,28 @@
     .f-brand-name { color: var(--white); font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; }
     .f-brand-name small { display: block; color: rgba(201,168,76,0.6); font-size: 9px; letter-spacing: 3px; }
     .f-brand p { color: rgba(255,255,255,0.4); font-size: 13px; font-weight: 300; line-height: 1.75; max-width: 260px; }
-    .f-col h4 { color: var(--gold); font-size: 10.5px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; }
-    .f-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-    .f-col ul li a { color: rgba(255,255,255,0.5); font-size: 13px; text-decoration: none; font-weight: 300; transition: color .2s; }
-    .f-col ul li a:hover { color: var(--gold); }
+    .f-wa {
+      display: inline-flex; align-items: center; gap: 9px; align-self: flex-start;
+      border: 1px solid rgba(37,211,102,0.45); border-radius: 999px; padding: 10px 20px;
+      color: #7CE0A3; font-size: 13px; font-weight: 600; text-decoration: none; transition: .2s;
+    }
+    .f-wa:hover { background: rgba(37,211,102,0.1); border-color: #25D366; color: #9FF0BD; }
+    .f-wa .ico { width: 16px; height: 16px; }
+    .f-col h4 {
+      display: inline-block; color: var(--gold); font-size: 10.5px; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px;
+      padding-bottom: 8px; border-bottom: 1px solid rgba(201,168,76,0.35);
+    }
+    .f-col ul { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+    .f-col ul li a {
+      display: inline-block; color: rgba(255,255,255,0.5); font-size: 13px; text-decoration: none;
+      font-weight: 300; padding: 3px 0; transition: color .2s, transform .2s;
+    }
+    .f-col ul li a:hover { color: var(--gold); transform: translateX(4px); }
+    .f-ornament { display: flex; align-items: center; gap: 14px; margin-bottom: 26px; }
+    .f-ornament::before, .f-ornament::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.08); }
+    .f-ornament span { width: 7px; height: 7px; border: 1px solid rgba(201,168,76,0.6); transform: rotate(45deg); flex: 0 0 auto; }
     .footer-bottom {
-      border-top: 1px solid rgba(255,255,255,0.07); padding-top: 28px;
       display: flex; justify-content: space-between; align-items: center;
     }
     .footer-bottom p { color: rgba(255,255,255,0.25); font-size: 11.5px; }
@@ -659,7 +675,10 @@
       .services-section, .faq-section, .booking-section, .process-section { padding: 64px 6%; }
       .about-text { padding: 38px 24px; }
       .contacto { padding: 56px 6%; }
-      .footer-top { grid-template-columns: 1fr; }
+      footer { padding: 48px 6% 28px; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 34px 22px; margin-bottom: 38px; }
+      .f-brand { grid-column: 1 / -1; }
+      .f-brand p { max-width: none; }
       .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
     }
 
@@ -1213,6 +1232,7 @@
         <div class="f-brand-name">Basavilbaso <small>Estudio Jurídico</small></div>
       </div>
       <p>Especialistas en Divorcios y Sucesiones en Buenos Aires. Asesoramiento profesional, claro y personalizado. Virtual y presencial.</p>
+      <a class="f-wa" href="https://wa.me/5491169766772?text=Hola%2C%20quiero%20hacer%20una%20consulta." target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-chat"/></svg>Escribinos por WhatsApp</a>
     </div>
     <div class="f-col">
       <h4>Servicios</h4>
@@ -1238,6 +1258,7 @@
       </ul>
     </div>
   </div>
+  <div class="f-ornament" aria-hidden="true"><span></span></div>
   <div class="footer-bottom">
     <p>© 2026 Estudio Jurídico Basavilbaso — Divorcios y Sucesiones</p>
     <div class="f-socials">
