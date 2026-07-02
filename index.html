@@ -108,12 +108,29 @@
       position: absolute; inset: 0; z-index: 0;
       background-image:
         radial-gradient(135% 95% at 72% 6%, rgba(74,128,100,0.28) 0%, rgba(30,61,43,0) 50%),
-        url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1600&q=80&auto=format&fit=crop'),
         linear-gradient(165deg, #1b3a29 0%, #0f2719 55%, #091a11 100%);
       background-size: cover; background-position: center; background-repeat: no-repeat;
       transform: scale(1.04);
       transition: transform 8s ease-out;
     }
+    /* Auroras ambientales: luz que deriva lentamente detrás del contenido */
+    .hero::before, .hero::after {
+      content: ''; position: absolute; z-index: 1; border-radius: 50%;
+      pointer-events: none; filter: blur(70px);
+    }
+    .hero::before {
+      width: 560px; height: 560px; top: -160px; right: -120px;
+      background: radial-gradient(circle, rgba(201,168,76,0.16) 0%, rgba(201,168,76,0) 65%);
+      animation: auroraA 26s ease-in-out infinite alternate;
+    }
+    .hero::after {
+      width: 640px; height: 640px; bottom: -220px; left: -160px;
+      background: radial-gradient(circle, rgba(58,112,87,0.32) 0%, rgba(58,112,87,0) 65%);
+      animation: auroraB 32s ease-in-out infinite alternate;
+    }
+    @keyframes auroraA { from { transform: translate(0,0) scale(1); } to { transform: translate(-90px,60px) scale(1.18); } }
+    @keyframes auroraB { from { transform: translate(0,0) scale(1); } to { transform: translate(110px,-70px) scale(1.12); } }
+    @media (prefers-reduced-motion: reduce), (max-width: 580px) { .hero::before, .hero::after { animation: none; } }
     .hero-bg::after {
       content: '';
       position: absolute; inset: 0;
@@ -283,9 +300,10 @@
       align-items: stretch; background: var(--cream);
     }
     .about-img {
-      position: relative; background: var(--green-deep);
+      position: relative; background: var(--green-deep); overflow: hidden;
     }
-    .about-photo { display: block; width: 100%; height: auto; }
+    .about-photo { display: block; width: 100%; height: auto; transition: transform 1.4s cubic-bezier(.2,.7,.3,1); }
+    .about-section:hover .about-photo { transform: scale(1.025); }
     .about-img::after {
       content: ''; position: absolute; inset: 0;
       background: linear-gradient(to right, rgba(13,35,24,0.15), transparent);
@@ -316,14 +334,25 @@
     .section-header .eyebrow { display: block; margin-bottom: 12px; }
     .section-header h2 { font-family: 'Playfair Display', serif; font-size: clamp(28px,4vw,46px); color: var(--green); line-height: 1.2; }
     .section-header .gold-line { margin: 18px auto 0; }
+    /* La línea dorada se dibuja al entrar en pantalla */
+    .section-header.fade-in .gold-line { width: 0; transition: width .9s cubic-bezier(.2,.7,.3,1) .25s; }
+    .section-header.fade-in.visible .gold-line { width: 48px; }
+    @media (prefers-reduced-motion: reduce) { .section-header.fade-in .gold-line { width: 48px; transition: none; } }
 
     .services-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
     .svc-card {
-      border-radius: 8px; overflow: hidden;
+      position: relative; border-radius: 8px; overflow: hidden;
       background: var(--cream); border: 1px solid var(--cream-dk);
       transition: all .28s; cursor: default;
     }
+    .svc-card::after {
+      content: ''; position: absolute; left: 0; bottom: 0; width: 100%; height: 2.5px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-lt));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .45s cubic-bezier(.2,.7,.3,1);
+    }
     .svc-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(21,46,31,.13); border-color: rgba(201,168,76,0.4); }
+    .svc-card:hover::after { transform: scaleX(1); }
     .svc-card-body { padding: 34px 30px 32px; }
     .svc-card-body h3 { font-family: 'Playfair Display', serif; font-size: 19px; color: var(--green); margin-bottom: 10px; }
     .svc-card-body p { color: var(--muted); font-size: 13.5px; line-height: 1.75; font-weight: 300; }
@@ -335,7 +364,8 @@
     .blog-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; max-width: 1120px; margin: 0 auto; }
     .bh-card { display: flex; flex-direction: column; background: var(--cream); border: 1px solid var(--cream-dk); border-radius: 12px; overflow: hidden; text-decoration: none; transition: all .28s; }
     .bh-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(21,46,31,.13); border-color: rgba(201,168,76,0.4); }
-    .bh-card img { width: 100%; height: 184px; object-fit: cover; display: block; }
+    .bh-card img { width: 100%; height: 184px; object-fit: cover; display: block; transition: transform .8s cubic-bezier(.2,.7,.3,1); }
+    .bh-card:hover img { transform: scale(1.06); }
     .bh-body { padding: 24px 26px 28px; display: flex; flex-direction: column; flex: 1; }
     .bh-tag { font-size: 10.5px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold-deep); margin-bottom: 10px; }
     .bh-body h3 { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--green); line-height: 1.25; margin-bottom: 10px; }
@@ -637,8 +667,8 @@
     .fade-in { opacity: 0; transform: translateY(28px); transition: opacity .7s cubic-bezier(.2,.7,.3,1), transform .7s cubic-bezier(.2,.7,.3,1); }
     .fade-in.visible { opacity: 1; transform: none; }
     /* Revelado escalonado elegante en grillas */
-    .services-grid > .fade-in:nth-child(2), .contacto-inner > .fade-in:nth-child(2) { transition-delay: .07s; }
-    .services-grid > .fade-in:nth-child(3) { transition-delay: .14s; }
+    .services-grid > .fade-in:nth-child(2), .contacto-inner > .fade-in:nth-child(2), .blog-grid > .fade-in:nth-child(2) { transition-delay: .07s; }
+    .services-grid > .fade-in:nth-child(3), .blog-grid > .fade-in:nth-child(3) { transition-delay: .14s; }
     .services-grid > .fade-in:nth-child(4) { transition-delay: .21s; }
     .services-grid > .fade-in:nth-child(5) { transition-delay: .28s; }
     .services-grid > .fade-in:nth-child(6) { transition-delay: .35s; }
@@ -758,7 +788,27 @@
     @media (min-width: 961px) { .mobile-menu, .mobile-menu-overlay { display: none; } }
 
     /* ─── NAV SCROLL STATE ─── */
-    nav.scrolled { height: 60px; background: rgba(13,35,24,0.97); box-shadow: 0 6px 24px rgba(0,0,0,0.22); }
+    nav.scrolled { height: 60px; background: rgba(13,35,24,0.86); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); box-shadow: 0 6px 24px rgba(0,0,0,0.22); }
+
+    /* Barra de progreso de lectura */
+    .scroll-progress {
+      position: fixed; top: 0; left: 0; z-index: 1200;
+      height: 2.5px; width: 0;
+      background: linear-gradient(90deg, var(--gold), var(--gold-lt));
+      box-shadow: 0 0 8px rgba(201,168,76,0.55);
+      pointer-events: none;
+    }
+
+    /* Sheen: brillo que barre los CTAs al pasar el mouse */
+    .sheen { position: relative; overflow: hidden; }
+    .sheen::before {
+      content: ''; position: absolute; top: 0; left: -130%;
+      width: 55%; height: 100%; z-index: 1;
+      background: linear-gradient(105deg, transparent 0%, rgba(255,255,255,0.32) 50%, transparent 100%);
+      transform: skewX(-20deg); transition: left .7s ease; pointer-events: none;
+    }
+    .sheen:hover::before { left: 150%; }
+    @media (prefers-reduced-motion: reduce) { .sheen::before { display: none; } }
 
     /* ─── SVG ICONS ─── */
     .ico { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; display: inline-block; vertical-align: middle; }
@@ -841,6 +891,9 @@
   <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 17l-5.2 2.6 1-5.8L3.5 9.7l5.9-.9z"/></symbol>
 </svg>
 
+<!-- Progreso de lectura -->
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
 <!-- NAV -->
 <nav id="mainNav">
   <a href="#home" class="nav-logo">
@@ -867,7 +920,7 @@
       <button class="i18n-btn lang-item" data-lang="ru" type="button"><span class="lang-code">RU</span>Русский</button>
     </div>
   </div>
-  <a href="#turnos" class="nav-cta nav-cta-desktop">Agendá tu consulta</a>
+  <a href="#turnos" class="nav-cta nav-cta-desktop sheen">Agendá tu consulta</a>
 
   <!-- Botón hamburguesa (solo móvil) -->
   <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu" type="button">
@@ -901,7 +954,7 @@
       Asesoramiento jurídico profesional, claro y sin vueltas. Atención virtual y presencial en Buenos Aires.
     </p>
     <div class="qa-buttons hero-qa">
-      <a href="https://wa.me/5491169766772?text=Hola,%20quiero%20una%20consulta%20gratis." class="qa-btn wa-primary" target="_blank" rel="noopener"><img class="qa-ico" src="whatsapp.webp" alt="" loading="eager" width="58" height="58"><span>Consultá gratis por WhatsApp</span></a>
+      <a href="https://wa.me/5491169766772?text=Hola,%20quiero%20una%20consulta%20gratis." class="qa-btn wa-primary sheen" target="_blank" rel="noopener"><img class="qa-ico" src="whatsapp.webp" alt="" loading="eager" width="58" height="58"><span>Consultá gratis por WhatsApp</span></a>
       <a href="#turnos" class="qa-btn"><img class="qa-ico" src="agenda.webp" alt="" loading="eager" width="58" height="58"><span>Agendá tu consulta</span></a>
       <a href="consulta-divorcio.html" class="qa-btn"><img class="qa-ico" src="formulario.webp" alt="" loading="eager" width="58" height="58"><span>Evaluá tu caso</span></a>
     </div>
@@ -1022,7 +1075,7 @@
     <div class="eyebrow" style="color:var(--gold-lt); margin-bottom:14px;">Herramienta gratuita</div>
     <h2 style="font-family:'Playfair Display',serif; font-size:clamp(26px,4vw,40px); color:var(--white); line-height:1.2; margin-bottom:16px;">¿Tenés que resolver un divorcio o una sucesión?</h2>
     <p style="color:rgba(255,255,255,0.6); font-size:16px; line-height:1.7; font-weight:300; margin-bottom:32px;">Respondé unas preguntas simples y obtené al instante una evaluación preliminar de tu caso —divorcio o sucesión—, con orientación de honorarios. Confidencial y sin compromiso.</p>
-    <a href="consulta-divorcio.html" style="display:inline-flex; align-items:center; gap:10px; background:var(--gold); color:var(--green-ink); padding:17px 38px; border-radius:3px; font-weight:700; font-size:14px; letter-spacing:1.5px; text-transform:uppercase; text-decoration:none; transition:all .2s;" onmouseover="this.style.background='#E2C47A'" onmouseout="this.style.background='#C9A84C'">📋 Evaluá tu caso ahora</a>
+    <a href="consulta-divorcio.html" class="sheen" style="display:inline-flex; align-items:center; gap:10px; background:var(--gold); color:var(--green-ink); padding:17px 38px; border-radius:3px; font-weight:700; font-size:14px; letter-spacing:1.5px; text-transform:uppercase; text-decoration:none; transition:all .2s;" onmouseover="this.style.background='#E2C47A'" onmouseout="this.style.background='#C9A84C'">📋 Evaluá tu caso ahora</a>
   </div>
 </section>
 
@@ -1066,7 +1119,7 @@
       <div class="calendly-inline-widget" data-url="https://calendly.com/estudiobasavilbaso/" style="min-width:320px;height:600px;"></div>
       <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
       <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-      <a class="calendly-open-btn" href="https://calendly.com/estudiobasavilbaso/" target="_blank" rel="noopener"
+      <a class="calendly-open-btn sheen" href="https://calendly.com/estudiobasavilbaso/" target="_blank" rel="noopener"
          onclick="if(window.Calendly){Calendly.initPopupWidget({url:'https://calendly.com/estudiobasavilbaso/'});return false;}">
         <svg class="ico" aria-hidden="true"><use href="#i-calendar"/></svg><span>Abrir el calendario</span>
       </a>
@@ -1113,7 +1166,7 @@
     </a>
   </div>
   <div class="blog-home-cta">
-    <a class="bh-btn" href="blog.html">Ver todos los artículos →</a>
+    <a class="bh-btn sheen" href="blog.html">Ver todos los artículos →</a>
   </div>
 </section>
 
@@ -1146,7 +1199,7 @@
       <div class="ig-stats">
         <div class="ig-stat"><div class="ig-num">+15K</div><div class="ig-lbl">Seguidores</div></div>
       </div>
-      <a class="ig-cta" href="https://instagram.com/estudiobasavilbaso" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-instagram"/></svg>Seguinos en Instagram</a>
+      <a class="ig-cta sheen" href="https://instagram.com/estudiobasavilbaso" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-instagram"/></svg>Seguinos en Instagram</a>
     </div>
   </div>
 </section>
@@ -1206,6 +1259,7 @@
 
   /* Hero parallax + nav scroll state */
   const mainNav = document.getElementById('mainNav');
+  const scrollBar = document.getElementById('scrollProgress');
   const heroBg = document.getElementById('heroBg');
   let ticking = false;
   window.addEventListener('scroll', () => {
@@ -1215,6 +1269,10 @@
       const y = window.scrollY;
       if (heroBg && y < window.innerHeight) heroBg.style.transform = `scale(1.04) translateY(${y * 0.25}px)`;
       if (mainNav) mainNav.classList.toggle('scrolled', y > 40);
+      if (scrollBar) {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        scrollBar.style.width = (max > 0 ? (y / max) * 100 : 0) + '%';
+      }
       ticking = false;
     });
   }, { passive: true });
