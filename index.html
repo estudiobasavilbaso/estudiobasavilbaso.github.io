@@ -510,6 +510,9 @@
     .step-btn.s3 { background: var(--cream); color: var(--green); }
     .step-btn.s3 .step-n { background: #25D366; color: #fff; }
     .step-btn.s3:hover { background: #fff; transform: translateY(-2px); }
+    .book-cta { display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%; margin-top: 16px; background: var(--gold); color: var(--green-ink); border-radius: 12px; padding: 15px 22px; font-size: 15px; font-weight: 800; letter-spacing: .3px; text-decoration: none; box-shadow: 0 12px 30px rgba(201,168,76,.28); transition: transform .2s, box-shadow .2s, background .2s; cursor: pointer; }
+    .book-cta:hover { background: var(--gold-lt); transform: translateY(-2px); box-shadow: 0 18px 38px rgba(201,168,76,.4); }
+    .book-cta .ico { width: 20px; height: 20px; }
     .consult-warning { display: flex; gap: 10px; align-items: flex-start; background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.25); border-radius: 12px; padding: 13px 15px; margin-top: 0; color: rgba(255,255,255,0.72); font-size: 12.5px; line-height: 1.55; }
     .consult-warning strong { color: var(--gold-lt); }
     .consult-warning a { color: var(--gold-lt); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; white-space: nowrap; }
@@ -532,9 +535,24 @@
 
     /* ─── CONTACT STRIP ─── */
     .contacto { background: var(--cream); padding: 84px 6%; }
-    .contacto-inner { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 0.82fr 1fr; gap: 54px; align-items: center; }
+    .contacto-inner { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 44px; align-items: start; }
     .cto-title { font-family: 'Playfair Display', serif; font-size: clamp(28px,4.4vw,40px); color: var(--green); line-height: 1.12; margin-bottom: 14px; }
-    .cto-lead { color: var(--muted); font-size: 15px; font-weight: 300; line-height: 1.65; margin-bottom: 30px; max-width: 400px; }
+    .cto-lead { color: var(--muted); font-size: 15px; font-weight: 300; line-height: 1.65; margin-bottom: 26px; }
+    /* Formulario de contacto */
+    .cform { background: var(--white); border: 1px solid var(--cream-dk); border-radius: 18px; padding: 32px 30px; box-shadow: 0 18px 50px rgba(13,35,24,0.06); }
+    .cf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .cf-field { display: flex; flex-direction: column; margin-bottom: 16px; }
+    .cf-field label { font-size: 12.5px; font-weight: 600; color: var(--green); margin-bottom: 7px; letter-spacing: .02em; }
+    .cf-opt { color: var(--muted); font-weight: 400; }
+    .cform input, .cform select, .cform textarea { font-family: 'Raleway', sans-serif; font-size: 14.5px; color: var(--text); background: var(--cream); border: 1px solid var(--cream-dk); border-radius: 10px; padding: 12px 14px; width: 100%; transition: border-color .2s, box-shadow .2s, background .2s; }
+    .cform input::placeholder, .cform textarea::placeholder { color: #9a9a8e; }
+    .cform input:focus, .cform select:focus, .cform textarea:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.14); background: #fff; }
+    .cform textarea { resize: vertical; min-height: 84px; }
+    .cf-err { color: #a3341f; background: #fbebe6; border: 1px solid rgba(163,52,31,.25); border-radius: 10px; padding: 10px 14px; font-size: 13px; font-weight: 600; margin-bottom: 12px; }
+    .cf-submit { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; margin-top: 4px; background: linear-gradient(135deg, #25D366, #1ebe5d); color: #fff; border: 0; border-radius: 12px; padding: 15px 22px; font-family: 'Raleway', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer; box-shadow: 0 12px 28px rgba(37,211,102,0.3); transition: transform .2s, box-shadow .2s; }
+    .cf-submit:hover { transform: translateY(-2px); box-shadow: 0 16px 36px rgba(37,211,102,0.42); }
+    .cf-submit svg { width: 20px; height: 20px; fill: #fff; }
+    .cf-note { color: var(--muted); font-size: 12px; text-align: center; margin-top: 12px; font-weight: 300; }
     .cto-row { display: flex; align-items: center; gap: 18px; background: var(--white); border: 1px solid var(--cream-dk); border-radius: 16px; padding: 18px 20px; margin-bottom: 14px; text-decoration: none; transition: .2s; }
     a.cto-row:hover { border-color: var(--gold); transform: translateY(-2px); box-shadow: 0 14px 34px rgba(13,35,24,0.08); }
     .cto-ic { width: 50px; height: 50px; flex: 0 0 auto; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center; color: var(--gold-lt); }
@@ -669,6 +687,8 @@
       .section-header { margin-bottom: 38px; }
       .blog-grid { grid-template-columns: 1fr; }
       .blog-home { padding: 64px 6%; }
+      .cf-grid { grid-template-columns: 1fr; gap: 0; }
+      .cform { padding: 26px 22px; }
       .calendly-inline-widget { display: none; }
       .calendly-open-btn { display: inline-flex; }
       .calendly-card { padding-bottom: 12px; }
@@ -918,6 +938,7 @@
   <symbol id="i-chat" viewBox="0 0 24 24"><path d="M20 11.5a7.5 7.5 0 0 1-10.9 6.7L4 19.5l1.3-4.3A7.5 7.5 0 1 1 20 11.5z"/></symbol>
   <symbol id="i-instagram" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4.5"/><circle cx="12" cy="12" r="3.6"/><circle cx="16.6" cy="7.4" r="1"/></symbol>
   <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 17l-5.2 2.6 1-5.8L3.5 9.7l5.9-.9z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 7l8.5 6 8.5-6"/></symbol>
 </svg>
 
 <!-- Progreso de lectura -->
@@ -934,6 +955,7 @@
     <li><a href="#nosotros">Quiénes somos</a></li>
     <li><a href="blog.html">Blog</a></li>
     <li><a href="#turnos">Turnos</a></li>
+    <li><a href="#contacto">Contacto</a></li>
   </ul>
   <div class="i18n-switcher" aria-label="Seleccionar idioma / Select language">
     <button class="lang-trigger" id="langTrigger" type="button" aria-haspopup="true" aria-expanded="false">
@@ -964,6 +986,7 @@
     <li><a href="#nosotros" class="mm-link">Quiénes somos</a></li>
     <li><a href="blog.html" class="mm-link">Blog</a></li>
     <li><a href="#turnos" class="mm-link">Turnos</a></li>
+    <li><a href="#contacto" class="mm-link">Contacto</a></li>
   </ul>
   <a href="#turnos" class="mm-cta"><svg class="ico" aria-hidden="true"><use href="#i-calendar"/></svg><span>Agendá tu consulta</span></a>
   <a href="https://wa.me/5491169766772?text=Hola%2C%20quiero%20hacer%20una%20consulta." class="mm-wa" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-chat"/></svg><span>Consultanos por WhatsApp</span></a>
@@ -1130,32 +1153,19 @@
           <div class="h-detail">por consulta · 1 hora</div>
         </div>
         <div class="step-btns">
-          <a class="step-btn s1" href="#agenda"><span class="step-n">1</span><span>Agendá tu día y hora</span><span class="step-arrow">→</span></a>
+          <a class="step-btn s1" href="https://calendly.com/estudiobasavilbaso/" target="_blank" rel="noopener" onclick="return openCalendly(event)"><span class="step-n">1</span><span>Agendá tu día y hora</span><span class="step-arrow">→</span></a>
           <a class="step-btn s2" href="https://mpago.la/1YH2JQe" target="_blank" rel="noopener"><span class="step-n">2</span><span>Pagar la consulta</span><span class="step-arrow">→</span></a>
           <a class="step-btn s3" href="https://wa.me/5491169766772?text=Hola,%20te%20env%C3%ADo%20el%20comprobante%20de%20pago%20de%20mi%20consulta." target="_blank" rel="noopener"><span class="step-n"><svg class="ico" aria-hidden="true"><use href="#i-chat"/></svg></span><span>Enviá el comprobante</span><span class="step-arrow">→</span></a>
         </div>
+        <a class="book-cta sheen" href="https://calendly.com/estudiobasavilbaso/" target="_blank" rel="noopener" onclick="return openCalendly(event)">
+          <svg class="ico" aria-hidden="true"><use href="#i-calendar"/></svg><span>Agendar consulta</span>
+        </a>
       </div>
     </div>
-
-    <!-- Tarjeta del calendario (Calendly) -->
-    <div class="calendly-card" id="agenda">
-      <div class="calendly-head">
-        <div class="calendly-logo"><span>EB</span></div>
-        <h3>Estudio Jurídico Basavilbaso</h3>
-        <p>Agendá tu consulta con el Dr. Basavilbaso, en el día y horario que más te convenga.</p>
-      </div>
-      <!-- Calendly inline widget begin -->
-      <div class="calendly-inline-widget" data-url="https://calendly.com/estudiobasavilbaso/" style="min-width:320px;height:600px;"></div>
-      <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-      <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-      <a class="calendly-open-btn sheen" href="https://calendly.com/estudiobasavilbaso/" target="_blank" rel="noopener"
-         onclick="if(window.Calendly){Calendly.initPopupWidget({url:'https://calendly.com/estudiobasavilbaso/'});return false;}">
-        <svg class="ico" aria-hidden="true"><use href="#i-calendar"/></svg><span>Abrir el calendario</span>
-      </a>
-      <!-- Calendly inline widget end -->
-    </div>
-
   </div>
+  <!-- Calendly (popup — no ocupa espacio en la página) -->
+  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+  <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
 </section>
 
 <!-- DEL BLOG -->
@@ -1199,36 +1209,56 @@
   </div>
 </section>
 
-<!-- CONTACTO + COMUNIDAD -->
+<!-- CONTACTO -->
 <section class="contacto" id="contacto">
+  <div class="section-header fade-in">
+    <span class="eyebrow">Contacto</span>
+    <h2>Hablemos</h2>
+    <div class="gold-line"></div>
+  </div>
   <div class="contacto-inner">
+    <!-- Formulario -->
+    <form class="cform fade-in" id="contactForm" onsubmit="return sendContact(event)" novalidate>
+      <div class="cf-grid">
+        <div class="cf-field"><label for="cf_nombre">Nombre y apellido</label><input id="cf_nombre" type="text" autocomplete="name" placeholder="Ingresá tu nombre"></div>
+        <div class="cf-field"><label for="cf_tel">Teléfono</label><input id="cf_tel" type="tel" autocomplete="tel" placeholder="+54 9 11 ..."></div>
+      </div>
+      <div class="cf-field"><label for="cf_email">Email</label><input id="cf_email" type="email" autocomplete="email" placeholder="tucorreo@ejemplo.com"></div>
+      <div class="cf-field"><label for="cf_motivo">Motivo de la consulta</label>
+        <select id="cf_motivo">
+          <option value="">Seleccioná una opción</option>
+          <option>Divorcio</option>
+          <option>División de bienes</option>
+          <option>Cuota alimentaria</option>
+          <option>Sucesión / Herencia</option>
+          <option>Otro</option>
+        </select>
+      </div>
+      <div class="cf-field"><label for="cf_msg">Contanos tu caso <span class="cf-opt">(opcional)</span></label><textarea id="cf_msg" rows="3" placeholder="Escribí tu mensaje"></textarea></div>
+      <p class="cf-err" id="cf_err" role="alert" hidden></p>
+      <button class="cf-submit sheen" type="submit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.519 5.26l-.999 3.648 3.97-1.207zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>Enviar consulta por WhatsApp →</button>
+      <p class="cf-note">Al enviar se abre WhatsApp con tu mensaje listo. Es gratis y sin compromiso.</p>
+    </form>
+
+    <!-- Datos de contacto -->
     <div class="cto-info fade-in">
-      <h2 class="cto-title">Hablemos</h2>
-      <p class="cto-lead">Estamos para ayudarte. Escribinos y te respondemos a la brevedad, de forma confidencial.</p>
+      <p class="cto-lead">Contanos tu situación y te respondemos a la brevedad, de forma confidencial. Elegí el canal que más te convenga.</p>
       <a class="cto-row" href="https://wa.me/5491169766772?text=Hola%2C%20quiero%20hacer%20una%20consulta." target="_blank" rel="noopener">
         <div class="cto-ic"><svg class="ico" aria-hidden="true"><use href="#i-chat"/></svg></div>
         <div><strong>WhatsApp · 11-6976-6772</strong><span>Respondemos en menos de 24 hs</span></div>
+      </a>
+      <a class="cto-row" href="mailto:contacto@estudiobasavilbaso.com.ar">
+        <div class="cto-ic"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg></div>
+        <div><strong>contacto@estudiobasavilbaso.com.ar</strong><span>Escribinos por email</span></div>
+      </a>
+      <a class="cto-row" href="https://instagram.com/estudiobasavilbaso" target="_blank" rel="noopener">
+        <div class="cto-ic"><svg class="ico" aria-hidden="true"><use href="#i-instagram"/></svg></div>
+        <div><strong>@estudiobasavilbaso</strong><span>+15K seguidores · Novedades y contenido</span></div>
       </a>
       <div class="cto-row">
         <div class="cto-ic"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg></div>
         <div><strong>Horario de atención</strong><span>Lunes a viernes · 10:00 – 18:00 hs</span></div>
       </div>
-    </div>
-
-    <div class="ig-card fade-in">
-      <div class="ig-head">
-        <div class="ig-avatar"><svg aria-hidden="true"><use href="#i-instagram"/></svg></div>
-        <div>
-          <div class="ig-handle">@estudiobasavilbaso</div>
-          <div class="ig-sub">Estudio Jurídico · Divorcios y Sucesiones</div>
-        </div>
-      </div>
-      <h2>Seguinos y conocé el estudio <em>por dentro</em></h2>
-      <p>Novedades legales y todo lo que hacemos día a día. Sumate a nuestra comunidad.</p>
-      <div class="ig-stats">
-        <div class="ig-stat"><div class="ig-num">+15K</div><div class="ig-lbl">Seguidores</div></div>
-      </div>
-      <a class="ig-cta sheen" href="https://instagram.com/estudiobasavilbaso" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-instagram"/></svg>Seguinos en Instagram</a>
     </div>
   </div>
 </section>
@@ -1259,6 +1289,7 @@
       <h4>Contacto</h4>
       <ul>
         <li><a href="https://wa.me/5491169766772?text=Hola%2C%20quiero%20hacer%20una%20consulta." target="_blank" rel="noopener">WhatsApp: 11-6976-6772</a></li>
+        <li><a href="mailto:contacto@estudiobasavilbaso.com.ar">contacto@estudiobasavilbaso.com.ar</a></li>
         <li><a href="https://instagram.com/estudiobasavilbaso" target="_blank" rel="noopener">@estudiobasavilbaso</a></li>
         <li><a href="#turnos">Agendar consulta</a></li>
         <li><a href="blog.html">Blog</a></li>
@@ -1392,6 +1423,40 @@
       btn.querySelector('.faq-arrow').textContent = '×';
     }
   }
+
+  /* Calendly: abrir en popup (no ocupa espacio); si no cargó, abre en pestaña nueva */
+  window.openCalendly = function(e){
+    var url = 'https://calendly.com/estudiobasavilbaso/';
+    if (window.Calendly && typeof window.Calendly.initPopupWidget === 'function') {
+      if (e) e.preventDefault();
+      window.Calendly.initPopupWidget({ url: url });
+      return false;
+    }
+    return true; /* deja que el href abra Calendly en pestaña nueva */
+  };
+
+  /* Formulario de contacto → arma el mensaje y abre WhatsApp */
+  window.sendContact = function(e){
+    if (e) e.preventDefault();
+    var g = function(id){ var el = document.getElementById(id); return el ? el.value.trim() : ''; };
+    var nombre = g('cf_nombre'), tel = g('cf_tel'), email = g('cf_email'), motivo = g('cf_motivo'), msg = g('cf_msg');
+    var err = document.getElementById('cf_err');
+    if (!nombre || !tel) {
+      err.textContent = 'Completá al menos tu nombre y tu teléfono para poder responderte.';
+      err.hidden = false;
+      (!nombre ? document.getElementById('cf_nombre') : document.getElementById('cf_tel')).focus();
+      return false;
+    }
+    err.hidden = true;
+    var t = '*Consulta desde la web*\n\n';
+    t += '👤 ' + nombre + '\n';
+    t += '📱 ' + tel + '\n';
+    if (email)  t += '✉️ ' + email + '\n';
+    if (motivo) t += '📋 Motivo: ' + motivo + '\n';
+    if (msg)    t += '📝 ' + msg + '\n';
+    window.open('https://wa.me/5491169766772?text=' + encodeURIComponent(t), '_blank', 'noopener');
+    return false;
+  };
 </script>
   <script src="i18n.js"></script>
   <script>
