@@ -53,6 +53,22 @@
   t('Idiomas',            'Languages',         'Idiomas',          'Sprachen',           'Языки');
   t('Abrir el calendario','Open the calendar', 'Abrir o calendário','Kalender öffnen',   'Открыть календарь');
 
+  /* Contacto / formulario */
+  t('Hablemos',            'Let\'s talk',        'Vamos conversar',   'Sprechen wir',       'Поговорим');
+  t('Nombre y apellido',   'Full name',          'Nome completo',     'Vor- und Nachname',  'Имя и фамилия');
+  t('Teléfono',            'Phone',              'Telefone',          'Telefon',            'Телефон');
+  t('Motivo de la consulta','Reason for inquiry','Motivo da consulta','Anliegen',           'Причина обращения');
+  t('Seleccioná una opción','Select an option',  'Selecione uma opção','Option wählen',     'Выберите вариант');
+  t('Contanos tu caso',    'Tell us about your case','Conte-nos seu caso','Schildern Sie Ihren Fall','Расскажите о вашем деле');
+  t('Enviar consulta por WhatsApp →','Send inquiry via WhatsApp →','Enviar consulta por WhatsApp →','Anfrage per WhatsApp senden →','Отправить в WhatsApp →');
+  t('Escribinos por email','Email us',           'Escreva por e-mail', 'Schreiben Sie uns',  'Напишите нам');
+  t('Agendar consulta',    'Book a consultation','Agendar consulta',  'Termin buchen',      'Записаться');
+  t('Agendá tu día y hora','Pick your day & time','Escolha dia e hora','Tag & Uhrzeit wählen','Выберите день и время');
+  t('División de bienes',  'Division of assets', 'Divisão de bens',   'Vermögensteilung',   'Раздел имущества');
+  t('Cuota alimentaria',   'Child/spousal support','Pensão alimentícia','Unterhalt',        'Алименты');
+  t('Sucesión / Herencia', 'Estate / Inheritance','Sucessão / Herança','Nachlass / Erbe',   'Наследство');
+  t('Otro',                'Other',              'Outro',             'Sonstiges',          'Другое');
+
   /* Testimonios */
   t('Lo que dicen',       'What they say',     'O que dizem',      'Was sie sagen',      'Отзывы');
   t('Clientes que ya confiaron','Clients who already trusted us','Clientes que já confiaram','Mandanten, die uns vertrauten','Клиенты, которые нам доверились');
