@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="es-AR">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-X6QBBYW2R2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-X6QBBYW2R2');
+</script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="format-detection" content="telephone=no">
@@ -71,7 +81,6 @@ button{cursor:pointer}
 .err-msg{color:#8a2f20;background:var(--red-soft);border:1px solid rgba(201,74,56,.35);border-radius:10px;padding:.65rem .95rem;font-size:13px;font-weight:600;margin-top:1rem}
 .input-bad{border-color:var(--red)!important;box-shadow:0 0 0 3px rgba(201,74,56,.12)}
 .card-opt:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
-.opt-note{color:var(--muted2);font-weight:400;font-size:12px}
 .mini-note{font-size:12.5px;color:var(--muted);line-height:1.5;margin-top:6px}
 
 /* Cards */
@@ -351,10 +360,7 @@ button{cursor:pointer}
         <p class="step-label">Paso 5 de 7</p>
         <h2 class="step-title">Tus datos de contacto</h2>
         <p class="step-sub">Para poder responderte y enviarte tu evaluación. Solo te pedimos lo esencial.</p>
-        <div class="grid2">
-          <div class="field"><label>Nombre y apellido <span class="required">*</span></label><input id="cli_nombre" type="text" autocomplete="name" placeholder="Tu nombre"></div>
-          <div class="field"><label>DNI <span class="opt-note">(opcional)</span></label><input id="cli_dni" type="text" inputmode="numeric" placeholder="Ej: 28.341.210"></div>
-        </div>
+        <div class="field"><label>Nombre y apellido <span class="required">*</span></label><input id="cli_nombre" type="text" autocomplete="name" placeholder="Tu nombre"></div>
         <div class="grid2">
           <div class="field"><label>WhatsApp <span class="required">*</span></label><input id="cli_tel" type="tel" autocomplete="tel" placeholder="11 2345-6789"></div>
           <div class="field"><label>Email <span class="required">*</span></label><input id="cli_email" type="email" autocomplete="email" placeholder="tu@email.com"></div>
@@ -662,7 +668,6 @@ function buildCaseTextSucesion(){
   const bienes=sucesionBienes();
   let msg = `*CONSULTA DE SUCESIÓN* (desde la web)\n\n`;
   msg += `👤 *Nombre:* ${val('cli_nombre')}\n`;
-  if(val('cli_dni')) msg += `🪪 *DNI:* ${val('cli_dni')}\n`;
   msg += `📱 *WhatsApp:* ${val('cli_tel')}\n`;
   msg += `✉️ *Email:* ${val('cli_email')}\n`;
   if(val('cli_zona')) msg += `📍 *Zona:* ${val('cli_zona')}\n`;
@@ -714,7 +719,6 @@ function buildCaseText(){
 
   let msg = `*CONSULTA DE DIVORCIO* (desde la web)\n\n`;
   msg += `👤 *Nombre:* ${val('cli_nombre')}\n`;
-  if(val('cli_dni')) msg += `🪪 *DNI:* ${val('cli_dni')}\n`;
   msg += `📱 *WhatsApp:* ${val('cli_tel')}\n`;
   msg += `✉️ *Email:* ${val('cli_email')}\n`;
   if(val('cli_zona')) msg += `📍 *Zona:* ${val('cli_zona')}\n`;
@@ -762,7 +766,6 @@ function buildCaseText(){
 function sendEmail(){
   const data = {
     nombre: val('cli_nombre'),
-    dni: val('cli_dni'),
     whatsapp: val('cli_tel'),
     email: val('cli_email'),
     zona: val('cli_zona'),
