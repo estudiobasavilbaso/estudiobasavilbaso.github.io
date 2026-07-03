@@ -53,6 +53,45 @@
   t('Idiomas',            'Languages',         'Idiomas',          'Sprachen',           'Языки');
   t('Abrir el calendario','Open the calendar', 'Abrir o calendário','Kalender öffnen',   'Открыть календарь');
 
+  /* Turnos — proceso de reserva */
+  t('Consulta profesional', 'Professional consultation', 'Consulta profissional', 'Professionelle Beratung', 'Профессиональная консультация');
+  t('Sesión de 1 hora, virtual o presencial. Reservar tu turno lleva tres pasos simples:',
+    'One-hour session, virtual or in person. Booking takes three simple steps:',
+    'Sessão de 1 hora, virtual ou presencial. Reservar leva três passos simples:',
+    'Einstündige Sitzung, virtuell oder persönlich. Die Buchung dauert drei einfache Schritte:',
+    'Часовая сессия, онлайн или очно. Запись занимает три простых шага:');
+  t('Elegí el turno que más te convenga en el calendario.',
+    'Pick the slot that suits you best in the calendar.',
+    'Escolha o horário que preferir no calendário.',
+    'Wählen Sie den passenden Termin im Kalender.',
+    'Выберите удобное время в календаре.');
+  t('Aboná la consulta', 'Pay for the consultation', 'Pague a consulta', 'Beratung bezahlen', 'Оплатите консультацию');
+  t('Por Mercado Pago, con tarjeta o dinero en cuenta.',
+    'Via Mercado Pago, by card or account balance.',
+    'Pelo Mercado Pago, com cartão ou saldo em conta.',
+    'Über Mercado Pago, per Karte oder Guthaben.',
+    'Через Mercado Pago, картой или со счёта.');
+  t('Enviá el comprobante por WhatsApp',
+    'Send the receipt via WhatsApp',
+    'Envie o comprovante pelo WhatsApp',
+    'Beleg per WhatsApp senden',
+    'Отправьте чек в WhatsApp');
+  t('Al recibirlo, tu turno queda confirmado.',
+    'Once received, your appointment is confirmed.',
+    'Ao recebê-lo, sua consulta fica confirmada.',
+    'Nach Erhalt ist Ihr Termin bestätigt.',
+    'После получения ваша запись подтверждена.');
+  t('Los turnos sin comprobante se liberan automáticamente para otra persona.',
+    'Appointments without a receipt are automatically released to someone else.',
+    'Horários sem comprovante são liberados automaticamente para outra pessoa.',
+    'Termine ohne Beleg werden automatisch wieder freigegeben.',
+    'Записи без чека автоматически освобождаются для других.');
+  t('Honorarios', 'Fees', 'Honorários', 'Honorar', 'Гонорар');
+  t('por consulta · 1 hora', 'per consultation · 1 hour', 'por consulta · 1 hora', 'pro Beratung · 1 Stunde', 'за консультацию · 1 час');
+  t('Virtual o presencial', 'Virtual or in person', 'Virtual ou presencial', 'Virtuell oder persönlich', 'Онлайн или очно');
+  t('Pagar por Mercado Pago', 'Pay via Mercado Pago', 'Pagar pelo Mercado Pago', 'Mit Mercado Pago zahlen', 'Оплатить через Mercado Pago');
+  t('Enviar el comprobante', 'Send the receipt', 'Enviar o comprovante', 'Beleg senden', 'Отправить чек');
+
   /* Contacto / formulario */
   t('Hablemos',            'Let\'s talk',        'Vamos conversar',   'Sprechen wir',       'Поговорим');
   t('Nombre y apellido',   'Full name',          'Nome completo',     'Vor- und Nachname',  'Имя и фамилия');
