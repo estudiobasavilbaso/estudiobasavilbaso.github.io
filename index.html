@@ -31,6 +31,7 @@
   <title>Estudio Jurídico Basavilbaso — Divorcios y Sucesiones</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <script type="application/ld+json">
   {
@@ -118,10 +119,19 @@
       position: absolute; inset: 0; z-index: 0;
       background-image:
         radial-gradient(135% 95% at 72% 6%, rgba(74,128,100,0.28) 0%, rgba(30,61,43,0) 50%),
+        url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1600&q=80&auto=format&fit=crop'),
         linear-gradient(165deg, #1b3a29 0%, #0f2719 55%, #091a11 100%);
       background-size: cover; background-position: center; background-repeat: no-repeat;
       transform: scale(1.04);
       transition: transform 8s ease-out;
+    }
+    @media (max-width: 580px) {
+      .hero-bg {
+        background-image:
+          radial-gradient(135% 95% at 72% 6%, rgba(74,128,100,0.28) 0%, rgba(30,61,43,0) 50%),
+          url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&q=75&auto=format&fit=crop'),
+          linear-gradient(165deg, #1b3a29 0%, #0f2719 55%, #091a11 100%);
+      }
     }
     /* Auroras ambientales: luz que deriva lentamente detrás del contenido */
     .hero::before, .hero::after {
