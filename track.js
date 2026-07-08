@@ -34,19 +34,32 @@
   window.trackLead = fire;
 
   document.addEventListener('DOMContentLoaded', function () {
-    // WhatsApp: cualquier enlace a wa.me / api.whatsapp
+    // Delegación global: cubre cualquier punto de contacto del sitio
+    // (home, evaluador, blog, footer, flotante…), presente o futuro,
+    // sin tener que marcar cada botón.
     document.addEventListener('click', function (ev) {
-      var a = ev.target && ev.target.closest ? ev.target.closest('a[href]') : null;
+      var t = ev.target;
+      if (!t || !t.closest) return;
+
+      // 1) Botones que abren WhatsApp por JavaScript (evaluador, etc.)
+      if (t.closest('.wa-send, [onclick*="sendWhatsApp"], [onclick*="wa.me"], [data-wa]')) {
+        fire('whatsapp'); return;
+      }
+
+      // 2) Enlaces <a>
+      var a = t.closest('a[href]');
       if (!a) return;
       var href = a.getAttribute('href') || '';
-      if (/wa\.me|api\.whatsapp\.com|web\.whatsapp\.com/i.test(href)) {
-        fire('whatsapp');
-      } else if (/calendly\.com/i.test(href) || a.classList.contains('book-cta')) {
-        fire('agenda');
-      }
+      // Solo cuenta el WhatsApp que va A NUESTRO número (contacto). Los
+      // botones de "compartir" del blog abren wa.me/?text (sin número) y
+      // NO deben contar como conversión.
+      var isContactWa = /wa\.me\/\d/i.test(href) || /(?:api|web)\.whatsapp\.com\/send.*[?&]phone=\d/i.test(href);
+      if (isContactWa) fire('whatsapp');
+      else if (/calendly\.com/i.test(href) || a.classList.contains('book-cta')) fire('agenda');
+      else if (/^mailto:/i.test(href)) fire('email');
     }, true);
 
-    // Formulario de contacto (abre WhatsApp por JS, no es un <a>)
+    // 3) Formulario de contacto del home (abre WhatsApp por JS, no es un <a>)
     var form = document.getElementById('contactForm');
     if (form) form.addEventListener('submit', function () { fire('formulario'); });
   });
