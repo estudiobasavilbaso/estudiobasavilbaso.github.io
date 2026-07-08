@@ -50,8 +50,8 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --green-ink:#0D2318;--green-deep:#152E1F;--green:#1E3D2B;--green-mid:#2A5540;--green-lt:#3A7057;
-  --gold:#C9A84C;--gold-lt:#E2C47A;--gold-soft:#F3E6C4;
-  --cream:#F7F3EC;--cream-dk:#EDE6D8;--white:#fff;
+  --gold:#BFA463;--gold-lt:#D9C089;--gold-soft:#EFE2BE;--wa:#1C8A4E;--wa-dk:#14663A;
+  --cream:#F6F2EA;--cream-dk:#E8E0D0;--white:#fff;
   --text:#1A1A1A;--muted:#5d5d5d;--border:#DDD6C8;
 }
 html{scroll-behavior:smooth}
@@ -92,7 +92,7 @@ body{font-family:'Raleway',sans-serif;background:var(--cream);color:var(--text);
 .cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 .btn{display:inline-flex;align-items:center;gap:9px;border-radius:999px;padding:.85rem 1.5rem;font-size:14.5px;font-weight:600;text-decoration:none;transition:.2s}
 .btn svg{width:18px;height:18px}
-.btn-wa{background:#25D366;color:#0a3d1f}
+.btn-wa{background:var(--wa);color:#fff}
 .btn-wa:hover{background:#2bea73;transform:translateY(-1px)}
 .btn-wa svg{fill:#0a3d1f}
 .btn-ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.4)}
@@ -109,7 +109,7 @@ footer{background:var(--green-ink);color:rgba(255,255,255,.5);text-align:center;
 footer a{color:var(--gold-lt);text-decoration:none}
 footer a:hover{color:var(--gold)}
 footer .copy{font-size:11px;opacity:.5;margin-top:14px;border-top:1px solid rgba(255,255,255,.08);padding-top:14px}
-.wa-float{position:fixed;right:18px;bottom:18px;width:58px;height:58px;border-radius:50%;background:#25D366;display:grid;place-items:center;box-shadow:0 10px 26px rgba(0,0,0,.28);z-index:30;transition:transform .2s}
+.wa-float{position:fixed;right:18px;bottom:18px;width:58px;height:58px;border-radius:50%;background:var(--wa);display:grid;place-items:center;box-shadow:0 10px 26px rgba(0,0,0,.28);z-index:30;transition:transform .2s}
 .wa-float:hover{transform:scale(1.06)}
 .wa-float svg{width:30px;height:30px;fill:#fff}
 @media(max-width:600px){
@@ -139,7 +139,7 @@ footer .copy{font-size:11px;opacity:.5;margin-top:14px;border-top:1px solid rgba
 .share-btns{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
 .share-btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:.72rem 1.3rem;font-family:'Raleway',sans-serif;font-size:13.5px;font-weight:600;cursor:pointer;text-decoration:none;transition:.2s;border:1.5px solid var(--border);background:var(--cream);color:var(--green)}
 .share-btn:hover{border-color:var(--gold);transform:translateY(-1px)}
-.share-btn.wa{background:#25D366;border-color:#25D366;color:#0a3d1f}
+.share-btn.wa{background:var(--wa);border-color:var(--wa);color:#fff}
 .share-btn.wa:hover{background:#2bea73}
 .share-btn svg{width:17px;height:17px;fill:currentColor}
 .share-btn.copied{background:var(--green);border-color:var(--green);color:#fff}
