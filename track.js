@@ -15,6 +15,10 @@
 (function () {
   'use strict';
 
+  // Acción de conversión "Contacto" de Google Ads (AW-18284828027).
+  // Se dispara con el clic en WhatsApp / envío de formulario / agendar.
+  window.AW_SEND_TO = window.AW_SEND_TO || 'AW-18284828027/MdzJCJ3w_8wcEPuq8Y5E';
+
   function fire(method) {
     try {
       if (typeof gtag !== 'function') return;
