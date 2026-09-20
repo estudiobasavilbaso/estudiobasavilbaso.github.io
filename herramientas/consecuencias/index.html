@@ -4,347 +4,464 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="Registro de consecuencias de campana para DMs: facciones, hilos abiertos y lo que esta por volver, con vencimiento en dias de juego.">
-<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}html,body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<meta name="description" content="El libro de cuentas del dragon: registro de consecuencias de campana para DMs, con vencimiento en dias de juego.">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html,body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Deudas de Campaña</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@400;500;700&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap">
 <style>
+/* ===== El libro de cuentas del dragón =====================================
+   Oscuro por defecto: esto se lee a la luz de una vela. El tema claro es
+   vitela gastada, no papel blanco.
+   ========================================================================= */
 :root{
-  --paper:#E5E7E1;
-  --surface:#F2F3EF;
-  --sunk:#DCDFD8;
-  --ink:#161A18;
-  --ink-soft:#3C443F;
-  --muted:#6A716A;
-  --rule:#C3C8BF;
-  --rule-soft:#D5D9D0;
-  --verd:#2E6E5F;
-  --rust:#9C3C2C;
-  --amber:#996714;
-  --shadow:rgba(22,26,24,.10);
-  color-scheme:light;
+  --abismo:#0C0A09; --pergamino:#16110F; --pergamino-2:#1E1714; --hundido:#080605;
+  --hueso:#EDE0C8; --hueso-soft:#C3B295; --ceniza:#8A7B68;
+  --filo:#35281F; --filo-soft:#241B16;
+  --oro:#D4A83C; --oro-hondo:#8C6A1E; --oro-tenue:rgba(212,168,60,.13);
+  --brasa:#D0512F; --sangre:#7E1F14; --jade:#56A07C; --ambar:#DE9C36;
+  --oro-texto:#1A1207; --sombra:rgba(0,0,0,.6);
+  color-scheme:dark;
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --paper:#121615;
-    --surface:#1A201E;
-    --sunk:#0D110F;
-    --ink:#DEE3DC;
-    --ink-soft:#B4BCB4;
-    --muted:#8B958D;
-    --rule:#2E3733;
-    --rule-soft:#232B28;
-    --verd:#63A893;
-    --rust:#CE7159;
-    --amber:#C89A48;
-    --shadow:rgba(0,0,0,.45);
-    color-scheme:dark;
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --abismo:#DBD2B8; --pergamino:#E8E1CB; --pergamino-2:#F0EADA; --hundido:#CDC3A6;
+    --hueso:#241C14; --hueso-soft:#4A3C2C; --ceniza:#6E5F4A;
+    --filo:#BCAF95; --filo-soft:#CEC4AB;
+    --oro:#8A6512; --oro-hondo:#6B4E0C; --oro-tenue:rgba(138,101,18,.12);
+    --brasa:#9E3319; --sangre:#7E1F14; --jade:#2F6B4A; --ambar:#8E5B0E;
+    --oro-texto:#F5EEDD; --sombra:rgba(60,44,20,.22);
+    color-scheme:light;
   }
 }
-:root[data-theme="dark"]{
-  --paper:#121615;
-  --surface:#1A201E;
-  --sunk:#0D110F;
-  --ink:#DEE3DC;
-  --ink-soft:#B4BCB4;
-  --muted:#8B958D;
-  --rule:#2E3733;
-  --rule-soft:#232B28;
-  --verd:#63A893;
-  --rust:#CE7159;
-  --amber:#C89A48;
-  --shadow:rgba(0,0,0,.45);
-  color-scheme:dark;
+:root[data-theme="light"]{
+  --abismo:#DBD2B8; --pergamino:#E8E1CB; --pergamino-2:#F0EADA; --hundido:#CDC3A6;
+  --hueso:#241C14; --hueso-soft:#4A3C2C; --ceniza:#6E5F4A;
+  --filo:#BCAF95; --filo-soft:#CEC4AB;
+  --oro:#8A6512; --oro-hondo:#6B4E0C; --oro-tenue:rgba(138,101,18,.12);
+  --brasa:#9E3319; --sangre:#7E1F14; --jade:#2F6B4A; --ambar:#8E5B0E;
+  --oro-texto:#F5EEDD; --sombra:rgba(60,44,20,.22);
+  color-scheme:light;
 }
 
 *{box-sizing:border-box}
 body{
-  margin:0;
-  background:var(--paper);
-  color:var(--ink);
-  font-family:"Archivo","Helvetica Neue",Arial,sans-serif;
-  font-size:15px;
-  line-height:1.5;
+  margin:0; background:var(--abismo); color:var(--hueso);
+  font-family:"EB Garamond",Georgia,serif; font-size:17px; line-height:1.55;
   -webkit-font-smoothing:antialiased;
 }
 h1,h2,h3{margin:0;font-weight:600;text-wrap:balance}
 p{margin:0}
 button{font:inherit;color:inherit}
 input,select,textarea{font:inherit;color:inherit}
+svg{display:block}
+.wrap{max-width:1020px;margin:0 auto;padding-inline:20px}
 
-.wrap{max-width:1000px;margin:0 auto;padding-inline:20px}
+/* etiquetas en versalitas: la voz "de manual" */
+.rotulo{
+  font-family:"Alegreya Sans SC","Archivo",sans-serif;
+  text-transform:uppercase; letter-spacing:.13em; font-size:12px; font-weight:500;
+  color:var(--ceniza);
+}
+.titulo{font-family:"Cinzel",Georgia,serif;font-weight:600;letter-spacing:.01em}
 
-/* ---------- barra superior ---------- */
-.topbar{
-  position:sticky;top:env(safe-area-inset-top,0px);z-index:40;
-  background:var(--paper);
-  border-bottom:1px solid var(--rule);
+/* ===== escamas: textura de fondo del encabezado ===== */
+.escamas{
+  background-image:
+    radial-gradient(circle at 50% 100%, transparent 57%, var(--oro-tenue) 58%, transparent 61%),
+    radial-gradient(circle at 50% 100%, transparent 57%, var(--oro-tenue) 58%, transparent 61%);
+  background-size:26px 14px;
+  background-position:0 0, 13px 7px;
 }
-.topbar .wrap{padding-block:12px 0}
-.brandrow{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;justify-content:space-between}
-.brand{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
-.brand h1{
-  font-family:"Spectral",Georgia,serif;font-size:21px;font-weight:600;letter-spacing:-.01em;
-}
-.brand .sub{
-  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10.5px;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--muted);
-}
-.clock{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.clock .dial{
-  font-family:"IBM Plex Mono",ui-monospace,monospace;
-  font-size:12px;letter-spacing:.04em;color:var(--ink-soft);
-  border:1px solid var(--rule);border-radius:2px;padding:5px 9px;background:var(--surface);
-  font-variant-numeric:tabular-nums;
-}
-.clock .dial b{font-weight:500;color:var(--ink)}
 
-.tabs{display:flex;gap:2px;margin-top:12px;overflow-x:auto;scrollbar-width:none}
+/* ===== encabezado ===== */
+.masthead{
+  position:sticky; top:env(safe-area-inset-top,0px); z-index:40;
+  background:var(--pergamino);
+  border-bottom:1px solid var(--filo);
+  box-shadow:0 1px 0 var(--oro-tenue), 0 10px 24px -18px var(--sombra);
+}
+.masthead::before{
+  content:""; position:absolute; inset:0; pointer-events:none; opacity:.55;
+  background-image:
+    radial-gradient(circle at 50% 100%, transparent 57%, var(--oro-tenue) 58%, transparent 61%),
+    radial-gradient(circle at 50% 100%, transparent 57%, var(--oro-tenue) 58%, transparent 61%);
+  background-size:26px 14px; background-position:0 0, 13px 7px;
+  -webkit-mask-image:linear-gradient(to bottom, rgba(0,0,0,.9), transparent 78%);
+  mask-image:linear-gradient(to bottom, rgba(0,0,0,.9), transparent 78%);
+}
+.masthead .wrap{position:relative;padding-block:14px 0}
+.mrow{display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:space-between}
+.sello{display:flex;align-items:center;gap:13px;min-width:0}
+.sello h1{font-family:"Cinzel",Georgia,serif;font-size:23px;font-weight:700;letter-spacing:.02em;line-height:1.1}
+.sello .sub{display:block;margin-top:2px}
+
+/* el ojo mira: se abre y enrojece cuando hay cuentas vencidas */
+.ojo{width:56px;height:38px;flex:0 0 auto}
+.ojo .lente{fill:var(--hundido);stroke:var(--oro-hondo);stroke-width:1.4}
+.ojo .iris{fill:url(#irisCalma);stroke:var(--oro-hondo);stroke-width:.8}
+.ojo .pupila{fill:#08060A;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.ojo .brillo{fill:var(--hueso);opacity:.55}
+.ojo .rayo{stroke:var(--oro-hondo);stroke-width:1.1;opacity:.5}
+.ojo.alerta .iris{fill:url(#irisFuria)}
+.ojo.alerta .pupila{transform:scaleX(2.1);transform-origin:30px 20px}
+.ojo.alerta .rayo{stroke:var(--brasa);opacity:.85}
+.ojo.alerta{animation:latir 2.6s ease-in-out infinite}
+@keyframes latir{0%,100%{filter:drop-shadow(0 0 0 transparent)}50%{filter:drop-shadow(0 0 7px rgba(208,81,47,.55))}}
+
+.relojes{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.dial{
+  display:inline-flex;align-items:baseline;gap:7px;
+  border:1px solid var(--filo);border-radius:2px;padding:5px 11px;
+  background:var(--pergamino-2);
+}
+.dial .k{font-family:"Alegreya Sans SC",sans-serif;text-transform:uppercase;letter-spacing:.12em;font-size:11px;color:var(--ceniza)}
+.dial .v{font-family:"Cinzel",Georgia,serif;font-size:17px;font-weight:700;color:var(--oro);font-variant-numeric:tabular-nums}
+
+/* pestañas como lengüetas de tomo */
+.tabs{display:flex;gap:4px;margin-top:13px;overflow-x:auto;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
 .tab{
-  appearance:none;background:none;border:0;border-bottom:2px solid transparent;
-  padding:9px 12px;cursor:pointer;white-space:nowrap;
-  font-size:13.5px;font-weight:500;color:var(--muted);
+  appearance:none;background:transparent;border:1px solid transparent;border-bottom:0;
+  border-radius:4px 4px 0 0;padding:9px 15px 10px;cursor:pointer;white-space:nowrap;
+  font-family:"Alegreya Sans SC",sans-serif;text-transform:uppercase;letter-spacing:.1em;
+  font-size:13px;font-weight:500;color:var(--ceniza);position:relative;top:1px;
+  transition:color .15s ease,background .15s ease;
 }
-.tab:hover{color:var(--ink)}
-.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--verd)}
-.tab .cnt{
-  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10.5px;
-  color:var(--muted);margin-left:5px;font-variant-numeric:tabular-nums;
+.tab:hover{color:var(--hueso);background:var(--oro-tenue)}
+.tab[aria-selected="true"]{
+  color:var(--oro);background:var(--abismo);
+  border-color:var(--filo);box-shadow:0 -1px 0 var(--oro-hondo) inset;
 }
-.tab[aria-selected="true"] .cnt{color:var(--verd)}
-.tab.alarm .cnt{color:var(--rust)}
+.tab .cnt{font-family:"Cinzel",serif;font-size:12px;margin-left:6px;font-variant-numeric:tabular-nums}
+.tab.alarma .cnt{color:var(--brasa)}
 
-/* ---------- estructura ---------- */
-main{padding-block:26px 64px}
-.lead{max-width:62ch;color:var(--ink-soft);font-size:14.5px}
-.sectitle{
-  font-family:"IBM Plex Mono",ui-monospace,monospace;
-  font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
-  display:flex;align-items:center;gap:12px;margin-block:34px 6px;
-}
-.sectitle::after{content:"";flex:1;height:1px;background:var(--rule)}
-.sectitle:first-child{margin-top:0}
-.stack{display:flex;flex-direction:column;gap:14px}
+/* ===== estructura ===== */
+main{padding-block:30px 70px}
+.lead{max-width:60ch;color:var(--hueso-soft);font-size:17.5px}
+.lead em{color:var(--oro);font-style:italic}
+
+.seccion{display:flex;align-items:center;gap:14px;margin-block:38px 4px}
+.seccion .rotulo{white-space:nowrap}
+.seccion .hilo-oro{flex:1;height:1px;background:linear-gradient(to right,var(--oro-hondo),transparent)}
+.seccion:first-child{margin-top:0}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.spread{display:flex;gap:16px;justify-content:space-between;align-items:flex-start;flex-wrap:wrap}
+.spread{display:flex;gap:18px;justify-content:space-between;align-items:flex-start;flex-wrap:wrap}
 
-/* ---------- registro (renglones) ---------- */
+/* ===== la entrada: una cuenta anotada ===== */
 .entry{
-  display:grid;grid-template-columns:96px 1fr;gap:20px;
-  padding-block:18px;border-top:1px solid var(--rule-soft);
+  display:grid;grid-template-columns:104px 1fr;gap:22px;
+  padding:20px 20px 20px 18px;margin-top:12px;
+  background:var(--pergamino);
+  border:1px solid var(--filo-soft);border-left:3px solid var(--filo);
+  border-radius:3px;
+  transition:border-left-color .18s ease,transform .18s ease,box-shadow .18s ease;
 }
-.entry:first-of-type{border-top:1px solid var(--rule)}
-.entry.gone{opacity:.45}
-.when{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
-.when .big{
-  font-family:"IBM Plex Mono",ui-monospace,monospace;
-  font-size:19px;line-height:1.1;font-variant-numeric:tabular-nums;letter-spacing:-.02em;
+.entry:hover{transform:translateX(2px);box-shadow:-3px 0 16px -6px var(--sombra)}
+.entry.e-vencida{border-left-color:var(--brasa)}
+.entry.e-inminente{border-left-color:var(--ambar)}
+.entry.e-camino{border-left-color:var(--oro-hondo)}
+.entry.e-lejana{border-left-color:var(--filo)}
+.entry.e-bien{border-left-color:var(--jade)}
+.entry.gone{opacity:.42}
+.entry.nueva{animation:desplegar .45s ease both}
+@keyframes desplegar{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+
+.cuando{display:flex;flex-direction:column;gap:9px;align-items:flex-start}
+.cuando .dia{
+  font-family:"Cinzel",Georgia,serif;font-size:15px;font-weight:700;color:var(--hueso);
+  font-variant-numeric:tabular-nums;line-height:1;
 }
-.when .small{
-  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10px;
-  letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
-}
-.body h3{
-  font-family:"Spectral",Georgia,serif;font-size:19px;line-height:1.25;font-weight:600;
-  margin-bottom:5px;
-}
-.body .text{font-family:"Spectral",Georgia,serif;font-size:16px;line-height:1.55;max-width:60ch}
-.body .tone{
-  font-family:"Spectral",Georgia,serif;font-style:italic;color:var(--ink-soft);
-  font-size:15px;margin-top:4px;max-width:60ch;
-}
+.cuando .dia b{display:block;font-size:30px;color:var(--oro);letter-spacing:-.01em;margin-top:3px}
+.cuando .resta{font-family:"Alegreya Sans SC",sans-serif;text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:var(--ceniza)}
+
+/* mecha: cuánto se quemó del plazo */
+.mecha{width:100%;max-width:104px;height:3px;background:var(--hundido);border-radius:2px;position:relative;overflow:visible}
+.mecha i{position:absolute;left:0;top:0;bottom:0;border-radius:2px;background:linear-gradient(to right,var(--oro-hondo),var(--ambar))}
+.mecha.arde i{background:linear-gradient(to right,var(--ambar),var(--brasa))}
+.mecha svg{position:absolute;top:-6px;width:11px;height:14px;transform:translateX(-50%)}
+
+.cuerpo h3{font-family:"Cinzel",Georgia,serif;font-size:20px;font-weight:600;line-height:1.25;margin-bottom:6px}
+.cuerpo .texto{font-size:17.5px;line-height:1.58;max-width:58ch;color:var(--hueso)}
+.cuerpo .tono{font-style:italic;color:var(--oro);opacity:.92;font-size:16.5px;margin-top:5px;max-width:58ch}
+
 .meta{
-  display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:9px;
-  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10.5px;
-  letter-spacing:.07em;text-transform:uppercase;color:var(--muted);
+  display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-top:11px;
+  font-family:"Alegreya Sans SC",sans-serif;text-transform:uppercase;letter-spacing:.09em;
+  font-size:11.5px;color:var(--ceniza);
 }
-.meta .dot{opacity:.5}
-.ignora{
-  margin-top:10px;padding:9px 12px;background:var(--surface);
-  border-left:2px solid var(--rule);font-size:13.5px;color:var(--ink-soft);max-width:60ch;
-}
-.ignora b{
-  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--muted);font-weight:500;display:block;margin-bottom:2px;
-}
-.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.meta .sep{opacity:.4}
+.meta .quien{color:var(--hueso-soft)}
+.llamas{display:inline-flex;gap:2px;align-items:center;vertical-align:-2px}
+.llamas svg{width:9px;height:11px}
+.llamas .off{opacity:.22}
 
-/* ---------- sellos y etiquetas ---------- */
-.stamp{
-  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10px;font-weight:500;
-  letter-spacing:.12em;text-transform:uppercase;
-  border:1px solid currentColor;border-radius:2px;padding:2px 6px;display:inline-block;
-}
-.s-vencida{color:var(--rust);border-width:2px;border-style:double;transform:rotate(-2.5deg)}
-.s-inminente{color:var(--amber)}
-.s-camino{color:var(--verd)}
-.s-lejana{color:var(--muted)}
-.s-usada{color:var(--muted)}
 .tag{
-  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--muted);border:1px solid var(--rule);
-  border-radius:2px;padding:2px 6px;
+  font-family:"Alegreya Sans SC",sans-serif;text-transform:uppercase;letter-spacing:.1em;
+  font-size:11px;border:1px solid var(--filo);border-radius:2px;padding:2px 7px;color:var(--ceniza);
 }
-.tag.good{color:var(--verd);border-color:currentColor}
-.pip{display:inline-flex;gap:2px;vertical-align:middle}
-.pip i{width:5px;height:5px;background:currentColor;border-radius:50%;display:block;opacity:.25}
-.pip i.on{opacity:1}
+.tag.bien{color:var(--jade);border-color:var(--jade)}
 
-/* ---------- controles ---------- */
+/* sellos de estado */
+.sigilo{
+  font-family:"Alegreya Sans SC",sans-serif;text-transform:uppercase;letter-spacing:.12em;
+  font-size:11px;font-weight:700;padding:3px 8px;border-radius:2px;border:1px solid currentColor;
+  display:inline-block;
+}
+.g-vencida{color:var(--brasa);border-width:2px;border-style:double;transform:rotate(-2.5deg);
+  background:rgba(208,81,47,.08)}
+.g-inminente{color:var(--ambar)}
+.g-camino{color:var(--oro)}
+.g-lejana{color:var(--ceniza)}
+.g-usada{color:var(--ceniza);opacity:.8}
+
+.presagio{
+  display:inline-flex;align-items:center;gap:5px;color:var(--oro);
+  font-family:"Cinzel",serif;font-size:11.5px;font-weight:700;font-variant-numeric:tabular-nums;
+}
+.presagio svg{width:13px;height:13px}
+
+.si-ignoran{
+  margin-top:12px;padding:10px 14px;max-width:58ch;
+  background:var(--hundido);border-left:2px solid var(--sangre);border-radius:2px;
+  font-size:16px;color:var(--hueso-soft);
+}
+.si-ignoran b{display:block;margin-bottom:2px;
+  font-family:"Alegreya Sans SC",sans-serif;text-transform:uppercase;letter-spacing:.12em;
+  font-size:11px;font-weight:500;color:var(--brasa)}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+
+/* ===== controles forjados ===== */
 .btn{
-  appearance:none;background:transparent;border:1px solid var(--rule);color:var(--ink);
-  border-radius:2px;padding:7px 12px;font-size:13px;font-weight:500;cursor:pointer;
-  transition:background .12s ease,border-color .12s ease;
+  appearance:none;cursor:pointer;border-radius:3px;
+  background:var(--pergamino-2);border:1px solid var(--filo);color:var(--hueso);
+  padding:8px 14px;font-family:"Alegreya Sans SC",sans-serif;font-size:13.5px;
+  text-transform:uppercase;letter-spacing:.09em;font-weight:500;
+  transition:border-color .15s ease,color .15s ease,background .15s ease,transform .1s ease;
 }
-.btn:hover{border-color:var(--ink);background:var(--surface)}
-.btn.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
-.btn.primary:hover{background:var(--ink-soft);border-color:var(--ink-soft)}
-.btn.quiet{border-color:transparent;color:var(--muted);padding-inline:8px}
-.btn.quiet:hover{color:var(--ink);background:var(--surface)}
-.btn.danger:hover{border-color:var(--rust);color:var(--rust)}
-.btn.tiny{font-size:11.5px;padding:4px 8px}
+.btn:hover{border-color:var(--oro);color:var(--oro);background:var(--oro-tenue)}
+.btn:active{transform:translateY(1px)}
+.btn.oro{background:linear-gradient(to bottom,var(--oro),var(--oro-hondo));border-color:var(--oro-hondo);color:var(--oro-texto);font-weight:700}
+.btn.oro:hover{filter:brightness(1.12);color:var(--oro-texto)}
+.btn.fantasma{background:transparent;border-color:transparent;color:var(--ceniza);padding-inline:9px}
+.btn.fantasma:hover{color:var(--hueso);background:var(--oro-tenue);border-color:transparent}
+.btn.peligro:hover{border-color:var(--brasa);color:var(--brasa);background:rgba(208,81,47,.08)}
+.btn.chico{font-size:12px;padding:5px 10px}
 .btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.conicono{display:inline-flex;align-items:center;gap:8px}
+.btn.conicono svg{width:16px;height:16px}
 .btn:focus-visible,.tab:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{
-  outline:2px solid var(--verd);outline-offset:2px;
+  outline:2px solid var(--oro);outline-offset:2px;
 }
+
 input[type=text],input[type=number],select,textarea{
-  background:var(--surface);border:1px solid var(--rule);border-radius:2px;
-  padding:7px 9px;font-size:14px;width:100%;
+  background:var(--hundido);border:1px solid var(--filo);border-radius:2px;
+  padding:8px 10px;font-size:16px;width:100%;font-family:"EB Garamond",Georgia,serif;
 }
-input[type=number]{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
-textarea{font-family:"Spectral",Georgia,serif;font-size:15.5px;line-height:1.6;resize:vertical}
-label.field{display:flex;flex-direction:column;gap:5px;flex:1 1 170px;min-width:0}
-label.field > span{
-  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--muted);
+input[type=number]{font-variant-numeric:tabular-nums}
+textarea{line-height:1.6;resize:vertical}
+label.campo{display:flex;flex-direction:column;gap:5px;flex:1 1 180px;min-width:0}
+label.campo > span:first-child{
+  font-family:"Alegreya Sans SC",sans-serif;text-transform:uppercase;letter-spacing:.12em;
+  font-size:11.5px;color:var(--ceniza);
 }
-.panel{border:1px solid var(--rule);border-radius:3px;background:var(--surface);padding:18px}
-.panel.flat{background:transparent}
-.hint{font-size:13px;color:var(--muted);max-width:62ch}
+.ayuda{font-size:14.5px;color:var(--ceniza);max-width:60ch}
+.panel{border:1px solid var(--filo);border-radius:3px;background:var(--pergamino);padding:20px}
+.panel.liso{background:transparent;border-color:var(--filo-soft)}
 
-/* ---------- fichas del mundo ---------- */
-.people{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:0 28px}
-.who{padding-block:14px;border-top:1px solid var(--rule-soft)}
-.who .nm{font-family:"Spectral",Georgia,serif;font-size:17px;font-weight:600}
-.who .nm.dead{text-decoration:line-through;text-decoration-thickness:1px;opacity:.65}
-.who .ln{
-  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10.5px;letter-spacing:.08em;
-  text-transform:uppercase;color:var(--muted);margin-top:3px;
+/* ===== propuestas: lo que el dragón dictó ===== */
+.prop{
+  border:1px solid var(--oro-hondo);border-radius:3px;padding:18px 20px;margin-top:12px;
+  background:linear-gradient(to bottom right,var(--pergamino-2),var(--pergamino));
+  box-shadow:0 0 0 1px var(--oro-tenue) inset;
+  animation:surgir .5s ease both;
 }
-.who .nt{font-size:13.5px;color:var(--ink-soft);margin-top:5px}
-.mood{display:flex;align-items:center;gap:6px;margin-top:6px}
-.moodbar{height:3px;flex:1;background:var(--sunk);position:relative;border-radius:2px;max-width:120px}
-.moodbar span{position:absolute;top:0;bottom:0;border-radius:2px}
+@keyframes surgir{from{opacity:0;transform:translateY(10px) scale(.99)}to{opacity:1;transform:none}}
+.prop h3{font-family:"Cinzel",Georgia,serif;font-size:19px;font-weight:600}
+.prop .texto{font-size:17px;line-height:1.55;max-width:58ch;margin-top:6px}
 
-/* ---------- propuestas ---------- */
-.prop{border:1px solid var(--rule);border-left:3px solid var(--verd);border-radius:3px;
-  background:var(--surface);padding:16px 18px}
-.prop.vetoed{opacity:.4;border-left-color:var(--rule)}
-.linerow{
-  display:grid;grid-template-columns:1fr 160px 200px 92px;gap:10px;align-items:end;
-  padding-block:12px;border-top:1px solid var(--rule-soft);
+/* fichas del mundo */
+.gente{display:grid;grid-template-columns:repeat(auto-fill,minmax(262px,1fr));gap:12px;margin-top:12px}
+.ficha{
+  border:1px solid var(--filo-soft);border-radius:3px;background:var(--pergamino);
+  padding:15px 16px;transition:border-color .16s ease;
 }
-.empty{
-  border:1px dashed var(--rule);border-radius:3px;padding:26px 20px;text-align:center;
-  color:var(--muted);font-size:14px;
-}
-.empty b{display:block;font-family:"Spectral",Georgia,serif;font-size:17px;color:var(--ink);
-  font-weight:600;margin-bottom:5px}
+.ficha:hover{border-color:var(--oro-hondo)}
+.ficha .nm{font-family:"Cinzel",Georgia,serif;font-size:17.5px;font-weight:600}
+.ficha .nm.muerto{text-decoration:line-through;text-decoration-color:var(--brasa);opacity:.7}
+.ficha .ln{margin-top:3px}
+.ficha .nt{font-size:15.5px;color:var(--hueso-soft);margin-top:7px;font-style:italic}
+.animo{display:flex;align-items:center;gap:8px;margin-top:9px}
+.animobar{height:4px;flex:1;max-width:120px;background:var(--hundido);border-radius:2px;position:relative}
+.animobar span{position:absolute;top:0;bottom:0;left:0;border-radius:2px}
 
-.note{
-  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;letter-spacing:.06em;
-  color:var(--muted);
+.vacio{
+  border:1px dashed var(--filo);border-radius:3px;padding:30px 22px;text-align:center;
+  color:var(--ceniza);font-size:16px;margin-top:12px;
 }
-.warn{border-left:2px solid var(--amber);padding-left:12px;color:var(--ink-soft);font-size:13.5px}
+.vacio b{display:block;font-family:"Cinzel",Georgia,serif;font-size:19px;color:var(--hueso);margin-bottom:6px}
+.aviso{border-left:2px solid var(--ambar);padding-left:13px;color:var(--hueso-soft);font-size:15.5px}
+
+.lineafila{
+  display:grid;grid-template-columns:1fr 168px 200px 104px;gap:11px;align-items:end;
+  padding-block:13px;border-top:1px solid var(--filo-soft);
+}
+.bitacora{margin-top:12px}
+.bit{display:grid;grid-template-columns:104px 1fr;gap:22px;padding-block:15px;border-top:1px solid var(--filo-soft)}
+.bit ul{margin:0;padding-left:18px;font-size:16.5px}
+.bit li{margin-block:3px}
+.bit li::marker{color:var(--oro-hondo)}
+
+.pie{
+  border-top:1px solid var(--filo);margin-top:54px;padding-block:20px 8px;
+  display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between;align-items:center;
+  color:var(--ceniza);font-size:14.5px;
+}
+
+/* ===== diálogos ===== */
+.overlay{
+  position:fixed;inset:0;z-index:80;background:rgba(6,4,3,.72);backdrop-filter:blur(2px);
+  display:flex;align-items:flex-start;justify-content:center;
+  padding:max(26px,env(safe-area-inset-top,0px)) 16px 26px;overflow-y:auto;
+  animation:aparecer .18s ease both;
+}
+@keyframes aparecer{from{opacity:0}to{opacity:1}}
+.modal{
+  background:var(--pergamino);border:1px solid var(--oro-hondo);border-radius:4px;
+  box-shadow:0 22px 60px var(--sombra), 0 0 0 1px var(--oro-tenue) inset;
+  width:min(470px,100%);margin-block:auto;padding:24px;
+  animation:subir .22s ease both;
+}
+@keyframes subir{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.modal h3{font-family:"Cinzel",Georgia,serif;font-size:21px;font-weight:600;margin-bottom:5px}
+.modal .mtxt{color:var(--hueso-soft);font-size:16px;margin-bottom:18px;white-space:pre-line}
+.modal .mcampos{display:flex;flex-direction:column;gap:15px}
+.modal .mcampos > label.campo{flex:0 0 auto}
+.modal .mopt{font-size:14.5px;color:var(--ceniza);margin-top:3px;
+  font-family:"EB Garamond",Georgia,serif;letter-spacing:normal;text-transform:none;font-style:italic}
+.modal .macts{display:flex;gap:10px;justify-content:flex-end;margin-top:22px;flex-wrap:wrap}
+
 .toast{
   position:fixed;left:50%;transform:translateX(-50%);
-  bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:90;
-  background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:3px;
-  font-size:13.5px;box-shadow:0 6px 24px var(--shadow);max-width:86vw;
+  bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:90;
+  background:var(--pergamino);color:var(--hueso);border:1px solid var(--oro-hondo);
+  padding:11px 18px;border-radius:3px;font-size:16px;max-width:88vw;
+  box-shadow:0 10px 34px var(--sombra);
+  animation:subir .22s ease both;
 }
 
-/* ---------- diálogos ---------- */
-.overlay{
-  position:fixed;inset:0;z-index:80;background:rgba(10,14,12,.55);
-  display:flex;align-items:flex-start;justify-content:center;
-  padding:max(24px,env(safe-area-inset-top,0px)) 16px 24px;overflow-y:auto;
+/* ===== la tirada del presagio ===== */
+.tirada{
+  position:fixed;inset:0;z-index:85;background:rgba(6,4,3,.82);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;
+  animation:aparecer .18s ease both;
 }
-.modal{
-  background:var(--paper);border:1px solid var(--rule);border-radius:4px;
-  box-shadow:0 18px 50px var(--shadow);width:min(460px,100%);margin-block:auto;
-  padding:22px;
+.tirada .d20{width:176px;height:176px;filter:drop-shadow(0 0 22px rgba(212,168,60,.4))}
+.tirada .d20{fill:var(--pergamino-2);stroke:var(--oro)}
+.d20ico{fill:none;stroke:currentColor}
+.tirada .d20 .cifra{fill:var(--oro);stroke:none;font-family:"Cinzel",serif;font-weight:700;font-size:30px;text-anchor:middle}
+.tirada.girando .d20{animation:rodar .9s cubic-bezier(.3,.05,.2,1) both}
+@keyframes rodar{
+  0%{transform:rotate(0) scale(.6);opacity:.2}
+  55%{transform:rotate(340deg) scale(1.12)}
+  100%{transform:rotate(360deg) scale(1);opacity:1}
 }
-.modal h3{font-family:"Spectral",Georgia,serif;font-size:19px;margin-bottom:4px}
-.modal .mtxt{color:var(--ink-soft);font-size:14px;margin-bottom:16px;white-space:pre-line}
-.modal .mfields{display:flex;flex-direction:column;gap:14px}
-.modal .mfields > label.field{flex:0 0 auto}
-.modal .mopt{
-  font-size:12.5px;color:var(--muted);margin-top:3px;
-  font-family:"Archivo","Helvetica Neue",Arial,sans-serif;
-  letter-spacing:normal;text-transform:none;
-}
-.modal .macts{display:flex;gap:9px;justify-content:flex-end;margin-top:20px;flex-wrap:wrap}
-.timeline{display:flex;flex-direction:column}
-.tl{display:grid;grid-template-columns:96px 1fr;gap:20px;padding-block:14px;
-  border-top:1px solid var(--rule-soft)}
-.tl .n{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;letter-spacing:.08em;
-  text-transform:uppercase;color:var(--muted)}
-.tl ul{margin:0;padding-left:17px;font-family:"Spectral",Georgia,serif;font-size:15px}
-.tl li{margin-block:2px}
-.footer{border-top:1px solid var(--rule);margin-top:48px;padding-block:20px 8px;
-  color:var(--muted);font-size:12.5px;display:flex;gap:14px;flex-wrap:wrap;justify-content:space-between}
+.tirada .veredicto{text-align:center;max-width:32ch}
+.tirada .veredicto .n{font-family:"Cinzel",serif;font-size:15px;letter-spacing:.14em;text-transform:uppercase;color:var(--oro)}
+.tirada .veredicto .d{font-size:17px;color:var(--hueso-soft);margin-top:5px;font-style:italic}
+.tirada.nat20 .d20{filter:drop-shadow(0 0 30px rgba(208,81,47,.75))}
+.tirada.nat20 .d20 .cifra{fill:var(--brasa)}
+.tirada.nat1 .d20{filter:drop-shadow(0 0 20px rgba(120,120,140,.4));opacity:.8}
 
-@media (max-width:760px){
-  .linerow{grid-template-columns:1fr 1fr;gap:8px}
-  .linerow .l-text{grid-column:1 / -1}
+@media (max-width:780px){
+  .lineafila{grid-template-columns:1fr 1fr;gap:9px}
+  .lineafila .l-texto{grid-column:1 / -1}
 }
-@media (max-width:560px){
-  .entry,.tl{grid-template-columns:1fr;gap:10px}
-  .when{flex-direction:row;align-items:baseline;gap:10px}
-  .brandrow{align-items:flex-start}
-  .body .text{font-size:15.5px}
+@media (max-width:580px){
+  body{font-size:16.5px}
+  .entry,.bit{grid-template-columns:1fr;gap:12px;padding-inline:15px}
+  .cuando{flex-direction:row;align-items:center;gap:12px;flex-wrap:wrap}
+  .cuando .dia b{display:inline;font-size:22px;margin-left:5px}
+  .mecha{max-width:none;flex-basis:100%}
+  .sello h1{font-size:19px}
+  .ojo{width:46px;height:31px}
+  .tirada .d20{width:132px;height:132px}
 }
 @media (prefers-reduced-motion:reduce){
   *{transition:none!important;animation:none!important}
-  .s-vencida{transform:none}
+  .g-vencida{transform:none}
+  .entry:hover{transform:none}
 }
 </style>
 </head>
 <body>
-<div class="topbar">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+  <radialGradient id="irisCalma" cx="38%" cy="34%" r="72%">
+    <stop offset="0%" stop-color="#F2D98A"/>
+    <stop offset="52%" stop-color="#D4A83C"/>
+    <stop offset="100%" stop-color="#6B4C10"/>
+  </radialGradient>
+  <radialGradient id="irisFuria" cx="38%" cy="34%" r="72%">
+    <stop offset="0%" stop-color="#F6C77A"/>
+    <stop offset="45%" stop-color="#D0512F"/>
+    <stop offset="100%" stop-color="#57150C"/>
+  </radialGradient>
+  <symbol id="llama" viewBox="0 0 12 14">
+    <path d="M6 0.5 C 8.2 3.5, 10.8 5.2, 10.8 8.4 A 4.8 4.8 0 1 1 1.2 8.4 C 1.2 5.2, 3.8 3.5, 6 0.5 Z" fill="currentColor"/>
+  </symbol>
+  <symbol id="d20" viewBox="0 0 100 100">
+    <polygon points="50,3 93,27.5 93,72.5 50,97 7,72.5 7,27.5" stroke-width="4" stroke-linejoin="round"/>
+    <polygon points="50,29 75,71 25,71" stroke-width="4" stroke-linejoin="round"/>
+    <g fill="none" stroke-width="3" opacity=".6">
+      <path d="M50 3 L50 29 M93 72.5 L75 71 M7 72.5 L25 71"/>
+      <path d="M7 27.5 L50 29 M93 27.5 L50 29 M50 97 L25 71 M50 97 L75 71"/>
+    </g>
+  </symbol>
+</defs></svg>
+
+<header class="masthead">
   <div class="wrap">
-    <div class="brandrow">
-      <div class="brand">
-        <h1 id="camp-name">Deudas de Campaña</h1>
-        <span class="sub" id="camp-sub">registro de causas y vencimientos</span>
+    <div class="mrow">
+      <div class="sello">
+        <svg class="ojo" id="ojo" viewBox="0 0 60 40" role="img" aria-label="Sigilo del dragón">
+          <g class="rayo" fill="none" stroke-linecap="round">
+            <path d="M30 1.5 L30 5 M8 6 L11 9 M52 6 L49 9 M1.5 20 L5 20 M58.5 20 L55 20 M8 34 L11 31 M52 34 L49 31"/>
+          </g>
+          <path class="lente" d="M3 20 C 14 5, 46 5, 57 20 C 46 35, 14 35, 3 20 Z"/>
+          <circle class="iris" cx="30" cy="20" r="10.5"/>
+          <ellipse class="pupila" cx="30" cy="20" rx="2.4" ry="9.6"/>
+          <circle class="brillo" cx="25.6" cy="15.6" r="1.9"/>
+        </svg>
+        <div>
+          <h1 id="camp-name">Deudas de Campaña</h1>
+          <span class="rotulo sub" id="camp-sub">el libro de cuentas del dragón</span>
+        </div>
       </div>
-      <div class="clock">
-        <span class="dial">día de campaña <b id="dial-day">1</b></span>
-        <span class="dial">sesiones <b id="dial-ses">0</b></span>
-        <button class="btn tiny" id="btn-advance" title="Mover el reloj sin cerrar una sesión">Avanzar días</button>
+      <div class="relojes">
+        <span class="dial"><span class="k">día</span><span class="v" id="dial-day">1</span></span>
+        <span class="dial"><span class="k">sesiones</span><span class="v" id="dial-ses">0</span></span>
+        <button class="btn chico" id="btn-advance">Avanzar días</button>
       </div>
     </div>
-    <div class="tabs" role="tablist" id="tabs"></div>
+    <nav class="tabs" role="tablist" id="tabs"></nav>
   </div>
-</div>
+</header>
 
 <main>
   <div class="wrap" id="view"></div>
   <div class="wrap">
-    <div class="footer">
-      <span id="foot-state">Los datos viven en este navegador.</span>
-      <span class="note">Deudas de Campaña</span>
+    <div class="pie">
+      <span id="foot-state">El registro vive en este navegador.</span>
+      <span class="rotulo">Deudas de Campaña</span>
     </div>
   </div>
 </main>
 <div id="modal-root"></div>
+<div id="tirada-root"></div>
 
 <script>
 "use strict";
-
 /* =========================================================================
    MOTOR
    Una consecuencia es: QUIÉN (el actor) + QUÉ FORMA toma + CUÁNDO vence.
@@ -647,7 +764,6 @@ function clasificar(texto){
   }
   return mejor || "deuda";
 }
-
 /* =========================================================================
    ESTADO
    ========================================================================= */
@@ -700,15 +816,31 @@ function hilo(id){ for(var i=0;i<S.hilos.length;i++) if(S.hilos[i].id===id) retu
 
 /* =========================================================================
    GENERACIÓN
+   La tirada de presagio es el d20 del mundo, y no es adorno: entra en la
+   cuenta del vencimiento y puede subir o bajar la presión de lo que viene.
    ========================================================================= */
 
-function venceEn(h, p){
+var PRESAGIOS = [
+  {min:20, n:"El dragón abre un ojo", d:"Todo llega antes de lo que el grupo esperaba."},
+  {min:16, n:"El mundo se adelanta",  d:"Las cuentas se acortan solas."},
+  {min:9,  n:"El mundo sigue su paso",d:"Nadie apura ni afloja nada."},
+  {min:4,  n:"Otros asuntos primero", d:"Lo del grupo baja en la lista de prioridades."},
+  {min:1,  n:"El mundo se distrae",   d:"Esta vez respiran. Esta vez."}
+];
+function leerPresagio(t){
+  for(var i=0;i<PRESAGIOS.length;i++) if(t >= PRESAGIOS[i].min) return PRESAGIOS[i];
+  return PRESAGIOS[PRESAGIOS.length-1];
+}
+function tirarD20(){ return 1 + Math.floor(Math.random()*20); }
+
+function venceEn(h, p, presagio){
   var base = (ALCANCES[p.alcance]||ALCANCES.local).base;
   var mult = (TEMPLES[p.temple]||TEMPLES.calculador).mult;
   var grav = 1.25 - 0.12 * (h.gravedad||3);          /* más grave, más rápido */
   var esc  = Math.pow(0.85, h.vueltas||0);            /* cada vuelta acorta la mecha */
-  var jit  = 0.78 + Math.random()*0.45;
-  var d = Math.round(base * mult * grav * esc * jit);
+  var jit  = 0.82 + Math.random()*0.36;
+  var aug  = 1.25 - (presagio/20) * 0.5;              /* 20 adelanta, 1 demora */
+  var d = Math.round(base * mult * grav * esc * jit * aug);
   return Math.max(2, d);
 }
 
@@ -721,7 +853,8 @@ function rellenar(txt, h, a){
     .replace(/\{lugar\}/g, S.campana.lugar || "la ciudad");
 }
 
-function proponer(h){
+function proponer(h, presagio){
+  if(presagio == null) presagio = tirarD20();
   var a = actor(h.actorId);
   var p = perfil(a);
   var objetivo = Math.min(3, 1 + (h.vueltas||0));
@@ -742,7 +875,10 @@ function proponer(h){
   if(!pool.length) return null;
   pool.sort(function(x,y){ return y.s - x.s; });
   var forma = pool[0].f;
-  var d = venceEn(h, p);
+
+  var presion = Math.min(3, Math.max(forma.presion, objetivo));
+  if(presagio >= 18) presion = Math.min(3, presion + 1);
+  if(presagio <= 3)  presion = Math.max(1, presion - 1);
 
   return {
     id: uid("c"),
@@ -752,8 +888,9 @@ function proponer(h){
     cuerpo: rellenar(forma.c, h, a),
     tono: (TEMPLES[p.temple]||TEMPLES.calculador).tono,
     ignorar: rellenar(forma.i, h, a),
-    presion: Math.min(3, Math.max(forma.presion, objetivo)),
-    diaVence: S.campana.dia + d,
+    presion: presion,
+    presagio: presagio,
+    diaVence: S.campana.dia + venceEn(h, p, presagio),
     creadaDia: S.campana.dia,
     sesionN: S.sesiones.length,
     estado: "propuesta"
@@ -783,14 +920,16 @@ function hilosQueAprietan(){
   return out;
 }
 
-function generar(limite){
+function generar(limite, presagio){
+  if(presagio == null) presagio = tirarD20();
   var hs = hilosQueAprietan();
   var max = limite || 4;
   propuestas = [];
   for(var i=0;i<hs.length && propuestas.length<max;i++){
-    var c = proponer(hs[i]);
+    var c = proponer(hs[i], presagio);
     if(c) propuestas.push(c);
   }
+  ultimoPresagio = presagio;
   return propuestas;
 }
 
@@ -804,19 +943,43 @@ function esc(s){
     .replace(/"/g,"&quot;").replace(/'/g,"&#39;");
 }
 
-function estadoVenc(c){
-  var d = c.diaVence - S.campana.dia;
-  if(d < 0) return {k:"vencida", cls:"s-vencida", txt:"vencida", det:"hace " + (-d) + " " + (-d===1?"día":"días")};
-  if(d === 0) return {k:"vencida", cls:"s-vencida", txt:"vence hoy", det:"hoy"};
-  if(d <= 7) return {k:"inminente", cls:"s-inminente", txt:"inminente", det:"en " + d + (d===1?" día":" días")};
-  if(d <= 30) return {k:"camino", cls:"s-camino", txt:"en camino", det:"en " + d + " días"};
-  return {k:"lejana", cls:"s-lejana", txt:"lejos", det:"en " + d + " días"};
+function sec(txt){
+  return '<div class="seccion"><span class="rotulo">' + esc(txt) + '</span><span class="hilo-oro"></span></div>';
 }
 
-function pip(n){
-  var s = '<span class="pip">';
-  for(var i=1;i<=3;i++) s += '<i class="'+(i<=n?"on":"")+'"></i>';
+function estadoVenc(c){
+  var d = c.diaVence - S.campana.dia;
+  if(d < 0) return {k:"vencida", txt:"vencida", det:"hace " + (-d) + (-d===1?" día":" días")};
+  if(d === 0) return {k:"vencida", txt:"vence hoy", det:"hoy"};
+  if(d <= 7) return {k:"inminente", txt:"inminente", det:"en " + d + (d===1?" día":" días")};
+  if(d <= 30) return {k:"camino", txt:"en camino", det:"en " + d + " días"};
+  return {k:"lejana", txt:"lejos", det:"en " + d + " días"};
+}
+
+function llamas(n){
+  var s = '<span class="llamas">';
+  for(var i=1;i<=3;i++){
+    s += '<svg viewBox="0 0 12 14" class="' + (i<=n ? "" : "off") + '" style="color:' +
+         (i<=n ? "var(--ambar)" : "var(--ceniza)") + '"><use href="#llama"/></svg>';
+  }
   return s + "</span>";
+}
+
+function d20HTML(n){
+  return '<span class="presagio" title="Tirada de presagio con la que se calculó esta fecha">' +
+         '<svg class="d20ico" viewBox="0 0 100 100"><use href="#d20"/></svg>' + n + "</span>";
+}
+
+/* la mecha: cuánto del plazo ya se quemó */
+function mechaHTML(c){
+  var total = Math.max(1, c.diaVence - (c.creadaDia==null ? c.diaVence-1 : c.creadaDia));
+  var pasado = S.campana.dia - (c.creadaDia==null ? c.diaVence-1 : c.creadaDia);
+  var pct = Math.max(0, Math.min(100, Math.round(pasado / total * 100)));
+  var arde = pct >= 72;
+  return '<div class="mecha' + (arde ? " arde" : "") + '" role="img" aria-label="Plazo consumido: ' + pct + ' por ciento">' +
+         '<i style="width:' + pct + '%"></i>' +
+         '<svg viewBox="0 0 12 14" style="left:' + Math.max(3, Math.min(97, pct)) + '%;color:' + (arde ? "var(--brasa)" : "var(--ambar)") + '"><use href="#llama"/></svg>' +
+         "</div>";
 }
 
 function pendientes(){
@@ -836,32 +999,30 @@ function vistaTablero(){
   var ps = pendientes();
   var h = "";
 
-  h += '<div class="spread" style="margin-bottom:22px">';
-  h += '<p class="lead">Esto es lo que el mundo tiene anotado contra el grupo, o a su favor. ' +
-       'Ordenado por cuándo vuelve. Lo que no sirva, se descarta: el hilo sigue abierto y vuelve con otra forma.</p>';
+  h += '<div class="spread" style="margin-bottom:6px;align-items:flex-end">';
+  h += '<p class="lead">El mundo lleva sus propias cuentas. Esto es lo que tiene anotado contra el grupo —o <em>a su favor</em>—, ' +
+       'ordenado por cuándo vuelve. Lo que no te sirva, se descarta: el hilo sigue abierto y vuelve con otra forma.</p>';
   h += '<div class="row">';
-  h += '<button class="btn" id="go-generar">Generar consecuencias</button>';
-  h += '<button class="btn primary" id="go-sesion">Cargar una sesión</button>';
+  h += '<button class="btn conicono" id="go-generar"><svg class="d20ico" viewBox="0 0 100 100"><use href="#d20"/></svg>Tirar presagio</button>';
+  h += '<button class="btn oro" id="go-sesion">Cargar una sesión</button>';
   h += "</div></div>";
 
   if(propuestas.length){
-    h += '<div class="sectitle">Propuestas sin anotar</div>';
-    h += '<div class="stack">';
+    h += sec("El dragón dictó · sin anotar");
     for(var i=0;i<propuestas.length;i++) h += propuestaHTML(propuestas[i]);
-    h += "</div>";
   }
 
   if(!ps.length && !propuestas.length){
-    h += '<div class="empty"><b>No hay nada por vencer</b>' +
+    var abiertos = S.hilos.filter(function(x){return x.estado==="abierto";}).length;
+    h += '<div class="vacio"><b>Las cuentas están al día</b>' +
          (S.hilos.length
-            ? 'Hay ' + S.hilos.filter(function(x){return x.estado==="abierto";}).length +
-              ' hilo(s) abierto(s) esperando. Tocá <em>Generar consecuencias</em> y elegí qué vuelve.'
-            : 'Cargá facciones y NPCs en <em>El mundo</em>, y después una sesión en <em>Después de la sesión</em>.') +
+            ? "Hay " + abiertos + " hilo(s) abierto(s) esperando turno. Tirá el presagio y elegí qué vuelve."
+            : "Cargá facciones y NPCs en <em>El mundo</em>, y después una sesión en <em>Después de la sesión</em>.") +
          "</div>";
   }
 
   var grupos = [
-    ["vencida",   "Ya deberían haber pasado"],
+    ["vencida",   "Ya deberían haber golpeado la puerta"],
     ["inminente", "Esta sesión o la próxima"],
     ["camino",    "En camino"],
     ["lejana",    "Todavía lejos"]
@@ -870,16 +1031,16 @@ function vistaTablero(){
     var clave = grupos[g][0];
     var lista = ps.filter(function(c){ return estadoVenc(c).k === clave; });
     if(!lista.length) continue;
-    h += '<div class="sectitle">' + esc(grupos[g][1]) + " · " + lista.length + "</div>";
+    h += sec(grupos[g][1] + " · " + lista.length);
     for(var j=0;j<lista.length;j++) h += consecuenciaHTML(lista[j]);
   }
 
   var usadas = S.consecuencias.filter(function(c){ return c.estado==="usada"; });
   if(usadas.length){
-    h += '<div class="sectitle">Ya pasaron en mesa · ' + usadas.length + "</div>";
     usadas.sort(function(a,b){ return b.diaVence - a.diaVence; });
+    h += sec("Ya pasaron en mesa · " + usadas.length);
     for(var u=0; u<Math.min(usadas.length, 6); u++) h += consecuenciaHTML(usadas[u]);
-    if(usadas.length>6) h += '<p class="note" style="margin-top:12px">y ' + (usadas.length-6) + " más en el historial del hilo.</p>";
+    if(usadas.length>6) h += '<p class="ayuda" style="margin-top:14px">y ' + (usadas.length-6) + " más, contadas en las vueltas de cada hilo.</p>";
   }
   return h;
 }
@@ -890,39 +1051,45 @@ function consecuenciaHTML(c){
   var a = hl ? actor(hl.actorId) : null;
   var tipo = hl ? TIPOS[hl.tipo] : null;
   var usada = c.estado === "usada";
-  var h = '<article class="entry' + (usada ? " gone" : "") + '" data-c="' + esc(c.id) + '">';
+  var clase = usada ? "gone" : ((tipo && tipo.bueno) ? "e-bien" : "e-" + st.k);
 
-  h += '<div class="when">';
-  h += '<span class="big">día ' + c.diaVence + "</span>";
-  h += '<span class="stamp ' + (usada ? "s-usada" : st.cls) + '">' + (usada ? "usada" : esc(st.txt)) + "</span>";
-  if(!usada) h += '<span class="small">' + esc(st.det) + "</span>";
+  var h = '<article class="entry ' + clase + '" data-c="' + esc(c.id) + '">';
+
+  h += '<div class="cuando">';
+  h += '<span class="dia">día<b>' + c.diaVence + "</b></span>";
+  h += '<span class="sigilo ' + (usada ? "g-usada" : "g-" + st.k) + '">' + (usada ? "usada" : esc(st.txt)) + "</span>";
+  if(!usada){
+    h += '<span class="resta">' + esc(st.det) + "</span>";
+    h += mechaHTML(c);
+  }
   h += "</div>";
 
-  h += '<div class="body">';
+  h += '<div class="cuerpo">';
   h += "<h3>" + esc(c.titulo) + "</h3>";
-  h += '<p class="text">' + esc(c.cuerpo) + "</p>";
-  if(c.tono) h += '<p class="tone">' + esc(c.tono) + "</p>";
+  h += '<p class="texto">' + esc(c.cuerpo) + "</p>";
+  if(c.tono) h += '<p class="tono">' + esc(c.tono) + "</p>";
 
   h += '<div class="meta">';
-  if(a) h += "<span>" + esc(a.nombre) + "</span><span class='dot'>·</span>";
-  if(tipo) h += '<span class="tag' + (tipo.bueno ? " good" : "") + '">' + esc(tipo.n) + "</span>";
-  if(hl) h += '<span class="dot">·</span><span>' + esc(hl.titulo.slice(0,54)) + (hl.titulo.length>54?"…":"") + "</span>";
-  h += '<span class="dot">·</span><span>' + esc(PRESIONES[c.presion]) + " " + pip(c.presion) + "</span>";
-  if(hl && hl.vueltas) h += '<span class="dot">·</span><span>' + (hl.vueltas+1) + "ª vez que vuelve</span>";
-  if(c.afinada) h += '<span class="dot">·</span><span>afinada</span>';
+  if(a) h += '<span class="quien">' + esc(a.nombre) + '</span><span class="sep">·</span>';
+  if(tipo) h += '<span class="tag' + (tipo.bueno ? " bien" : "") + '">' + esc(tipo.n) + "</span>";
+  if(hl) h += '<span class="sep">·</span><span>' + esc(hl.titulo.slice(0,52)) + (hl.titulo.length>52?"…":"") + "</span>";
+  h += '<span class="sep">·</span><span>' + esc(PRESIONES[c.presion]) + " " + llamas(c.presion) + "</span>";
+  if(c.presagio) h += '<span class="sep">·</span>' + d20HTML(c.presagio);
+  if(hl && hl.vueltas) h += '<span class="sep">·</span><span>' + (hl.vueltas+1) + "ª vez que vuelve</span>";
+  if(c.afinada) h += '<span class="sep">·</span><span>afinada</span>';
   h += "</div>";
 
   if(!usada && c.ignorar){
-    h += '<div class="ignora"><b>Si lo dejan pasar</b>' + esc(c.ignorar) + "</div>";
+    h += '<div class="si-ignoran"><b>Si lo dejan pasar</b>' + esc(c.ignorar) + "</div>";
   }
 
   if(!usada){
     h += '<div class="acts">';
-    h += '<button class="btn tiny" data-act="usar" data-c="'+esc(c.id)+'">Ya la usé en mesa</button>';
-    h += '<button class="btn tiny" data-act="posponer" data-c="'+esc(c.id)+'">Posponer</button>';
-    h += '<button class="btn tiny" data-act="otra" data-c="'+esc(c.id)+'">Otra forma</button>';
-    if(sample) h += '<button class="btn tiny" data-act="afinar" data-c="'+esc(c.id)+'">Afinar con IA</button>';
-    h += '<button class="btn tiny quiet danger" data-act="descartar" data-c="'+esc(c.id)+'">Descartar</button>';
+    h += '<button class="btn chico" data-act="usar" data-c="'+esc(c.id)+'">Ya la usé en mesa</button>';
+    h += '<button class="btn chico" data-act="posponer" data-c="'+esc(c.id)+'">Posponer</button>';
+    h += '<button class="btn chico" data-act="otra" data-c="'+esc(c.id)+'">Otra forma</button>';
+    if(sample) h += '<button class="btn chico" data-act="afinar" data-c="'+esc(c.id)+'">Afinar</button>';
+    h += '<button class="btn chico fantasma peligro" data-act="descartar" data-c="'+esc(c.id)+'">Descartar</button>';
     h += "</div>";
   }
   h += "</div></article>";
@@ -934,20 +1101,22 @@ function propuestaHTML(c){
   var a = hl ? actor(hl.actorId) : null;
   var d = c.diaVence - S.campana.dia;
   var h = '<div class="prop" data-p="' + esc(c.id) + '">';
-  h += '<div class="spread" style="align-items:baseline">';
-  h += "<h3 style='font-family:Spectral,Georgia,serif;font-size:18px'>" + esc(c.titulo) + "</h3>";
-  h += '<span class="note">vence el día ' + c.diaVence + " · en " + d + " días</span>";
+  h += '<div class="spread" style="align-items:baseline;gap:12px">';
+  h += "<h3>" + esc(c.titulo) + "</h3>";
+  h += '<span class="rotulo" style="white-space:nowrap">día ' + c.diaVence + " · en " + d + " días</span>";
   h += "</div>";
-  h += '<p class="text" style="font-family:Spectral,Georgia,serif;font-size:15.5px;margin-top:6px;max-width:60ch">' + esc(c.cuerpo) + "</p>";
-  h += '<p class="tone" style="font-family:Spectral,Georgia,serif">' + esc(c.tono) + "</p>";
+  h += '<p class="texto">' + esc(c.cuerpo) + "</p>";
+  h += '<p class="tono" style="font-style:italic;color:var(--oro);margin-top:5px">' + esc(c.tono) + "</p>";
   h += '<div class="meta">';
-  if(a) h += "<span>" + esc(a.nombre) + "</span><span class='dot'>·</span>";
-  if(hl) h += "<span>" + esc(hl.titulo.slice(0,60)) + "</span>";
+  if(a) h += '<span class="quien">' + esc(a.nombre) + '</span><span class="sep">·</span>';
+  if(hl) h += "<span>" + esc(hl.titulo.slice(0,58)) + "</span>";
+  h += '<span class="sep">·</span><span>' + esc(PRESIONES[c.presion]) + " " + llamas(c.presion) + "</span>";
+  if(c.presagio) h += '<span class="sep">·</span>' + d20HTML(c.presagio);
   h += "</div>";
   h += '<div class="acts">';
-  h += '<button class="btn tiny primary" data-act="anotar" data-p="'+esc(c.id)+'">Anotar</button>';
-  h += '<button class="btn tiny" data-act="reroll" data-p="'+esc(c.id)+'">Otra forma</button>';
-  h += '<button class="btn tiny quiet" data-act="tirar" data-p="'+esc(c.id)+'">No sirve</button>';
+  h += '<button class="btn oro chico" data-act="anotar" data-p="'+esc(c.id)+'">Anotar en el libro</button>';
+  h += '<button class="btn chico" data-act="reroll" data-p="'+esc(c.id)+'">Otra forma</button>';
+  h += '<button class="btn chico fantasma" data-act="tirar" data-p="'+esc(c.id)+'">No sirve</button>';
   h += "</div></div>";
   return h;
 }
@@ -955,52 +1124,52 @@ function propuestaHTML(c){
 /* ---------- después de la sesión ---------- */
 function vistaSesion(){
   var h = "";
-  h += '<p class="lead" style="margin-bottom:20px">Cuatro o cinco líneas de lo que hicieron. Una cosa por línea, como se la contarías a alguien que faltó. ' +
-       'El registro las lee, propone de qué tipo es cada una y a quién le tocó, y vos corregís lo que haya leído mal.</p>';
+  h += '<p class="lead" style="margin-bottom:22px">Cuatro o cinco líneas de lo que hicieron, una cosa por línea, como se la contarías a alguien que faltó. ' +
+       'El libro las lee, propone de qué tipo es cada una y a quién le tocó. Vos corregís lo que haya leído mal.</p>';
 
   if(!lineasLeidas){
-    h += '<div class="panel"><div class="row" style="gap:16px;margin-bottom:14px">';
-    h += '<label class="field" style="flex:0 0 190px"><span>Días de juego desde la última sesión</span>' +
+    h += '<div class="panel"><div class="row" style="gap:16px;margin-bottom:16px">';
+    h += '<label class="campo" style="flex:0 0 210px"><span>Días de juego desde la última sesión</span>' +
          '<input type="number" id="in-dias" min="0" max="3650" value="7"></label>';
-    h += '<label class="field"><span>Título de la sesión (opcional)</span>' +
+    h += '<label class="campo"><span>Título de la sesión (opcional)</span>' +
          '<input type="text" id="in-titulo" placeholder="La noche del muelle"></label>';
     h += "</div>";
-    h += '<label class="field"><span>Qué hicieron</span><textarea id="in-log" rows="6" placeholder="Mataron al capitán de la guardia del puerto en una pelea de taberna.&#10;Se llevaron la reliquia del altar del Culto de la Marea Baja.&#10;Le pidieron 200 monedas prestadas a la Casa Renaldi y no las devolvieron.&#10;Bruna la Sorda los cubrió ante la guardia y la dejaron colgada.&#10;Sacaron a los pescadores del muelle antes de que se derrumbara."></textarea></label>';
-    h += '<div class="row" style="margin-top:14px"><button class="btn primary" id="btn-leer">Leer la bitácora</button>' +
-         '<span class="hint">Nada se guarda hasta que confirmes.</span></div>';
+    h += '<label class="campo"><span>Qué hicieron</span><textarea id="in-log" rows="6" placeholder="Mataron al capitán de la guardia del puerto en una pelea de taberna.&#10;Se llevaron la reliquia del altar del Culto de la Marea Baja.&#10;Le pidieron 200 monedas prestadas a la Casa Renaldi y no las devolvieron.&#10;Bruna la Sorda los cubrió ante la guardia y la dejaron colgada.&#10;Sacaron a los pescadores del muelle antes de que se derrumbara."></textarea></label>';
+    h += '<div class="row" style="margin-top:16px"><button class="btn oro" id="btn-leer">Leer la bitácora</button>' +
+         '<span class="ayuda">Nada se anota hasta que confirmes.</span></div>';
     h += "</div>";
-    return h;
+  } else {
+    h += '<div class="panel">';
+    h += '<p class="ayuda" style="margin-bottom:4px">Revisá tipo y actor de cada línea. Lo que quede sin actor no genera consecuencias.</p>';
+    for(var i=0;i<lineasLeidas.length;i++){
+      var L = lineasLeidas[i];
+      h += '<div class="lineafila" data-i="'+i+'">';
+      h += '<label class="campo l-texto"><span>Qué pasó</span><input type="text" data-f="texto" value="'+esc(L.texto)+'"></label>';
+      h += '<label class="campo"><span>Tipo de hilo</span><select data-f="tipo">';
+      for(var k in TIPOS) h += '<option value="'+k+'"'+(L.tipo===k?" selected":"")+">"+esc(TIPOS[k].n)+"</option>";
+      h += "</select></label>";
+      h += '<label class="campo"><span>Con quién</span><select data-f="actorId">';
+      h += '<option value="">— sin actor —</option>' + grupoOpciones(L.actorId);
+      h += "</select></label>";
+      h += '<label class="campo" style="flex:0 0 104px"><span>Gravedad</span><select data-f="gravedad">';
+      for(var g=1;g<=5;g++) h += '<option value="'+g+'"'+(L.gravedad===g?" selected":"")+">"+g+" / 5</option>";
+      h += "</select></label>";
+      h += "</div>";
+    }
+    h += '<div class="row" style="margin-top:22px">';
+    h += '<button class="btn oro" id="btn-cerrar-sesion">Cerrar la sesión y avanzar el reloj</button>';
+    h += '<button class="btn fantasma" id="btn-cancelar-lectura">Volver</button>';
+    h += "</div></div>";
   }
-
-  h += '<div class="panel flat">';
-  h += '<p class="hint" style="margin-bottom:6px">Revisá tipo y actor de cada línea. Lo que quede sin actor no genera consecuencias.</p>';
-  for(var i=0;i<lineasLeidas.length;i++){
-    var L = lineasLeidas[i];
-    h += '<div class="linerow" data-i="'+i+'">';
-    h += '<label class="field l-text"><span>Qué pasó</span><input type="text" data-f="texto" value="'+esc(L.texto)+'"></label>';
-    h += '<label class="field"><span>Tipo de hilo</span><select data-f="tipo">';
-    for(var k in TIPOS) h += '<option value="'+k+'"'+(L.tipo===k?" selected":"")+">"+esc(TIPOS[k].n)+"</option>";
-    h += "</select></label>";
-    h += '<label class="field"><span>Con quién</span><select data-f="actorId">';
-    h += '<option value="">— sin actor —</option>';
-    h += grupoOpciones(L.actorId);
-    h += "</select></label>";
-    h += '<label class="field" style="flex:0 0 92px"><span>Gravedad</span><select data-f="gravedad">';
-    for(var g=1;g<=5;g++) h += '<option value="'+g+'"'+(L.gravedad===g?" selected":"")+">"+g+"</option>";
-    h += "</select></label>";
-    h += "</div>";
-  }
-  h += '<div class="row" style="margin-top:20px">';
-  h += '<button class="btn primary" id="btn-cerrar-sesion">Cerrar la sesión y avanzar el reloj</button>';
-  h += '<button class="btn quiet" id="btn-cancelar-lectura">Volver</button>';
-  h += "</div></div>";
 
   if(S.sesiones.length){
-    h += '<div class="sectitle">Bitácora</div><div class="timeline">';
+    h += sec("Bitácora · " + S.sesiones.length + " sesiones");
+    h += '<div class="bitacora">';
     for(var s=S.sesiones.length-1; s>=0; s--){
       var ses = S.sesiones[s];
-      h += '<div class="tl"><div><div class="n">sesión ' + ses.n + '</div><div class="n">día ' + ses.dia + "</div></div><div>";
-      if(ses.titulo) h += '<div style="font-family:Spectral,Georgia,serif;font-size:16px;font-weight:600">' + esc(ses.titulo) + "</div>";
+      h += '<div class="bit"><div><div class="rotulo">sesión ' + ses.n + '</div>' +
+           '<div class="dia" style="margin-top:4px">día<b>' + ses.dia + "</b></div></div><div>";
+      if(ses.titulo) h += '<div class="titulo" style="font-size:18px;margin-bottom:3px">' + esc(ses.titulo) + "</div>";
       h += "<ul>";
       for(var l=0;l<ses.lineas.length;l++) h += "<li>" + esc(ses.lineas[l]) + "</li>";
       h += "</ul></div></div>";
@@ -1030,35 +1199,36 @@ function grupoOpciones(sel){
 /* ---------- el mundo ---------- */
 function vistaMundo(){
   var h = "";
-  h += '<p class="lead" style="margin-bottom:8px">El temperamento y el alcance deciden <em>cómo</em> y <em>cuándo</em> vuelve cada uno. ' +
-       'Un gremio burocrático y regional tarda semanas y llega con papeles; una banda vengativa y local llega en tres días y rompe algo.</p>';
+  h += '<p class="lead">El temperamento y el alcance deciden <em>cómo</em> y <em>cuándo</em> vuelve cada uno. ' +
+       'Un gremio burocrático y regional tarda semanas y llega con papeles; una banda vengativa y local llega en tres días y rompe algo primero.</p>';
 
-  h += '<div class="sectitle">Facciones · ' + S.facciones.length + "</div>";
-  h += '<div class="people">';
+  h += sec("Facciones · " + S.facciones.length);
+  h += '<div class="gente">';
   for(var i=0;i<S.facciones.length;i++){
     var f = S.facciones[i];
-    h += '<div class="who"><div class="nm">' + esc(f.nombre) + "</div>";
-    h += '<div class="ln">' + esc((TEMPLES[f.temple]||{}).n || f.temple) + " · " + esc((ALCANCES[f.alcance]||{}).n || f.alcance) + "</div>";
-    h += moodHTML(f.animo);
+    h += '<div class="ficha"><div class="nm">' + esc(f.nombre) + "</div>";
+    h += '<div class="ln rotulo">' + esc((TEMPLES[f.temple]||{}).n || f.temple) + " · " + esc((ALCANCES[f.alcance]||{}).n || f.alcance) + "</div>";
+    h += animoHTML(f.animo);
     if(f.notas) h += '<div class="nt">' + esc(f.notas) + "</div>";
-    h += '<div class="acts"><button class="btn tiny quiet" data-act="editar-actor" data-id="'+esc(f.id)+'">Editar</button>' +
-         '<button class="btn tiny quiet danger" data-act="borrar-actor" data-id="'+esc(f.id)+'">Borrar</button></div>';
+    h += '<div class="acts"><button class="btn chico fantasma" data-act="editar-actor" data-id="'+esc(f.id)+'">Editar</button>' +
+         '<button class="btn chico fantasma peligro" data-act="borrar-actor" data-id="'+esc(f.id)+'">Borrar</button></div>';
     h += "</div>";
   }
   h += "</div>";
   h += '<div class="row" style="margin-top:14px"><button class="btn" data-act="nueva-faccion">Agregar facción</button></div>';
 
-  h += '<div class="sectitle">NPCs · ' + S.npcs.length + "</div>";
-  h += '<div class="people">';
+  h += sec("NPCs · " + S.npcs.length);
+  h += '<div class="gente">';
   for(var j=0;j<S.npcs.length;j++){
     var n = S.npcs[j];
     var fa = n.faccionId ? actor(n.faccionId) : null;
-    h += '<div class="who"><div class="nm' + (n.estado==="muerto" ? " dead" : "") + '">' + esc(n.nombre) + "</div>";
-    h += '<div class="ln">' + esc(n.rol || "—") + (fa ? " · " + esc(fa.nombre) : "") + (n.estado && n.estado!=="vivo" ? " · " + esc(n.estado) : "") + "</div>";
-    h += moodHTML(n.animo);
+    h += '<div class="ficha"><div class="nm' + (n.estado==="muerto" ? " muerto" : "") + '">' + esc(n.nombre) + "</div>";
+    h += '<div class="ln rotulo">' + esc(n.rol || "—") + (fa ? " · " + esc(fa.nombre) : "") +
+         (n.estado && n.estado!=="vivo" ? " · " + esc(n.estado) : "") + "</div>";
+    h += animoHTML(n.animo);
     if(n.notas) h += '<div class="nt">' + esc(n.notas) + "</div>";
-    h += '<div class="acts"><button class="btn tiny quiet" data-act="editar-actor" data-id="'+esc(n.id)+'">Editar</button>' +
-         '<button class="btn tiny quiet danger" data-act="borrar-actor" data-id="'+esc(n.id)+'">Borrar</button></div>';
+    h += '<div class="acts"><button class="btn chico fantasma" data-act="editar-actor" data-id="'+esc(n.id)+'">Editar</button>' +
+         '<button class="btn chico fantasma peligro" data-act="borrar-actor" data-id="'+esc(n.id)+'">Borrar</button></div>';
     h += "</div>";
   }
   h += "</div>";
@@ -1066,30 +1236,30 @@ function vistaMundo(){
   return h;
 }
 
-function moodHTML(v){
+function animoHTML(v){
   v = typeof v === "number" ? v : 0;
   var pct = Math.max(8, Math.round(((v + 3) / 6) * 100));
-  var col = v < -1 ? "var(--rust)" : (v > 1 ? "var(--verd)" : "var(--muted)");
+  var col = v < -1 ? "var(--brasa)" : (v > 1 ? "var(--jade)" : "var(--ceniza)");
   var etiqueta = v <= -2 ? "hostil" : v === -1 ? "recelo" : v === 0 ? "indiferente" : v === 1 ? "cordial" : "leal";
-  return '<div class="mood"><div class="moodbar"><span style="left:0;width:' + pct + '%;background:' + col + '"></span></div>' +
-         '<span class="note">' + etiqueta + "</span></div>";
+  return '<div class="animo"><div class="animobar"><span style="width:' + pct + '%;background:' + col + '"></span></div>' +
+         '<span class="rotulo">' + etiqueta + "</span></div>";
 }
 
 /* ---------- hilos ---------- */
 function vistaHilos(){
   var h = "";
-  h += '<p class="lead" style="margin-bottom:8px">Cada hilo es una causa todavía sin saldar. Un hilo cerrado deja de volver; uno abierto vuelve más fuerte cada vez.</p>';
-  h += '<div class="row" style="margin:14px 0"><button class="btn" data-act="nuevo-hilo">Agregar hilo a mano</button></div>';
+  h += '<p class="lead">Cada hilo es una causa sin saldar. Uno cerrado deja de volver; uno abierto vuelve <em>más fuerte cada vez</em>.</p>';
+  h += '<div class="row" style="margin:16px 0"><button class="btn" data-act="nuevo-hilo">Abrir un hilo a mano</button></div>';
 
   var abiertos = S.hilos.filter(function(x){ return x.estado==="abierto"; });
   var cerrados = S.hilos.filter(function(x){ return x.estado!=="abierto"; });
 
-  h += '<div class="sectitle">Abiertos · ' + abiertos.length + "</div>";
-  if(!abiertos.length) h += '<div class="empty"><b>Ningún hilo abierto</b>Cargá una sesión y el registro los abre solo.</div>';
+  h += sec("Abiertos · " + abiertos.length);
+  if(!abiertos.length) h += '<div class="vacio"><b>Ningún hilo abierto</b>Cargá una sesión y el libro los abre solo.</div>';
   for(var i=0;i<abiertos.length;i++) h += hiloHTML(abiertos[i]);
 
   if(cerrados.length){
-    h += '<div class="sectitle">Saldados · ' + cerrados.length + "</div>";
+    h += sec("Saldados · " + cerrados.length);
     for(var j=0;j<cerrados.length;j++) h += hiloHTML(cerrados[j]);
   }
   return h;
@@ -1099,26 +1269,27 @@ function hiloHTML(t){
   var a = actor(t.actorId);
   var tipo = TIPOS[t.tipo] || {n:t.tipo};
   var cerrado = t.estado !== "abierto";
-  var h = '<article class="entry' + (cerrado ? " gone" : "") + '">';
-  h += '<div class="when"><span class="big">' + (t.vueltas||0) + "</span>" +
-       '<span class="small">' + ((t.vueltas||0)===1 ? "vuelta" : "vueltas") + "</span></div>";
-  h += '<div class="body"><h3>' + esc(t.titulo) + "</h3>";
+  var h = '<article class="entry ' + (cerrado ? "gone" : (tipo.bueno ? "e-bien" : "e-camino")) + '">';
+  h += '<div class="cuando"><span class="dia">vueltas<b>' + (t.vueltas||0) + "</b></span>";
+  h += '<span class="resta">' + esc(PRESIONES[Math.min(3, 1 + (t.vueltas||0))]) + " " + llamas(Math.min(3, 1 + (t.vueltas||0))) + "</span>";
+  h += "</div>";
+  h += '<div class="cuerpo"><h3>' + esc(t.titulo) + "</h3>";
   h += '<div class="meta">';
-  h += '<span class="tag' + (tipo.bueno ? " good" : "") + '">' + esc(tipo.n) + "</span>";
-  if(a) h += '<span class="dot">·</span><span>' + esc(a.nombre) + "</span>";
-  h += '<span class="dot">·</span><span>gravedad ' + (t.gravedad||3) + "/5</span>";
-  h += '<span class="dot">·</span><span>abierto el día ' + t.diaOrigen + (t.sesionN ? " · sesión " + t.sesionN : "") + "</span>";
-  if(cerrado) h += '<span class="dot">·</span><span>' + esc(t.estado) + "</span>";
+  h += '<span class="tag' + (tipo.bueno ? " bien" : "") + '">' + esc(tipo.n) + "</span>";
+  if(a) h += '<span class="sep">·</span><span class="quien">' + esc(a.nombre) + "</span>";
+  h += '<span class="sep">·</span><span>gravedad ' + (t.gravedad||3) + "/5</span>";
+  h += '<span class="sep">·</span><span>abierto el día ' + t.diaOrigen + (t.sesionN ? " · sesión " + t.sesionN : "") + "</span>";
+  if(cerrado) h += '<span class="sep">·</span><span>' + esc(t.estado) + "</span>";
   h += "</div>";
   h += '<div class="acts">';
   if(!cerrado){
-    h += '<button class="btn tiny" data-act="forzar" data-h="'+esc(t.id)+'">Traerlo ahora</button>';
-    h += '<button class="btn tiny" data-act="saldar" data-h="'+esc(t.id)+'">Saldado</button>';
+    h += '<button class="btn chico" data-act="forzar" data-h="'+esc(t.id)+'">Traerlo ahora</button>';
+    h += '<button class="btn chico" data-act="saldar" data-h="'+esc(t.id)+'">Saldado</button>';
   } else {
-    h += '<button class="btn tiny" data-act="reabrir" data-h="'+esc(t.id)+'">Reabrir</button>';
+    h += '<button class="btn chico" data-act="reabrir" data-h="'+esc(t.id)+'">Reabrir</button>';
   }
-  h += '<button class="btn tiny quiet" data-act="editar-hilo" data-h="'+esc(t.id)+'">Editar</button>';
-  h += '<button class="btn tiny quiet danger" data-act="borrar-hilo" data-h="'+esc(t.id)+'">Borrar</button>';
+  h += '<button class="btn chico fantasma" data-act="editar-hilo" data-h="'+esc(t.id)+'">Editar</button>';
+  h += '<button class="btn chico fantasma peligro" data-act="borrar-hilo" data-h="'+esc(t.id)+'">Borrar</button>';
   h += "</div></div></article>";
   return h;
 }
@@ -1127,35 +1298,35 @@ function hiloHTML(t){
 function vistaDatos(){
   var h = "";
   h += '<p class="lead">Todo esto vive en este navegador y en ningún otro lado. Si limpiás los datos del sitio, se pierde. ' +
-       'Bajá un respaldo cada tantas sesiones: el archivo se vuelve a cargar acá mismo y también sirve para pasarle la campaña a otra máquina.</p>';
+       'Bajá un respaldo cada tantas sesiones: el archivo se vuelve a cargar acá mismo y sirve para pasar la campaña a otra máquina.</p>';
 
   var ultimo = S.ultimoRespaldo
     ? "Último respaldo: sesión " + S.ultimoRespaldo.sesion + ", hace " + (S.sesiones.length - S.ultimoRespaldo.sesion) + " sesión(es)."
     : "Todavía no bajaste ningún respaldo.";
-  h += '<div class="panel" style="margin-top:20px">';
-  h += '<p class="note" style="margin-bottom:12px">' + esc(ultimo) + "</p>";
+  h += '<div class="panel" style="margin-top:22px">';
+  h += '<p class="rotulo" style="margin-bottom:14px">' + esc(ultimo) + "</p>";
   h += '<div class="row">';
-  h += '<button class="btn primary" data-act="exportar">Bajar respaldo (.json)</button>';
+  h += '<button class="btn oro" data-act="exportar">Bajar respaldo (.json)</button>';
   h += '<button class="btn" data-act="notas">Notas para la próxima sesión (.md)</button>';
-  h += '<button class="btn" data-act="mostrar-json">Ver el texto del respaldo</button>';
+  h += '<button class="btn fantasma" data-act="mostrar-json">Ver el texto del respaldo</button>';
   h += "</div></div>";
 
-  h += '<div class="sectitle">Cargar un respaldo</div>';
-  h += '<div class="panel flat"><label class="field"><span>Pegá acá el contenido del archivo .json</span>' +
+  h += sec("Cargar un respaldo");
+  h += '<div class="panel liso"><label class="campo"><span>Pegá acá el contenido del archivo .json</span>' +
        '<textarea id="in-import" rows="4" placeholder=\'{"v":1,"campana":{...}}\'></textarea></label>' +
-       '<div class="row" style="margin-top:12px"><button class="btn" data-act="importar">Reemplazar la campaña con esto</button>' +
-       '<span class="hint">Pisa todo lo que haya cargado ahora.</span></div></div>';
+       '<div class="row" style="margin-top:14px"><button class="btn" data-act="importar">Reemplazar la campaña con esto</button>' +
+       '<span class="ayuda">Pisa todo lo que haya cargado ahora.</span></div></div>';
 
-  h += '<div class="sectitle">La campaña</div>';
-  h += '<div class="panel flat"><div class="row" style="gap:16px">';
-  h += '<label class="field"><span>Nombre</span><input type="text" id="in-camp" value="'+esc(S.campana.nombre)+'"></label>';
-  h += '<label class="field"><span>Plaza principal</span><input type="text" id="in-lugar" value="'+esc(S.campana.lugar||"")+'"></label>';
-  h += '<label class="field" style="flex:0 0 150px"><span>Día de campaña</span><input type="number" id="in-dia" value="'+S.campana.dia+'" min="1"></label>';
-  h += '</div><div class="row" style="margin-top:12px"><button class="btn" data-act="guardar-campana">Guardar</button></div></div>';
+  h += sec("La campaña");
+  h += '<div class="panel liso"><div class="row" style="gap:16px">';
+  h += '<label class="campo"><span>Nombre</span><input type="text" id="in-camp" value="'+esc(S.campana.nombre)+'"></label>';
+  h += '<label class="campo"><span>Plaza principal</span><input type="text" id="in-lugar" value="'+esc(S.campana.lugar||"")+'"></label>';
+  h += '<label class="campo" style="flex:0 0 150px"><span>Día de campaña</span><input type="number" id="in-dia" value="'+S.campana.dia+'" min="1"></label>';
+  h += '</div><div class="row" style="margin-top:14px"><button class="btn" data-act="guardar-campana">Guardar</button></div></div>';
 
-  h += '<div class="sectitle">Empezar de cero</div>';
-  h += '<div class="panel flat"><p class="hint" style="margin-bottom:12px">Borra facciones, NPCs, hilos, sesiones y consecuencias. No se puede deshacer.</p>' +
-       '<button class="btn danger" data-act="reset">Vaciar y empezar una campaña nueva</button></div>';
+  h += sec("Empezar de cero");
+  h += '<div class="panel liso"><p class="ayuda" style="margin-bottom:14px">Borra facciones, NPCs, hilos, sesiones y consecuencias. No se puede deshacer.</p>' +
+       '<button class="btn peligro" data-act="reset">Vaciar y empezar una campaña nueva</button></div>';
 
   h += '<div id="json-out"></div>';
   return h;
@@ -1164,6 +1335,8 @@ function vistaDatos(){
 /* =========================================================================
    RENDER
    ========================================================================= */
+
+var ultimoPresagio = null;
 
 var TABS = [
   {id:"tablero", n:"Lo que vuelve"},
@@ -1175,11 +1348,20 @@ var TABS = [
 
 function render(){
   document.getElementById("camp-name").textContent = S.campana.nombre || "Deudas de Campaña";
-  document.getElementById("camp-sub").textContent = S.ejemplo ? "campaña de ejemplo" : "registro de causas y vencimientos";
+  document.getElementById("camp-sub").textContent =
+    S.ejemplo ? "campaña de ejemplo" : "el libro de cuentas del dragón";
   document.getElementById("dial-day").textContent = S.campana.dia;
   document.getElementById("dial-ses").textContent = S.sesiones.length;
 
   var venc = vencidasCount();
+  var ojo = document.getElementById("ojo");
+  if(ojo){
+    ojo.classList.toggle("alerta", venc > 0);
+    ojo.setAttribute("aria-label", venc
+      ? "El dragón está atento: " + venc + " cuenta(s) vencida(s)"
+      : "El dragón duerme: no hay cuentas vencidas");
+  }
+
   var abiertos = S.hilos.filter(function(x){return x.estado==="abierto";}).length;
   var conteos = {
     tablero: pendientes().length,
@@ -1193,8 +1375,9 @@ function render(){
   for(var i=0;i<TABS.length;i++){
     var tb = TABS[i];
     var alarma = tb.id==="tablero" && venc>0;
-    t += '<button class="tab' + (alarma ? " alarm" : "") + '" role="tab" data-tab="' + tb.id + '" aria-selected="' + (tabActual===tb.id) + '">' +
-         esc(tb.n) + (conteos[tb.id] ? '<span class="cnt">' + conteos[tb.id] + "</span>" : "") + "</button>";
+    t += '<button class="tab' + (alarma ? " alarma" : "") + '" role="tab" data-tab="' + tb.id +
+         '" aria-selected="' + (tabActual===tb.id) + '">' + esc(tb.n) +
+         (conteos[tb.id] ? '<span class="cnt">' + conteos[tb.id] + "</span>" : "") + "</button>";
   }
   document.getElementById("tabs").innerHTML = t;
 
@@ -1205,12 +1388,53 @@ function render(){
   else if(tabActual==="hilos") v.innerHTML = vistaHilos();
   else v.innerHTML = vistaDatos();
 
-  var fs = document.getElementById("foot-state");
-  fs.textContent = venc
-    ? venc + " consecuencia(s) ya vencida(s): el mundo se está haciendo esperar."
-    : "Los datos viven en este navegador. Bajá un respaldo cada tanto.";
+  document.getElementById("foot-state").textContent = venc
+    ? venc + " cuenta(s) ya vencida(s). El mundo se está haciendo esperar."
+    : "El registro vive en este navegador. Bajá un respaldo cada tanto.";
 }
 
+/* ---------- la tirada de presagio ---------- */
+function mostrarTirada(n){
+  return new Promise(function(resolve){
+    var root = document.getElementById("tirada-root");
+    var p = leerPresagio(n);
+    var quieto = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var extra = n === 20 ? " nat20" : (n === 1 ? " nat1" : "");
+
+    root.innerHTML =
+      '<div class="tirada' + (quieto ? "" : " girando") + extra + '" role="status">' +
+        '<svg class="d20" viewBox="0 0 100 100" aria-hidden="true"><use href="#d20"/>' +
+          '<text class="cifra" x="50" y="63">' + n + "</text></svg>" +
+        '<div class="veredicto"><div class="n">' + esc(p.n) + "</div>" +
+          '<div class="d">' + esc(p.d) + "</div></div>" +
+      "</div>";
+
+    var overlay = root.firstChild;
+    var cerrado = false;
+    function cerrar(){
+      if(cerrado) return;
+      cerrado = true;
+      root.innerHTML = "";
+      document.removeEventListener("keydown", onKey);
+      resolve(n);
+    }
+    function onKey(){ cerrar(); }
+    document.addEventListener("keydown", onKey);
+    overlay.addEventListener("click", cerrar);
+    setTimeout(cerrar, quieto ? 900 : 1750);
+  });
+}
+
+/* Tira el d20 del mundo y propone consecuencias con ese resultado. */
+function convocar(){
+  var n = tirarD20();
+  return mostrarTirada(n).then(function(){
+    generar(4, n);
+    irA("tablero");
+    if(!propuestas.length) toast("No hay hilos abiertos esperando turno.");
+    else toast(propuestas.length + " propuesta(s) con presagio " + n + ". Anotá las que sirvan.");
+  });
+}
 /* Diálogos propios: los del navegador pueden estar bloqueados dentro del visor. */
 function modal(spec){
   return new Promise(function(resolve){
@@ -1220,10 +1444,10 @@ function modal(spec){
     h += "<h3>" + esc(spec.titulo) + "</h3>";
     if(spec.texto) h += '<p class="mtxt">' + esc(spec.texto) + "</p>";
     if(campos.length){
-      h += '<div class="mfields">';
+      h += '<div class="mcampos">';
       for(var i=0;i<campos.length;i++){
         var c = campos[i];
-        h += '<label class="field"><span>' + esc(c.label) + "</span>";
+        h += '<label class="campo"><span>' + esc(c.label) + "</span>";
         if(c.tipo === "select"){
           h += '<select data-k="' + esc(c.k) + '">';
           for(var j=0;j<c.opciones.length;j++){
@@ -1248,8 +1472,8 @@ function modal(spec){
       h += "</div>";
     }
     h += '<div class="macts">';
-    h += '<button type="button" class="btn quiet" data-m="no">' + esc(spec.cancelar || "Cancelar") + "</button>";
-    h += '<button type="submit" class="btn ' + (spec.peligro ? "danger" : "primary") + '">' + esc(spec.ok || "Guardar") + "</button>";
+    h += '<button type="button" class="btn fantasma" data-m="no">' + esc(spec.cancelar || "Cancelar") + "</button>";
+    h += '<button type="submit" class="btn ' + (spec.peligro ? "peligro" : "oro") + '">' + esc(spec.ok || "Guardar") + "</button>";
     h += "</div></form></div>";
     root.innerHTML = h;
 
@@ -1326,7 +1550,6 @@ function toast(msg){
   document.body.appendChild(d);
   setTimeout(function(){ if(d.parentNode) d.remove(); }, 3200);
 }
-
 /* =========================================================================
    ACCIONES
    ========================================================================= */
@@ -1375,7 +1598,7 @@ function adivinarGravedad(texto){
 }
 
 function cerrarSesion(){
-  var filas = document.querySelectorAll(".linerow");
+  var filas = document.querySelectorAll(".lineafila");
   var nuevos = [], lineas = [];
   for(var i=0;i<filas.length;i++){
     var f = filas[i];
@@ -1415,9 +1638,13 @@ function cerrarSesion(){
   S.ejemplo = false;
   lineasLeidas = null;
   guardar();
-  generar(4);
   irA("tablero");
-  toast(nuevos.length + " hilo(s) nuevo(s). " + propuestas.length + " consecuencia(s) propuesta(s).");
+  var n = tirarD20();
+  mostrarTirada(n).then(function(){
+    generar(4, n);
+    render();
+    toast(nuevos.length + " hilo(s) nuevo(s) · " + propuestas.length + " consecuencia(s) propuesta(s).");
+  });
 }
 
 function anotar(id){
@@ -1743,8 +1970,8 @@ function mostrarTexto(filename, texto){
   render();
   var out = document.getElementById("json-out");
   if(!out) return;
-  out.innerHTML = '<div class="sectitle">' + esc(filename) + "</div>" +
-    '<p class="hint" style="margin-bottom:8px">Copiá esto y guardalo en un archivo.</p>' +
+  out.innerHTML = sec(filename) +
+    '<p class="ayuda" style="margin-block:8px 10px">Copiá esto y guardalo en un archivo.</p>' +
     '<textarea rows="10" id="out-area"></textarea>';
   var ta = document.getElementById("out-area");
   ta.value = texto;
@@ -1827,12 +2054,7 @@ document.getElementById("view").addEventListener("click", function(e){
   var act = b.getAttribute("data-act");
   var id = b.getAttribute("data-c") || b.getAttribute("data-p") || b.getAttribute("data-h") || b.getAttribute("data-id");
 
-  if(b.id === "go-generar"){
-    var n = generar(4);
-    render();
-    toast(n.length ? n.length + " propuesta(s). Anotá las que sirvan." : "No hay hilos abiertos esperando turno.");
-    return;
-  }
+  if(b.id === "go-generar"){ convocar(); return; }
   if(b.id === "go-sesion"){ irA("sesion"); return; }
   if(b.id === "btn-leer"){ leerBitacora(); return; }
   if(b.id === "btn-cerrar-sesion"){ cerrarSesion(); return; }
@@ -1939,7 +2161,11 @@ function ejemplo(){
     {id:"h_4", titulo:"Dejaron a Bruna la Sorda pagando el frente ante la guardia", tipo:"traicion",
      actorId:"n_bruna", gravedad:4, diaOrigen:19, sesionN:3, estado:"abierto", vueltas:0, evitadas:[]},
     {id:"h_5", titulo:"Sacaron a los pescadores del muelle antes del derrumbe", tipo:"alianza",
-     actorId:"f_pesca", gravedad:3, diaOrigen:19, sesionN:3, estado:"abierto", vueltas:0, evitadas:[]}
+     actorId:"f_pesca", gravedad:3, diaOrigen:19, sesionN:3, estado:"abierto", vueltas:0, evitadas:[]},
+    {id:"h_6", titulo:"Le prometieron a Sarna Renaldi saldar todo antes de la luna llena", tipo:"promesa",
+     actorId:"n_sarna", gravedad:3, diaOrigen:4, sesionN:1, estado:"abierto", vueltas:0, evitadas:[]},
+    {id:"h_7", titulo:"El Padre Ostro vio quién se llevó la reliquia del altar", tipo:"secreto",
+     actorId:"n_ostro", gravedad:4, diaOrigen:12, sesionN:2, estado:"abierto", vueltas:0, evitadas:[]}
   ];
 
   var ses = [
@@ -1962,32 +2188,32 @@ function ejemplo(){
      cuerpo:"Casa Renaldi manda un papel antes que una persona: el monto, la fecha y con quién hablar. La cifra creció desde la última vez que la miraron.",
      tono:TEMPLES.codicioso.tono,
      ignorar:"Se acaba el papeleo y empieza la gente.",
-     presion:1, diaVence:17, creadaDia:4, sesionN:1, estado:"usada"},
+     presion:1, presagio:11, diaVence:17, creadaDia:4, sesionN:1, estado:"usada"},
     {id:"c_2", hiloId:"h_1", formaId:"d2", titulo:"Cobrador a la puerta",
      cuerpo:"Alguien de Casa Renaldi aparece donde duerme el grupo. No viene a negociar: viene con una cifra, un plazo corto y alguien esperando afuera.",
      tono:TEMPLES.codicioso.tono,
      ignorar:"El monto se duplica y la próxima visita no es de un cobrador.",
-     presion:2, diaVence:24, creadaDia:19, sesionN:3, estado:"pendiente"},
+     presion:2, presagio:14, diaVence:24, creadaDia:19, sesionN:3, estado:"pendiente"},
     {id:"c_3", hiloId:"h_2", formaId:"s1", titulo:"El que ocupó el lugar",
      cuerpo:"La Guardia del Puerto ya tiene reemplazo para el que mataron, y el reemplazo es peor: más joven, con menos escrúpulos y con algo que probar frente a los suyos.",
      tono:TEMPLES.burocratico.tono,
      ignorar:"El nuevo hace su nombre a costa del grupo.",
-     presion:1, diaVence:21, creadaDia:12, sesionN:2, estado:"pendiente"},
+     presion:1, presagio:7, diaVence:21, creadaDia:12, sesionN:2, estado:"pendiente"},
     {id:"c_4", hiloId:"h_3", formaId:"r3", titulo:"El dueño anterior",
      cuerpo:"El Culto de la Marea Baja no era el primer dueño. Alguien más viejo y más paciente también estuvo buscando esa pieza, y el robo le avisó dónde mirar.",
      tono:TEMPLES.devoto.tono,
      ignorar:"El más viejo llega primero y no viene a hablar.",
-     presion:2, diaVence:38, creadaDia:12, sesionN:2, estado:"pendiente"},
+     presion:2, presagio:16, diaVence:38, creadaDia:12, sesionN:2, estado:"pendiente"},
     {id:"c_5", hiloId:"h_4", formaId:"t1", titulo:"Del otro lado de la mesa",
      cuerpo:"Bruna la Sorda aparece trabajando para el bando contrario. No por convicción: porque el grupo le cerró la única otra puerta que tenía.",
      tono:TEMPLES.calculador.tono,
      ignorar:"Lleva al otro bando todo lo que sabe del grupo, que es bastante.",
-     presion:2, diaVence:26, creadaDia:19, sesionN:3, estado:"pendiente"},
+     presion:2, presagio:12, diaVence:26, creadaDia:19, sesionN:3, estado:"pendiente"},
     {id:"c_6", hiloId:"h_5", formaId:"a3", titulo:"Aviso a tiempo",
      cuerpo:"La Cofradía de Pescadores les hace llegar algo que no tenía ninguna obligación de contarles, y lo manda con alguien de confianza para que llegue antes.",
      tono:TEMPLES.paciente.tono,
      ignorar:"Si lo ignoran, el aviso era cierto igual.",
-     presion:1, diaVence:31, creadaDia:19, sesionN:3, estado:"pendiente"}
+     presion:1, presagio:9, diaVence:31, creadaDia:19, sesionN:3, estado:"pendiente"}
   ];
 
   return {
