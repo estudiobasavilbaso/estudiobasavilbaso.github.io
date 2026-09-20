@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /herramientas/
 
 Sitemap: https://estudiobasavilbaso.com.ar/sitemap.xml

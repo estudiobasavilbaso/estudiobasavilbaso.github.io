@@ -1,0 +1,2017 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Registro de consecuencias de campana para DMs: facciones, hilos abiertos y lo que esta por volver, con vencimiento en dias de juego.">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}html,body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Deudas de Campaña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+:root{
+  --paper:#E5E7E1;
+  --surface:#F2F3EF;
+  --sunk:#DCDFD8;
+  --ink:#161A18;
+  --ink-soft:#3C443F;
+  --muted:#6A716A;
+  --rule:#C3C8BF;
+  --rule-soft:#D5D9D0;
+  --verd:#2E6E5F;
+  --rust:#9C3C2C;
+  --amber:#996714;
+  --shadow:rgba(22,26,24,.10);
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#121615;
+    --surface:#1A201E;
+    --sunk:#0D110F;
+    --ink:#DEE3DC;
+    --ink-soft:#B4BCB4;
+    --muted:#8B958D;
+    --rule:#2E3733;
+    --rule-soft:#232B28;
+    --verd:#63A893;
+    --rust:#CE7159;
+    --amber:#C89A48;
+    --shadow:rgba(0,0,0,.45);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#121615;
+  --surface:#1A201E;
+  --sunk:#0D110F;
+  --ink:#DEE3DC;
+  --ink-soft:#B4BCB4;
+  --muted:#8B958D;
+  --rule:#2E3733;
+  --rule-soft:#232B28;
+  --verd:#63A893;
+  --rust:#CE7159;
+  --amber:#C89A48;
+  --shadow:rgba(0,0,0,.45);
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Archivo","Helvetica Neue",Arial,sans-serif;
+  font-size:15px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{margin:0;font-weight:600;text-wrap:balance}
+p{margin:0}
+button{font:inherit;color:inherit}
+input,select,textarea{font:inherit;color:inherit}
+
+.wrap{max-width:1000px;margin:0 auto;padding-inline:20px}
+
+/* ---------- barra superior ---------- */
+.topbar{
+  position:sticky;top:env(safe-area-inset-top,0px);z-index:40;
+  background:var(--paper);
+  border-bottom:1px solid var(--rule);
+}
+.topbar .wrap{padding-block:12px 0}
+.brandrow{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;justify-content:space-between}
+.brand{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.brand h1{
+  font-family:"Spectral",Georgia,serif;font-size:21px;font-weight:600;letter-spacing:-.01em;
+}
+.brand .sub{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted);
+}
+.clock{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.clock .dial{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:12px;letter-spacing:.04em;color:var(--ink-soft);
+  border:1px solid var(--rule);border-radius:2px;padding:5px 9px;background:var(--surface);
+  font-variant-numeric:tabular-nums;
+}
+.clock .dial b{font-weight:500;color:var(--ink)}
+
+.tabs{display:flex;gap:2px;margin-top:12px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{
+  appearance:none;background:none;border:0;border-bottom:2px solid transparent;
+  padding:9px 12px;cursor:pointer;white-space:nowrap;
+  font-size:13.5px;font-weight:500;color:var(--muted);
+}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--verd)}
+.tab .cnt{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10.5px;
+  color:var(--muted);margin-left:5px;font-variant-numeric:tabular-nums;
+}
+.tab[aria-selected="true"] .cnt{color:var(--verd)}
+.tab.alarm .cnt{color:var(--rust)}
+
+/* ---------- estructura ---------- */
+main{padding-block:26px 64px}
+.lead{max-width:62ch;color:var(--ink-soft);font-size:14.5px}
+.sectitle{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+  display:flex;align-items:center;gap:12px;margin-block:34px 6px;
+}
+.sectitle::after{content:"";flex:1;height:1px;background:var(--rule)}
+.sectitle:first-child{margin-top:0}
+.stack{display:flex;flex-direction:column;gap:14px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.spread{display:flex;gap:16px;justify-content:space-between;align-items:flex-start;flex-wrap:wrap}
+
+/* ---------- registro (renglones) ---------- */
+.entry{
+  display:grid;grid-template-columns:96px 1fr;gap:20px;
+  padding-block:18px;border-top:1px solid var(--rule-soft);
+}
+.entry:first-of-type{border-top:1px solid var(--rule)}
+.entry.gone{opacity:.45}
+.when{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.when .big{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:19px;line-height:1.1;font-variant-numeric:tabular-nums;letter-spacing:-.02em;
+}
+.when .small{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+}
+.body h3{
+  font-family:"Spectral",Georgia,serif;font-size:19px;line-height:1.25;font-weight:600;
+  margin-bottom:5px;
+}
+.body .text{font-family:"Spectral",Georgia,serif;font-size:16px;line-height:1.55;max-width:60ch}
+.body .tone{
+  font-family:"Spectral",Georgia,serif;font-style:italic;color:var(--ink-soft);
+  font-size:15px;margin-top:4px;max-width:60ch;
+}
+.meta{
+  display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:9px;
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10.5px;
+  letter-spacing:.07em;text-transform:uppercase;color:var(--muted);
+}
+.meta .dot{opacity:.5}
+.ignora{
+  margin-top:10px;padding:9px 12px;background:var(--surface);
+  border-left:2px solid var(--rule);font-size:13.5px;color:var(--ink-soft);max-width:60ch;
+}
+.ignora b{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);font-weight:500;display:block;margin-bottom:2px;
+}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+
+/* ---------- sellos y etiquetas ---------- */
+.stamp{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10px;font-weight:500;
+  letter-spacing:.12em;text-transform:uppercase;
+  border:1px solid currentColor;border-radius:2px;padding:2px 6px;display:inline-block;
+}
+.s-vencida{color:var(--rust);border-width:2px;border-style:double;transform:rotate(-2.5deg)}
+.s-inminente{color:var(--amber)}
+.s-camino{color:var(--verd)}
+.s-lejana{color:var(--muted)}
+.s-usada{color:var(--muted)}
+.tag{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);border:1px solid var(--rule);
+  border-radius:2px;padding:2px 6px;
+}
+.tag.good{color:var(--verd);border-color:currentColor}
+.pip{display:inline-flex;gap:2px;vertical-align:middle}
+.pip i{width:5px;height:5px;background:currentColor;border-radius:50%;display:block;opacity:.25}
+.pip i.on{opacity:1}
+
+/* ---------- controles ---------- */
+.btn{
+  appearance:none;background:transparent;border:1px solid var(--rule);color:var(--ink);
+  border-radius:2px;padding:7px 12px;font-size:13px;font-weight:500;cursor:pointer;
+  transition:background .12s ease,border-color .12s ease;
+}
+.btn:hover{border-color:var(--ink);background:var(--surface)}
+.btn.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.btn.primary:hover{background:var(--ink-soft);border-color:var(--ink-soft)}
+.btn.quiet{border-color:transparent;color:var(--muted);padding-inline:8px}
+.btn.quiet:hover{color:var(--ink);background:var(--surface)}
+.btn.danger:hover{border-color:var(--rust);color:var(--rust)}
+.btn.tiny{font-size:11.5px;padding:4px 8px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn:focus-visible,.tab:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:2px solid var(--verd);outline-offset:2px;
+}
+input[type=text],input[type=number],select,textarea{
+  background:var(--surface);border:1px solid var(--rule);border-radius:2px;
+  padding:7px 9px;font-size:14px;width:100%;
+}
+input[type=number]{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+textarea{font-family:"Spectral",Georgia,serif;font-size:15.5px;line-height:1.6;resize:vertical}
+label.field{display:flex;flex-direction:column;gap:5px;flex:1 1 170px;min-width:0}
+label.field > span{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);
+}
+.panel{border:1px solid var(--rule);border-radius:3px;background:var(--surface);padding:18px}
+.panel.flat{background:transparent}
+.hint{font-size:13px;color:var(--muted);max-width:62ch}
+
+/* ---------- fichas del mundo ---------- */
+.people{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:0 28px}
+.who{padding-block:14px;border-top:1px solid var(--rule-soft)}
+.who .nm{font-family:"Spectral",Georgia,serif;font-size:17px;font-weight:600}
+.who .nm.dead{text-decoration:line-through;text-decoration-thickness:1px;opacity:.65}
+.who .ln{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--muted);margin-top:3px;
+}
+.who .nt{font-size:13.5px;color:var(--ink-soft);margin-top:5px}
+.mood{display:flex;align-items:center;gap:6px;margin-top:6px}
+.moodbar{height:3px;flex:1;background:var(--sunk);position:relative;border-radius:2px;max-width:120px}
+.moodbar span{position:absolute;top:0;bottom:0;border-radius:2px}
+
+/* ---------- propuestas ---------- */
+.prop{border:1px solid var(--rule);border-left:3px solid var(--verd);border-radius:3px;
+  background:var(--surface);padding:16px 18px}
+.prop.vetoed{opacity:.4;border-left-color:var(--rule)}
+.linerow{
+  display:grid;grid-template-columns:1fr 160px 200px 92px;gap:10px;align-items:end;
+  padding-block:12px;border-top:1px solid var(--rule-soft);
+}
+.empty{
+  border:1px dashed var(--rule);border-radius:3px;padding:26px 20px;text-align:center;
+  color:var(--muted);font-size:14px;
+}
+.empty b{display:block;font-family:"Spectral",Georgia,serif;font-size:17px;color:var(--ink);
+  font-weight:600;margin-bottom:5px}
+
+.note{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;letter-spacing:.06em;
+  color:var(--muted);
+}
+.warn{border-left:2px solid var(--amber);padding-left:12px;color:var(--ink-soft);font-size:13.5px}
+.toast{
+  position:fixed;left:50%;transform:translateX(-50%);
+  bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:90;
+  background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:3px;
+  font-size:13.5px;box-shadow:0 6px 24px var(--shadow);max-width:86vw;
+}
+
+/* ---------- diálogos ---------- */
+.overlay{
+  position:fixed;inset:0;z-index:80;background:rgba(10,14,12,.55);
+  display:flex;align-items:flex-start;justify-content:center;
+  padding:max(24px,env(safe-area-inset-top,0px)) 16px 24px;overflow-y:auto;
+}
+.modal{
+  background:var(--paper);border:1px solid var(--rule);border-radius:4px;
+  box-shadow:0 18px 50px var(--shadow);width:min(460px,100%);margin-block:auto;
+  padding:22px;
+}
+.modal h3{font-family:"Spectral",Georgia,serif;font-size:19px;margin-bottom:4px}
+.modal .mtxt{color:var(--ink-soft);font-size:14px;margin-bottom:16px;white-space:pre-line}
+.modal .mfields{display:flex;flex-direction:column;gap:14px}
+.modal .mfields > label.field{flex:0 0 auto}
+.modal .mopt{
+  font-size:12.5px;color:var(--muted);margin-top:3px;
+  font-family:"Archivo","Helvetica Neue",Arial,sans-serif;
+  letter-spacing:normal;text-transform:none;
+}
+.modal .macts{display:flex;gap:9px;justify-content:flex-end;margin-top:20px;flex-wrap:wrap}
+.timeline{display:flex;flex-direction:column}
+.tl{display:grid;grid-template-columns:96px 1fr;gap:20px;padding-block:14px;
+  border-top:1px solid var(--rule-soft)}
+.tl .n{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--muted)}
+.tl ul{margin:0;padding-left:17px;font-family:"Spectral",Georgia,serif;font-size:15px}
+.tl li{margin-block:2px}
+.footer{border-top:1px solid var(--rule);margin-top:48px;padding-block:20px 8px;
+  color:var(--muted);font-size:12.5px;display:flex;gap:14px;flex-wrap:wrap;justify-content:space-between}
+
+@media (max-width:760px){
+  .linerow{grid-template-columns:1fr 1fr;gap:8px}
+  .linerow .l-text{grid-column:1 / -1}
+}
+@media (max-width:560px){
+  .entry,.tl{grid-template-columns:1fr;gap:10px}
+  .when{flex-direction:row;align-items:baseline;gap:10px}
+  .brandrow{align-items:flex-start}
+  .body .text{font-size:15.5px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+  .s-vencida{transform:none}
+}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="wrap">
+    <div class="brandrow">
+      <div class="brand">
+        <h1 id="camp-name">Deudas de Campaña</h1>
+        <span class="sub" id="camp-sub">registro de causas y vencimientos</span>
+      </div>
+      <div class="clock">
+        <span class="dial">día de campaña <b id="dial-day">1</b></span>
+        <span class="dial">sesiones <b id="dial-ses">0</b></span>
+        <button class="btn tiny" id="btn-advance" title="Mover el reloj sin cerrar una sesión">Avanzar días</button>
+      </div>
+    </div>
+    <div class="tabs" role="tablist" id="tabs"></div>
+  </div>
+</div>
+
+<main>
+  <div class="wrap" id="view"></div>
+  <div class="wrap">
+    <div class="footer">
+      <span id="foot-state">Los datos viven en este navegador.</span>
+      <span class="note">Deudas de Campaña</span>
+    </div>
+  </div>
+</main>
+<div id="modal-root"></div>
+
+<script>
+"use strict";
+
+/* =========================================================================
+   MOTOR
+   Una consecuencia es: QUIÉN (el actor) + QUÉ FORMA toma + CUÁNDO vence.
+   El motor no inventa trama: elige la forma del regreso de un hilo abierto,
+   la tiñe con el temperamento del actor y le pone fecha en días de juego.
+   ========================================================================= */
+
+var TIPOS = {
+  deuda:    {n:"Deuda",            g:"Le deben algo material a alguien"},
+  sangre:   {n:"Sangre",           g:"Mataron o hirieron a los suyos"},
+  robo:     {n:"Robo",             g:"Se llevaron algo que no era de ellos"},
+  traicion: {n:"Traición",         g:"Le fallaron a alguien que confiaba"},
+  promesa:  {n:"Promesa",          g:"Prometieron algo y no lo cumplieron"},
+  favor:    {n:"Favor recibido",   g:"Alguien los ayudó y espera cobrárselo"},
+  secreto:  {n:"Secreto",          g:"Alguien sabe algo que no debería"},
+  dano:     {n:"Daño público",     g:"Rompieron algo que le importaba a mucha gente"},
+  alianza:  {n:"Alianza",          g:"Hicieron un bien que alguien recuerda", bueno:true}
+};
+
+var TEMPLES = {
+  vengativo:   {n:"Vengativo",    mult:0.55, tono:"Llega con nombre propio y sin intermediarios."},
+  brutal:      {n:"Brutal",       mult:0.65, tono:"Llega sin aviso y rompe algo antes de hablar."},
+  codicioso:   {n:"Codicioso",    mult:0.85, tono:"Llega con un número y margen para negociar."},
+  devoto:      {n:"Devoto",       mult:1.05, tono:"Llega convencido de tener razón, y eso lo hace peor."},
+  calculador:  {n:"Calculador",   mult:1.25, tono:"Llega en el momento exacto en que más cuesta responder."},
+  burocratico: {n:"Burocrático",  mult:1.55, tono:"Llega con papeles, sellos y una fecha ya vencida."},
+  paciente:    {n:"Paciente",     mult:2.00, tono:"Llega tarde, cuando el grupo ya se había olvidado."}
+};
+
+var ALCANCES = {
+  local:    {n:"Local",    base:6,  g:"Manda gente en días"},
+  regional: {n:"Regional", base:17, g:"Manda gente en semanas"},
+  lejano:   {n:"Lejano",   base:42, g:"Tarda, pero llega igual"}
+};
+
+var PRESIONES = {1:"Susurro", 2:"Golpe en la puerta", 3:"A la vista"};
+
+/* Cada forma: qué toma el regreso. {A}=actor, {alguien}=persona concreta, {lugar}=plaza principal */
+var FORMAS = [
+  /* ---- DEUDA ---- */
+  {id:"d1",tipos:["deuda"],presion:1,temples:["codicioso","burocratico"],
+   t:"Aviso de cobro",
+   c:"{A} manda un papel antes que una persona: el monto, la fecha y con quién hablar. La cifra creció desde la última vez que la miraron.",
+   i:"Se acaba el papeleo y empieza la gente."},
+  {id:"d2",tipos:["deuda"],presion:2,temples:["codicioso","brutal"],
+   t:"Cobrador a la puerta",
+   c:"{alguien} aparece donde duerme el grupo. No viene a negociar: viene con una cifra, un plazo corto y alguien esperando afuera.",
+   i:"El monto se duplica y la próxima visita no es de un cobrador."},
+  {id:"d3",tipos:["deuda"],presion:2,temples:["calculador","codicioso"],
+   t:"La deuda cambia de manos",
+   c:"{A} vendió lo que el grupo debe a un tercero más impaciente. Ahora le deben a alguien que no conocen y que no les tiene ninguna consideración.",
+   i:"El nuevo dueño de la deuda cobra con lo que encuentre, no con plata."},
+  {id:"d4",tipos:["deuda"],presion:2,temples:["burocratico","calculador"],
+   t:"Se cobran con lo que haya",
+   c:"{A} se cobra con lo primero que encuentra a mano: una montura, un cuarto alquilado, una caja guardada, un contacto que de golpe deja de atenderlos.",
+   i:"Lo próximo que se lleven va a ser algo que el grupo sí iba a necesitar."},
+  {id:"d5",tipos:["deuda"],presion:1,temples:["calculador","codicioso"],
+   t:"Pagar con trabajo",
+   c:"{A} ofrece borrar la deuda a cambio de un encargo. El encargo es sucio, y el que lo propone lo sabe y no lo disimula.",
+   i:"La oferta se retira y queda anotado que el grupo prefirió deber."},
+  {id:"d6",tipos:["deuda"],presion:2,
+   t:"Crédito cortado",
+   c:"Corre la voz en {lugar}: al grupo no se le fía. Precios al doble, posadas llenas, puertas que antes se abrían con un saludo.",
+   i:"Deja de ser una molestia y pasa a ser un problema para conseguir cualquier cosa."},
+  {id:"d7",tipos:["deuda"],presion:3,temples:["brutal","vengativo"],
+   t:"Le cobran al que salió de garante",
+   c:"{A} va a cobrarle a alguien que el grupo aprecia y que quedó de garante sin enterarse del todo. Lo que le hagan es mensaje, no negocio.",
+   i:"El garante deja de estar disponible, de una manera o de otra."},
+
+  /* ---- SANGRE ---- */
+  {id:"s1",tipos:["sangre"],presion:1,temples:["calculador","burocratico"],
+   t:"El que ocupó el lugar",
+   c:"{A} ya tiene reemplazo para el que mataron, y el reemplazo es peor: más joven, con menos escrúpulos y con algo que probar frente a los suyos.",
+   i:"El nuevo hace su nombre a costa del grupo."},
+  {id:"s2",tipos:["sangre"],presion:2,
+   t:"Precio por sus cabezas",
+   c:"{A} pone recompensa. No hace falta que sea alta: hace falta que sea pública y que la cobre cualquiera.",
+   i:"La cifra sube y empieza a atraer gente competente."},
+  {id:"s3",tipos:["sangre"],presion:2,temples:["vengativo","devoto"],
+   t:"Alguien lo lloró",
+   c:"El muerto tenía a alguien. Esa persona ahora tiene nombre, cara, una idea fija y nada más que perder.",
+   i:"Deja de buscar justicia y empieza a buscar daño."},
+  {id:"s4",tipos:["sangre"],presion:3,temples:["brutal","vengativo"],
+   t:"Cacería",
+   c:"{A} manda gente entrenada. No buscan pelea abierta ni honor: buscan encontrarlos dormidos, separados o heridos.",
+   i:"Los encuentran así."},
+  {id:"s5",tipos:["sangre"],presion:1,temples:["burocratico","calculador"],
+   t:"Cierre de filas",
+   c:"{A} endurece todo después de lo que pasó: turnos dobles, controles nuevos, puertas que antes estaban abiertas y ahora piden nombre.",
+   i:"Moverse por {lugar} pasa a costar tiempo, plata o una mentira sostenida."},
+  {id:"s6",tipos:["sangre"],presion:2,temples:["devoto","codicioso","calculador"],
+   t:"La deuda de sangre",
+   c:"{A} manda decir que acepta compensación en lugar de venganza. El precio no es plata, y quien lo propone ya sabe que duele.",
+   i:"Se retira la oferta y queda claro que no habrá otra."},
+  {id:"s7",tipos:["sangre"],presion:1,
+   t:"Reconstruyeron la noche",
+   c:"Lo que el grupo dejó atrás habla: un testigo, una huella, un arma. Alguien armó el relato completo y tiene los nombres.",
+   i:"El relato llega a quien puede actuar sobre él."},
+
+  /* ---- ROBO ---- */
+  {id:"r1",tipos:["robo"],presion:2,temples:["calculador","codicioso"],
+   t:"Rastreador",
+   c:"{A} contrató a alguien que no se cansa y no negocia. Perdió días de ventaja, pero no pierde el rastro y no tiene apuro.",
+   i:"Los alcanza en el peor terreno posible para el grupo."},
+  {id:"r2",tipos:["robo"],presion:1,
+   t:"La pieza está marcada",
+   c:"Lo robado es invendible: todo comprador serio sabe de quién era y a quién conviene avisarle antes de tocarlo.",
+   i:"Un comprador acepta igual, cobra la información aparte y la vende dos veces."},
+  {id:"r3",tipos:["robo"],presion:2,temples:["paciente","devoto"],
+   t:"El dueño anterior",
+   c:"{A} no era el primer dueño. Alguien más viejo y más paciente también estuvo buscando esa pieza, y el robo le avisó dónde mirar.",
+   i:"El más viejo llega primero y no viene a hablar."},
+  {id:"r4",tipos:["robo"],presion:1,temples:["burocratico"],
+   t:"Denuncia con nombres",
+   c:"{A} declaró el robo ante quien tiene autoridad en {lugar}. Ahora hay papeles, descripciones y un funcionario obligado a mostrar resultados.",
+   i:"Los papeles llegan a las otras ciudades antes que el grupo."},
+  {id:"r5",tipos:["robo"],presion:3,temples:["brutal","vengativo"],
+   t:"Canje forzado",
+   c:"{A} se lleva algo del grupo —un contacto, un refugio, alguien— y manda a decir en qué lugar y a qué hora se hace el intercambio.",
+   i:"El canje se cierra sin ellos y en los términos del otro."},
+  {id:"r6",tipos:["robo"],presion:2,
+   t:"Lo que la pieza arrastra",
+   c:"Lo robado no vino solo. Algo lo estaba cuidando, o buscándolo, y ahora ese algo sigue al grupo en vez de seguir a {A}.",
+   i:"Los encuentra cuando estén ocupados con otra cosa."},
+
+  /* ---- TRAICIÓN ---- */
+  {id:"t1",tipos:["traicion"],presion:2,
+   t:"Del otro lado de la mesa",
+   c:"{alguien} aparece trabajando para el bando contrario. No por convicción: porque el grupo le cerró la única otra puerta que tenía.",
+   i:"Lleva al otro bando todo lo que sabe del grupo, que es bastante."},
+  {id:"t2",tipos:["traicion"],presion:2,temples:["codicioso","calculador"],
+   t:"Vende lo que sabe",
+   c:"{alguien} conoce rutinas, nombres y un punto débil concreto, y encontró a quién le interesa pagar por eso.",
+   i:"El comprador usa la información antes de que el grupo sepa que se vendió."},
+  {id:"t3",tipos:["traicion"],presion:1,
+   t:"Contó su versión primero",
+   c:"{alguien} habló antes, en el lugar correcto y con la gente correcta. Su versión es creíble porque es casi cierta.",
+   i:"La versión se vuelve la historia oficial y el grupo queda desmintiendo."},
+  {id:"t4",tipos:["traicion"],presion:1,temples:["calculador","paciente"],
+   t:"Retiro de apoyo",
+   c:"Lo que {alguien} daba —refugio, información, un permiso, una firma— deja de estar disponible justo cuando hace falta.",
+   i:"El agujero que deja lo ocupa alguien que cobra caro."},
+  {id:"t5",tipos:["traicion"],presion:2,temples:["vengativo","devoto"],
+   t:"Prueba de lealtad",
+   c:"{alguien} está dispuesto a volver, pero pide algo caro para confiar de nuevo. El pedido es humillante a propósito.",
+   i:"El puente se quema del todo, y esta vez con público."},
+  {id:"t6",tipos:["traicion"],presion:3,temples:["vengativo","brutal"],
+   t:"Cobra la traición",
+   c:"{alguien} armó lo suyo: gente nueva, recursos nuevos, y una manera de devolver exactamente lo que recibió.",
+   i:"Elige el momento y no falla dos veces."},
+
+  /* ---- PROMESA ---- */
+  {id:"p1",tipos:["promesa"],presion:1,
+   t:"Vino a recordarlo",
+   c:"{alguien} apareció donde está el grupo, con testigos, a recordarles en voz alta lo que le prometieron y nunca hicieron.",
+   i:"La próxima vez no lo dice: lo cuenta."},
+  {id:"p2",tipos:["promesa"],presion:2,
+   t:"Plazo vencido",
+   c:"Lo que el grupo prometió ya no alcanza. Ahora habría que reparar además el daño que causó la espera.",
+   i:"La reparación deja de ser posible y queda solo el reclamo."},
+  {id:"p3",tipos:["promesa"],presion:1,temples:["calculador","codicioso"],
+   t:"Buscó a otro",
+   c:"{A} consiguió que se lo haga otro. Ese otro cobró bien, quedó bien parado, y ahora ocupa el lugar que el grupo tenía.",
+   i:"El reemplazo se instala y empieza a competir por lo mismo."},
+  {id:"p4",tipos:["promesa"],presion:2,
+   t:"Palabra rota, puerta cerrada",
+   c:"Tres personas que pensaban ayudar al grupo se enteraron de que el grupo no cumple. Ninguna lo dice de frente.",
+   i:"La fama camina más rápido que ellos y llega antes a la próxima ciudad."},
+  {id:"p5",tipos:["promesa"],presion:3,temples:["vengativo","devoto"],
+   t:"El que esperó, pagó",
+   c:"A {alguien} le costó caro haber confiado. Sigue vivo, y quiere que el grupo vea exactamente qué le costó.",
+   i:"Deja de pedir y empieza a cobrarse."},
+
+  /* ---- FAVOR RECIBIDO ---- */
+  {id:"f1",tipos:["favor"],presion:1,temples:["calculador","codicioso"],
+   t:"Se cobra ahora",
+   c:"{A} llama al favor en el peor momento posible. Lo pide sin levantar la voz, porque tiene todo el derecho de pedirlo.",
+   i:"Dejar de deber un favor y pasar a deber una afrenta."},
+  {id:"f2",tipos:["favor"],presion:2,
+   t:"El favor creció",
+   c:"Lo que {A} pide a cambio es bastante más grande que lo que dio. Y aun así, negarse suena mal dicho en voz alta.",
+   i:"{A} lo cuenta a su manera, y a su manera el grupo queda como desagradecido."},
+  {id:"f3",tipos:["favor"],presion:2,temples:["calculador","devoto"],
+   t:"Cobrado en público",
+   c:"{A} cobra el favor delante de gente, para que quede claro quién manda a quién en {lugar}.",
+   i:"Lo público se vuelve costumbre: el grupo pasa a ser gente de {A}."},
+  {id:"f4",tipos:["favor"],presion:2,temples:["codicioso","burocratico"],
+   t:"El favor cambió de manos",
+   c:"{A} le pasó el favor a un tercero con el que el grupo no tiene ninguna historia, y ese tercero viene a cobrarlo entero.",
+   i:"El tercero ajusta el precio a su gusto."},
+
+  /* ---- SECRETO ---- */
+  {id:"x1",tipos:["secreto"],presion:1,temples:["calculador","codicioso"],
+   t:"Alguien sabe",
+   c:"{alguien} sabe. Todavía no lo usó: primero está averiguando cuánto vale y quién pagaría más.",
+   i:"Encuentra el precio y el comprador."},
+  {id:"x2",tipos:["secreto"],presion:2,
+   t:"Filtración deformada",
+   c:"Lo que el grupo quería callar llegó a {A} incompleto y torcido, que es la peor forma en que podía llegar.",
+   i:"La versión torcida se vuelve la única versión."},
+  {id:"x3",tipos:["secreto"],presion:2,temples:["codicioso","calculador"],
+   t:"Chantaje",
+   c:"{alguien} pone precio al silencio. El primer pago siempre es razonable; ese es el punto.",
+   i:"El precio sube cada vez que el grupo demuestra que puede pagarlo."},
+  {id:"x4",tipos:["secreto"],presion:3,temples:["devoto","burocratico","vengativo"],
+   t:"Lo saben los que no debían",
+   c:"El secreto llegó a {A}, que es exactamente quien no tenía que enterarse, y que ahora tiene motivo formal para actuar.",
+   i:"Actúa, y con razón declarada."},
+
+  /* ---- DAÑO PÚBLICO ---- */
+  {id:"n1",tipos:["dano"],presion:1,temples:["burocratico","calculador"],
+   t:"La regla nueva",
+   c:"{A} usa lo que pasó para imponer en {lugar} una regla que antes no se animaba a imponer. Nadie protesta: todos vieron el desastre.",
+   i:"La regla se aplica primero contra gente como el grupo."},
+  {id:"n2",tipos:["dano"],presion:2,
+   t:"Alguien paga la cuenta",
+   c:"La reparación la terminan pagando vecinos que no tuvieron nada que ver. Saben quién fue y tienen la cara fresca.",
+   i:"El resentimiento encuentra a alguien que lo organice."},
+  {id:"n3",tipos:["dano"],presion:2,temples:["burocratico","calculador"],
+   t:"Culparon a otro",
+   c:"{A} le colgó el muerto a alguien más para cerrar el asunto rápido. Ese alguien tiene familia, y la familia está averiguando.",
+   i:"La familia llega a la verdad y no distingue entre quien la usó y quien la causó."},
+  {id:"n4",tipos:["dano"],presion:2,
+   t:"Eso hacía falta",
+   c:"Lo que el grupo rompió servía para algo en {lugar}. Ahora falta, y la falta se nota todos los días.",
+   i:"La falta se vuelve escasez, y la escasez se vuelve bronca."},
+  {id:"n5",tipos:["dano"],presion:2,temples:["burocratico","vengativo"],
+   t:"Caras en la pared",
+   c:"{A} hizo circular descripciones del grupo. Entrar a ciertos lugares deja de ser gratis y empieza a requerir explicaciones.",
+   i:"Las descripciones mejoran hasta que son retratos."},
+
+  /* ---- ALIANZA (lo bueno también vuelve) ---- */
+  {id:"a1",tipos:["alianza"],presion:1,
+   t:"Devuelven la mano",
+   c:"{A} manda a alguien a dar una mano sin que se la pidan y sin cobrarla. Viene con lo que sabe hacer, no con lo que al grupo le conviene.",
+   i:"Nada malo. Si el grupo no la usa, la ayuda se va a otro lado."},
+  {id:"a2",tipos:["alianza"],presion:1,
+   t:"Puerta abierta",
+   c:"Algo que estaba cerrado para el grupo deja de estarlo: un archivo, un mercado, una audiencia, un camino sin control.",
+   i:"La puerta vuelve a cerrarse cuando cambie quien la abrió."},
+  {id:"a3",tipos:["alianza"],presion:1,temples:["calculador","paciente"],
+   t:"Aviso a tiempo",
+   c:"{A} les hace llegar algo que no tenía ninguna obligación de contarles, y lo manda con alguien de confianza para que llegue antes.",
+   i:"Si lo ignoran, el aviso era cierto igual."},
+  {id:"a4",tipos:["alianza"],presion:2,
+   t:"El nombre del grupo sirve",
+   c:"En {lugar} el nombre del grupo ahora vale como aval. Sirve para conseguir cosas y para que los encuentren más rápido.",
+   i:"Ser conocido no se puede devolver."},
+  {id:"a5",tipos:["alianza"],presion:2,temples:["codicioso","calculador","devoto"],
+   t:"Regalo con filo",
+   c:"{A} manda un obsequio que obliga: aceptarlo mete al grupo en una disputa que no era suya, rechazarlo ofende a quien los ayudó.",
+   i:"Alguien decide por ellos qué significó el silencio."},
+  {id:"a6",tipos:["alianza"],presion:1,
+   t:"El que se acuerda",
+   c:"Alguien a quien el grupo ayudó hace tiempo, y que ya habían olvidado por completo, aparece justo cuando hace falta.",
+   i:"Aparece igual, más adelante y con menos para dar."}
+];
+
+/* Qué delata el tipo de hilo en una línea de bitácora.
+   Lo que HICIERON (v) pesa más que los objetos nombrados (n): "prometieron
+   devolver la reliquia" es una promesa, no un robo. */
+var PISTAS = [
+  {tipo:"sangre",
+   v:["mat","asesin","degoll","ejecut","liquid","apuñal","apunal","decapit","masacr","hirier","hiri","murió","murio"],
+   n:["cadáver","cadaver","muerte","sangre"]},
+  {tipo:"robo",
+   v:["rob","saque","afan","hurt","se llevaron","sustraj","desvalij","chore"],
+   n:["ladr","reliquia","botín","botin"]},
+  {tipo:"deuda",
+   v:["deb","prest","fiad","adelant","empeñ","empen","alquil"],
+   n:["deuda","monedas","oro","préstamo","prestamo"]},
+  {tipo:"traicion",
+   v:["traicion","traición","delat","entregaron","vendieron a","abandonaron","dejaron tirad","dejaron sol","dejaron colgad","engañ","engan"],
+   n:["doble juego"]},
+  {tipo:"promesa",
+   v:["promet","jurar","juraron","se comprometieron","dieron su palabra","acordaron","quedaron en"],
+   n:["promesa","su palabra"]},
+  {tipo:"favor",
+   v:["les dio","les consiguió","les consiguio","les prestó","les presto","les abrió","les abrio","les facilit","interced","hizo el favor"],
+   n:["favor"]},
+  {tipo:"alianza",
+   v:["salv","ayud","curar","curaron","defend","rescat","proteg","sacaron a","apoyaron","repar"],
+   n:["alianza","pacto"]},
+  {tipo:"secreto",
+   v:["vieron","vio que","lo vio","los vio","descubr","enteraron","espi","averigu"],
+   n:["testigo","secreto"]},
+  {tipo:"dano",
+   v:["quem","incendi","destruy","derrumb","volaron","rompier","arras","inund","hundier","explot"],
+   n:["incendio","ruinas"]}
+];
+
+function clasificar(texto){
+  var t = (texto||"").toLowerCase();
+  var mejor = null, best = 0;
+  for(var i=0;i<PISTAS.length;i++){
+    var P = PISTAS[i], p = 0, j;
+    for(j=0;j<P.v.length;j++) if(t.indexOf(P.v[j])>=0) p += 12;
+    for(j=0;j<P.n.length;j++) if(t.indexOf(P.n[j])>=0) p += 4;
+    if(p>best){ best = p; mejor = P.tipo; }
+  }
+  return mejor || "deuda";
+}
+
+/* =========================================================================
+   ESTADO
+   ========================================================================= */
+
+var CLAVE = "deudas-campana.v1";
+var S = null;
+var tabActual = "tablero";
+var propuestas = [];
+var lineasLeidas = null;
+var sample = null;
+var downloads = null;
+
+function uid(p){ return (p||"x") + "_" + Math.random().toString(36).slice(2,8) + Date.now().toString(36).slice(-3); }
+
+function guardar(){
+  S.tocado = Date.now();
+  try{ localStorage.setItem(CLAVE, JSON.stringify(S)); }
+  catch(e){ /* navegador sin almacenamiento: la sesión sigue en memoria */ }
+}
+function cargar(){
+  try{
+    var raw = localStorage.getItem(CLAVE);
+    if(raw){
+      var d = JSON.parse(raw);
+      if(d && d.v === 1) return d;
+    }
+  }catch(e){}
+  return null;
+}
+
+function actor(id){
+  if(!id) return null;
+  var i;
+  for(i=0;i<S.facciones.length;i++) if(S.facciones[i].id===id) return S.facciones[i];
+  for(i=0;i<S.npcs.length;i++) if(S.npcs[i].id===id) return S.npcs[i];
+  return null;
+}
+function esNpc(a){ return !!(a && a.id && a.id.charAt(0)==="n"); }
+function perfil(a){
+  /* un NPC hereda alcance y temple de su facción si no tiene propios */
+  if(!a) return {alcance:"local", temple:"calculador", nombre:"alguien"};
+  var f = esNpc(a) && a.faccionId ? actor(a.faccionId) : null;
+  return {
+    alcance: a.alcance || (f && f.alcance) || "local",
+    temple:  a.temple  || (f && f.temple)  || "calculador",
+    nombre:  a.nombre
+  };
+}
+function hilo(id){ for(var i=0;i<S.hilos.length;i++) if(S.hilos[i].id===id) return S.hilos[i]; return null; }
+
+/* =========================================================================
+   GENERACIÓN
+   ========================================================================= */
+
+function venceEn(h, p){
+  var base = (ALCANCES[p.alcance]||ALCANCES.local).base;
+  var mult = (TEMPLES[p.temple]||TEMPLES.calculador).mult;
+  var grav = 1.25 - 0.12 * (h.gravedad||3);          /* más grave, más rápido */
+  var esc  = Math.pow(0.85, h.vueltas||0);            /* cada vuelta acorta la mecha */
+  var jit  = 0.78 + Math.random()*0.45;
+  var d = Math.round(base * mult * grav * esc * jit);
+  return Math.max(2, d);
+}
+
+function rellenar(txt, h, a){
+  var p = perfil(a);
+  var quien = esNpc(a) ? p.nombre : "alguien de " + p.nombre;
+  return txt
+    .replace(/\{A\}/g, p.nombre)
+    .replace(/\{alguien\}/g, quien)
+    .replace(/\{lugar\}/g, S.campana.lugar || "la ciudad");
+}
+
+function proponer(h){
+  var a = actor(h.actorId);
+  var p = perfil(a);
+  var objetivo = Math.min(3, 1 + (h.vueltas||0));
+  var evitadas = h.evitadas || [];
+  var usadasEnCampana = {};
+  for(var i=0;i<S.consecuencias.length;i++) usadasEnCampana[S.consecuencias[i].formaId] = true;
+
+  var pool = [];
+  for(var k=0;k<FORMAS.length;k++){
+    var f = FORMAS[k];
+    if(f.tipos.indexOf(h.tipo)<0) continue;
+    if(evitadas.indexOf(f.id)>=0) continue;
+    var s = 10 - Math.abs(f.presion - objetivo)*4;
+    if(f.temples && f.temples.indexOf(p.temple)>=0) s += 5;
+    if(usadasEnCampana[f.id]) s -= 7;
+    pool.push({f:f, s:s + Math.random()*3.5});
+  }
+  if(!pool.length) return null;
+  pool.sort(function(x,y){ return y.s - x.s; });
+  var forma = pool[0].f;
+  var d = venceEn(h, p);
+
+  return {
+    id: uid("c"),
+    hiloId: h.id,
+    formaId: forma.id,
+    titulo: forma.t,
+    cuerpo: rellenar(forma.c, h, a),
+    tono: (TEMPLES[p.temple]||TEMPLES.calculador).tono,
+    ignorar: rellenar(forma.i, h, a),
+    presion: Math.min(3, Math.max(forma.presion, objetivo)),
+    diaVence: S.campana.dia + d,
+    creadaDia: S.campana.dia,
+    sesionN: S.sesiones.length,
+    estado: "propuesta"
+  };
+}
+
+function hilosQueAprietan(){
+  /* un hilo pide consecuencia si está abierto y no tiene ninguna pendiente */
+  var pendientePorHilo = {};
+  for(var i=0;i<S.consecuencias.length;i++){
+    var c = S.consecuencias[i];
+    if(c.estado==="pendiente") pendientePorHilo[c.hiloId] = true;
+  }
+  var out = [];
+  for(var j=0;j<S.hilos.length;j++){
+    var h = S.hilos[j];
+    if(h.estado!=="abierto") continue;
+    if(pendientePorHilo[h.id]) continue;
+    if(!actor(h.actorId)) continue;
+    out.push(h);
+  }
+  out.sort(function(a,b){
+    var pa = (a.gravedad||3)*3 + (S.campana.dia - a.diaOrigen)/10 + (a.vueltas||0);
+    var pb = (b.gravedad||3)*3 + (S.campana.dia - b.diaOrigen)/10 + (b.vueltas||0);
+    return pb - pa;
+  });
+  return out;
+}
+
+function generar(limite){
+  var hs = hilosQueAprietan();
+  var max = limite || 4;
+  propuestas = [];
+  for(var i=0;i<hs.length && propuestas.length<max;i++){
+    var c = proponer(hs[i]);
+    if(c) propuestas.push(c);
+  }
+  return propuestas;
+}
+
+/* =========================================================================
+   VISTAS
+   ========================================================================= */
+
+function esc(s){
+  return String(s==null?"":s)
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+}
+
+function estadoVenc(c){
+  var d = c.diaVence - S.campana.dia;
+  if(d < 0) return {k:"vencida", cls:"s-vencida", txt:"vencida", det:"hace " + (-d) + " " + (-d===1?"día":"días")};
+  if(d === 0) return {k:"vencida", cls:"s-vencida", txt:"vence hoy", det:"hoy"};
+  if(d <= 7) return {k:"inminente", cls:"s-inminente", txt:"inminente", det:"en " + d + (d===1?" día":" días")};
+  if(d <= 30) return {k:"camino", cls:"s-camino", txt:"en camino", det:"en " + d + " días"};
+  return {k:"lejana", cls:"s-lejana", txt:"lejos", det:"en " + d + " días"};
+}
+
+function pip(n){
+  var s = '<span class="pip">';
+  for(var i=1;i<=3;i++) s += '<i class="'+(i<=n?"on":"")+'"></i>';
+  return s + "</span>";
+}
+
+function pendientes(){
+  var out = [];
+  for(var i=0;i<S.consecuencias.length;i++) if(S.consecuencias[i].estado==="pendiente") out.push(S.consecuencias[i]);
+  out.sort(function(a,b){ return a.diaVence - b.diaVence; });
+  return out;
+}
+function vencidasCount(){
+  var p = pendientes(), n = 0;
+  for(var i=0;i<p.length;i++) if(p[i].diaVence <= S.campana.dia) n++;
+  return n;
+}
+
+/* ---------- tablero ---------- */
+function vistaTablero(){
+  var ps = pendientes();
+  var h = "";
+
+  h += '<div class="spread" style="margin-bottom:22px">';
+  h += '<p class="lead">Esto es lo que el mundo tiene anotado contra el grupo, o a su favor. ' +
+       'Ordenado por cuándo vuelve. Lo que no sirva, se descarta: el hilo sigue abierto y vuelve con otra forma.</p>';
+  h += '<div class="row">';
+  h += '<button class="btn" id="go-generar">Generar consecuencias</button>';
+  h += '<button class="btn primary" id="go-sesion">Cargar una sesión</button>';
+  h += "</div></div>";
+
+  if(propuestas.length){
+    h += '<div class="sectitle">Propuestas sin anotar</div>';
+    h += '<div class="stack">';
+    for(var i=0;i<propuestas.length;i++) h += propuestaHTML(propuestas[i]);
+    h += "</div>";
+  }
+
+  if(!ps.length && !propuestas.length){
+    h += '<div class="empty"><b>No hay nada por vencer</b>' +
+         (S.hilos.length
+            ? 'Hay ' + S.hilos.filter(function(x){return x.estado==="abierto";}).length +
+              ' hilo(s) abierto(s) esperando. Tocá <em>Generar consecuencias</em> y elegí qué vuelve.'
+            : 'Cargá facciones y NPCs en <em>El mundo</em>, y después una sesión en <em>Después de la sesión</em>.') +
+         "</div>";
+  }
+
+  var grupos = [
+    ["vencida",   "Ya deberían haber pasado"],
+    ["inminente", "Esta sesión o la próxima"],
+    ["camino",    "En camino"],
+    ["lejana",    "Todavía lejos"]
+  ];
+  for(var g=0; g<grupos.length; g++){
+    var clave = grupos[g][0];
+    var lista = ps.filter(function(c){ return estadoVenc(c).k === clave; });
+    if(!lista.length) continue;
+    h += '<div class="sectitle">' + esc(grupos[g][1]) + " · " + lista.length + "</div>";
+    for(var j=0;j<lista.length;j++) h += consecuenciaHTML(lista[j]);
+  }
+
+  var usadas = S.consecuencias.filter(function(c){ return c.estado==="usada"; });
+  if(usadas.length){
+    h += '<div class="sectitle">Ya pasaron en mesa · ' + usadas.length + "</div>";
+    usadas.sort(function(a,b){ return b.diaVence - a.diaVence; });
+    for(var u=0; u<Math.min(usadas.length, 6); u++) h += consecuenciaHTML(usadas[u]);
+    if(usadas.length>6) h += '<p class="note" style="margin-top:12px">y ' + (usadas.length-6) + " más en el historial del hilo.</p>";
+  }
+  return h;
+}
+
+function consecuenciaHTML(c){
+  var st = estadoVenc(c);
+  var hl = hilo(c.hiloId);
+  var a = hl ? actor(hl.actorId) : null;
+  var tipo = hl ? TIPOS[hl.tipo] : null;
+  var usada = c.estado === "usada";
+  var h = '<article class="entry' + (usada ? " gone" : "") + '" data-c="' + esc(c.id) + '">';
+
+  h += '<div class="when">';
+  h += '<span class="big">día ' + c.diaVence + "</span>";
+  h += '<span class="stamp ' + (usada ? "s-usada" : st.cls) + '">' + (usada ? "usada" : esc(st.txt)) + "</span>";
+  if(!usada) h += '<span class="small">' + esc(st.det) + "</span>";
+  h += "</div>";
+
+  h += '<div class="body">';
+  h += "<h3>" + esc(c.titulo) + "</h3>";
+  h += '<p class="text">' + esc(c.cuerpo) + "</p>";
+  if(c.tono) h += '<p class="tone">' + esc(c.tono) + "</p>";
+
+  h += '<div class="meta">';
+  if(a) h += "<span>" + esc(a.nombre) + "</span><span class='dot'>·</span>";
+  if(tipo) h += '<span class="tag' + (tipo.bueno ? " good" : "") + '">' + esc(tipo.n) + "</span>";
+  if(hl) h += '<span class="dot">·</span><span>' + esc(hl.titulo.slice(0,54)) + (hl.titulo.length>54?"…":"") + "</span>";
+  h += '<span class="dot">·</span><span>' + esc(PRESIONES[c.presion]) + " " + pip(c.presion) + "</span>";
+  if(hl && hl.vueltas) h += '<span class="dot">·</span><span>' + (hl.vueltas+1) + "ª vez que vuelve</span>";
+  if(c.afinada) h += '<span class="dot">·</span><span>afinada</span>';
+  h += "</div>";
+
+  if(!usada && c.ignorar){
+    h += '<div class="ignora"><b>Si lo dejan pasar</b>' + esc(c.ignorar) + "</div>";
+  }
+
+  if(!usada){
+    h += '<div class="acts">';
+    h += '<button class="btn tiny" data-act="usar" data-c="'+esc(c.id)+'">Ya la usé en mesa</button>';
+    h += '<button class="btn tiny" data-act="posponer" data-c="'+esc(c.id)+'">Posponer</button>';
+    h += '<button class="btn tiny" data-act="otra" data-c="'+esc(c.id)+'">Otra forma</button>';
+    if(sample) h += '<button class="btn tiny" data-act="afinar" data-c="'+esc(c.id)+'">Afinar con IA</button>';
+    h += '<button class="btn tiny quiet danger" data-act="descartar" data-c="'+esc(c.id)+'">Descartar</button>';
+    h += "</div>";
+  }
+  h += "</div></article>";
+  return h;
+}
+
+function propuestaHTML(c){
+  var hl = hilo(c.hiloId);
+  var a = hl ? actor(hl.actorId) : null;
+  var d = c.diaVence - S.campana.dia;
+  var h = '<div class="prop" data-p="' + esc(c.id) + '">';
+  h += '<div class="spread" style="align-items:baseline">';
+  h += "<h3 style='font-family:Spectral,Georgia,serif;font-size:18px'>" + esc(c.titulo) + "</h3>";
+  h += '<span class="note">vence el día ' + c.diaVence + " · en " + d + " días</span>";
+  h += "</div>";
+  h += '<p class="text" style="font-family:Spectral,Georgia,serif;font-size:15.5px;margin-top:6px;max-width:60ch">' + esc(c.cuerpo) + "</p>";
+  h += '<p class="tone" style="font-family:Spectral,Georgia,serif">' + esc(c.tono) + "</p>";
+  h += '<div class="meta">';
+  if(a) h += "<span>" + esc(a.nombre) + "</span><span class='dot'>·</span>";
+  if(hl) h += "<span>" + esc(hl.titulo.slice(0,60)) + "</span>";
+  h += "</div>";
+  h += '<div class="acts">';
+  h += '<button class="btn tiny primary" data-act="anotar" data-p="'+esc(c.id)+'">Anotar</button>';
+  h += '<button class="btn tiny" data-act="reroll" data-p="'+esc(c.id)+'">Otra forma</button>';
+  h += '<button class="btn tiny quiet" data-act="tirar" data-p="'+esc(c.id)+'">No sirve</button>';
+  h += "</div></div>";
+  return h;
+}
+
+/* ---------- después de la sesión ---------- */
+function vistaSesion(){
+  var h = "";
+  h += '<p class="lead" style="margin-bottom:20px">Cuatro o cinco líneas de lo que hicieron. Una cosa por línea, como se la contarías a alguien que faltó. ' +
+       'El registro las lee, propone de qué tipo es cada una y a quién le tocó, y vos corregís lo que haya leído mal.</p>';
+
+  if(!lineasLeidas){
+    h += '<div class="panel"><div class="row" style="gap:16px;margin-bottom:14px">';
+    h += '<label class="field" style="flex:0 0 190px"><span>Días de juego desde la última sesión</span>' +
+         '<input type="number" id="in-dias" min="0" max="3650" value="7"></label>';
+    h += '<label class="field"><span>Título de la sesión (opcional)</span>' +
+         '<input type="text" id="in-titulo" placeholder="La noche del muelle"></label>';
+    h += "</div>";
+    h += '<label class="field"><span>Qué hicieron</span><textarea id="in-log" rows="6" placeholder="Mataron al capitán de la guardia del puerto en una pelea de taberna.&#10;Se llevaron la reliquia del altar del Culto de la Marea Baja.&#10;Le pidieron 200 monedas prestadas a la Casa Renaldi y no las devolvieron.&#10;Bruna la Sorda los cubrió ante la guardia y la dejaron colgada.&#10;Sacaron a los pescadores del muelle antes de que se derrumbara."></textarea></label>';
+    h += '<div class="row" style="margin-top:14px"><button class="btn primary" id="btn-leer">Leer la bitácora</button>' +
+         '<span class="hint">Nada se guarda hasta que confirmes.</span></div>';
+    h += "</div>";
+    return h;
+  }
+
+  h += '<div class="panel flat">';
+  h += '<p class="hint" style="margin-bottom:6px">Revisá tipo y actor de cada línea. Lo que quede sin actor no genera consecuencias.</p>';
+  for(var i=0;i<lineasLeidas.length;i++){
+    var L = lineasLeidas[i];
+    h += '<div class="linerow" data-i="'+i+'">';
+    h += '<label class="field l-text"><span>Qué pasó</span><input type="text" data-f="texto" value="'+esc(L.texto)+'"></label>';
+    h += '<label class="field"><span>Tipo de hilo</span><select data-f="tipo">';
+    for(var k in TIPOS) h += '<option value="'+k+'"'+(L.tipo===k?" selected":"")+">"+esc(TIPOS[k].n)+"</option>";
+    h += "</select></label>";
+    h += '<label class="field"><span>Con quién</span><select data-f="actorId">';
+    h += '<option value="">— sin actor —</option>';
+    h += grupoOpciones(L.actorId);
+    h += "</select></label>";
+    h += '<label class="field" style="flex:0 0 92px"><span>Gravedad</span><select data-f="gravedad">';
+    for(var g=1;g<=5;g++) h += '<option value="'+g+'"'+(L.gravedad===g?" selected":"")+">"+g+"</option>";
+    h += "</select></label>";
+    h += "</div>";
+  }
+  h += '<div class="row" style="margin-top:20px">';
+  h += '<button class="btn primary" id="btn-cerrar-sesion">Cerrar la sesión y avanzar el reloj</button>';
+  h += '<button class="btn quiet" id="btn-cancelar-lectura">Volver</button>';
+  h += "</div></div>";
+
+  if(S.sesiones.length){
+    h += '<div class="sectitle">Bitácora</div><div class="timeline">';
+    for(var s=S.sesiones.length-1; s>=0; s--){
+      var ses = S.sesiones[s];
+      h += '<div class="tl"><div><div class="n">sesión ' + ses.n + '</div><div class="n">día ' + ses.dia + "</div></div><div>";
+      if(ses.titulo) h += '<div style="font-family:Spectral,Georgia,serif;font-size:16px;font-weight:600">' + esc(ses.titulo) + "</div>";
+      h += "<ul>";
+      for(var l=0;l<ses.lineas.length;l++) h += "<li>" + esc(ses.lineas[l]) + "</li>";
+      h += "</ul></div></div>";
+    }
+    h += "</div>";
+  }
+  return h;
+}
+
+function grupoOpciones(sel){
+  var h = "";
+  if(S.facciones.length){
+    h += '<optgroup label="Facciones">';
+    for(var i=0;i<S.facciones.length;i++)
+      h += '<option value="'+esc(S.facciones[i].id)+'"'+(sel===S.facciones[i].id?" selected":"")+">"+esc(S.facciones[i].nombre)+"</option>";
+    h += "</optgroup>";
+  }
+  if(S.npcs.length){
+    h += '<optgroup label="NPCs">';
+    for(var j=0;j<S.npcs.length;j++)
+      h += '<option value="'+esc(S.npcs[j].id)+'"'+(sel===S.npcs[j].id?" selected":"")+">"+esc(S.npcs[j].nombre)+"</option>";
+    h += "</optgroup>";
+  }
+  return h;
+}
+
+/* ---------- el mundo ---------- */
+function vistaMundo(){
+  var h = "";
+  h += '<p class="lead" style="margin-bottom:8px">El temperamento y el alcance deciden <em>cómo</em> y <em>cuándo</em> vuelve cada uno. ' +
+       'Un gremio burocrático y regional tarda semanas y llega con papeles; una banda vengativa y local llega en tres días y rompe algo.</p>';
+
+  h += '<div class="sectitle">Facciones · ' + S.facciones.length + "</div>";
+  h += '<div class="people">';
+  for(var i=0;i<S.facciones.length;i++){
+    var f = S.facciones[i];
+    h += '<div class="who"><div class="nm">' + esc(f.nombre) + "</div>";
+    h += '<div class="ln">' + esc((TEMPLES[f.temple]||{}).n || f.temple) + " · " + esc((ALCANCES[f.alcance]||{}).n || f.alcance) + "</div>";
+    h += moodHTML(f.animo);
+    if(f.notas) h += '<div class="nt">' + esc(f.notas) + "</div>";
+    h += '<div class="acts"><button class="btn tiny quiet" data-act="editar-actor" data-id="'+esc(f.id)+'">Editar</button>' +
+         '<button class="btn tiny quiet danger" data-act="borrar-actor" data-id="'+esc(f.id)+'">Borrar</button></div>';
+    h += "</div>";
+  }
+  h += "</div>";
+  h += '<div class="row" style="margin-top:14px"><button class="btn" data-act="nueva-faccion">Agregar facción</button></div>';
+
+  h += '<div class="sectitle">NPCs · ' + S.npcs.length + "</div>";
+  h += '<div class="people">';
+  for(var j=0;j<S.npcs.length;j++){
+    var n = S.npcs[j];
+    var fa = n.faccionId ? actor(n.faccionId) : null;
+    h += '<div class="who"><div class="nm' + (n.estado==="muerto" ? " dead" : "") + '">' + esc(n.nombre) + "</div>";
+    h += '<div class="ln">' + esc(n.rol || "—") + (fa ? " · " + esc(fa.nombre) : "") + (n.estado && n.estado!=="vivo" ? " · " + esc(n.estado) : "") + "</div>";
+    h += moodHTML(n.animo);
+    if(n.notas) h += '<div class="nt">' + esc(n.notas) + "</div>";
+    h += '<div class="acts"><button class="btn tiny quiet" data-act="editar-actor" data-id="'+esc(n.id)+'">Editar</button>' +
+         '<button class="btn tiny quiet danger" data-act="borrar-actor" data-id="'+esc(n.id)+'">Borrar</button></div>';
+    h += "</div>";
+  }
+  h += "</div>";
+  h += '<div class="row" style="margin-top:14px"><button class="btn" data-act="nuevo-npc">Agregar NPC</button></div>';
+  return h;
+}
+
+function moodHTML(v){
+  v = typeof v === "number" ? v : 0;
+  var pct = Math.max(8, Math.round(((v + 3) / 6) * 100));
+  var col = v < -1 ? "var(--rust)" : (v > 1 ? "var(--verd)" : "var(--muted)");
+  var etiqueta = v <= -2 ? "hostil" : v === -1 ? "recelo" : v === 0 ? "indiferente" : v === 1 ? "cordial" : "leal";
+  return '<div class="mood"><div class="moodbar"><span style="left:0;width:' + pct + '%;background:' + col + '"></span></div>' +
+         '<span class="note">' + etiqueta + "</span></div>";
+}
+
+/* ---------- hilos ---------- */
+function vistaHilos(){
+  var h = "";
+  h += '<p class="lead" style="margin-bottom:8px">Cada hilo es una causa todavía sin saldar. Un hilo cerrado deja de volver; uno abierto vuelve más fuerte cada vez.</p>';
+  h += '<div class="row" style="margin:14px 0"><button class="btn" data-act="nuevo-hilo">Agregar hilo a mano</button></div>';
+
+  var abiertos = S.hilos.filter(function(x){ return x.estado==="abierto"; });
+  var cerrados = S.hilos.filter(function(x){ return x.estado!=="abierto"; });
+
+  h += '<div class="sectitle">Abiertos · ' + abiertos.length + "</div>";
+  if(!abiertos.length) h += '<div class="empty"><b>Ningún hilo abierto</b>Cargá una sesión y el registro los abre solo.</div>';
+  for(var i=0;i<abiertos.length;i++) h += hiloHTML(abiertos[i]);
+
+  if(cerrados.length){
+    h += '<div class="sectitle">Saldados · ' + cerrados.length + "</div>";
+    for(var j=0;j<cerrados.length;j++) h += hiloHTML(cerrados[j]);
+  }
+  return h;
+}
+
+function hiloHTML(t){
+  var a = actor(t.actorId);
+  var tipo = TIPOS[t.tipo] || {n:t.tipo};
+  var cerrado = t.estado !== "abierto";
+  var h = '<article class="entry' + (cerrado ? " gone" : "") + '">';
+  h += '<div class="when"><span class="big">' + (t.vueltas||0) + "</span>" +
+       '<span class="small">' + ((t.vueltas||0)===1 ? "vuelta" : "vueltas") + "</span></div>";
+  h += '<div class="body"><h3>' + esc(t.titulo) + "</h3>";
+  h += '<div class="meta">';
+  h += '<span class="tag' + (tipo.bueno ? " good" : "") + '">' + esc(tipo.n) + "</span>";
+  if(a) h += '<span class="dot">·</span><span>' + esc(a.nombre) + "</span>";
+  h += '<span class="dot">·</span><span>gravedad ' + (t.gravedad||3) + "/5</span>";
+  h += '<span class="dot">·</span><span>abierto el día ' + t.diaOrigen + (t.sesionN ? " · sesión " + t.sesionN : "") + "</span>";
+  if(cerrado) h += '<span class="dot">·</span><span>' + esc(t.estado) + "</span>";
+  h += "</div>";
+  h += '<div class="acts">';
+  if(!cerrado){
+    h += '<button class="btn tiny" data-act="forzar" data-h="'+esc(t.id)+'">Traerlo ahora</button>';
+    h += '<button class="btn tiny" data-act="saldar" data-h="'+esc(t.id)+'">Saldado</button>';
+  } else {
+    h += '<button class="btn tiny" data-act="reabrir" data-h="'+esc(t.id)+'">Reabrir</button>';
+  }
+  h += '<button class="btn tiny quiet" data-act="editar-hilo" data-h="'+esc(t.id)+'">Editar</button>';
+  h += '<button class="btn tiny quiet danger" data-act="borrar-hilo" data-h="'+esc(t.id)+'">Borrar</button>';
+  h += "</div></div></article>";
+  return h;
+}
+
+/* ---------- respaldo ---------- */
+function vistaDatos(){
+  var h = "";
+  h += '<p class="lead">Todo esto vive en este navegador y en ningún otro lado. Si limpiás los datos del sitio, se pierde. ' +
+       'Bajá un respaldo cada tantas sesiones: el archivo se vuelve a cargar acá mismo y también sirve para pasarle la campaña a otra máquina.</p>';
+
+  var ultimo = S.ultimoRespaldo
+    ? "Último respaldo: sesión " + S.ultimoRespaldo.sesion + ", hace " + (S.sesiones.length - S.ultimoRespaldo.sesion) + " sesión(es)."
+    : "Todavía no bajaste ningún respaldo.";
+  h += '<div class="panel" style="margin-top:20px">';
+  h += '<p class="note" style="margin-bottom:12px">' + esc(ultimo) + "</p>";
+  h += '<div class="row">';
+  h += '<button class="btn primary" data-act="exportar">Bajar respaldo (.json)</button>';
+  h += '<button class="btn" data-act="notas">Notas para la próxima sesión (.md)</button>';
+  h += '<button class="btn" data-act="mostrar-json">Ver el texto del respaldo</button>';
+  h += "</div></div>";
+
+  h += '<div class="sectitle">Cargar un respaldo</div>';
+  h += '<div class="panel flat"><label class="field"><span>Pegá acá el contenido del archivo .json</span>' +
+       '<textarea id="in-import" rows="4" placeholder=\'{"v":1,"campana":{...}}\'></textarea></label>' +
+       '<div class="row" style="margin-top:12px"><button class="btn" data-act="importar">Reemplazar la campaña con esto</button>' +
+       '<span class="hint">Pisa todo lo que haya cargado ahora.</span></div></div>';
+
+  h += '<div class="sectitle">La campaña</div>';
+  h += '<div class="panel flat"><div class="row" style="gap:16px">';
+  h += '<label class="field"><span>Nombre</span><input type="text" id="in-camp" value="'+esc(S.campana.nombre)+'"></label>';
+  h += '<label class="field"><span>Plaza principal</span><input type="text" id="in-lugar" value="'+esc(S.campana.lugar||"")+'"></label>';
+  h += '<label class="field" style="flex:0 0 150px"><span>Día de campaña</span><input type="number" id="in-dia" value="'+S.campana.dia+'" min="1"></label>';
+  h += '</div><div class="row" style="margin-top:12px"><button class="btn" data-act="guardar-campana">Guardar</button></div></div>';
+
+  h += '<div class="sectitle">Empezar de cero</div>';
+  h += '<div class="panel flat"><p class="hint" style="margin-bottom:12px">Borra facciones, NPCs, hilos, sesiones y consecuencias. No se puede deshacer.</p>' +
+       '<button class="btn danger" data-act="reset">Vaciar y empezar una campaña nueva</button></div>';
+
+  h += '<div id="json-out"></div>';
+  return h;
+}
+
+/* =========================================================================
+   RENDER
+   ========================================================================= */
+
+var TABS = [
+  {id:"tablero", n:"Lo que vuelve"},
+  {id:"sesion",  n:"Después de la sesión"},
+  {id:"mundo",   n:"El mundo"},
+  {id:"hilos",   n:"Hilos"},
+  {id:"datos",   n:"Respaldo"}
+];
+
+function render(){
+  document.getElementById("camp-name").textContent = S.campana.nombre || "Deudas de Campaña";
+  document.getElementById("camp-sub").textContent = S.ejemplo ? "campaña de ejemplo" : "registro de causas y vencimientos";
+  document.getElementById("dial-day").textContent = S.campana.dia;
+  document.getElementById("dial-ses").textContent = S.sesiones.length;
+
+  var venc = vencidasCount();
+  var abiertos = S.hilos.filter(function(x){return x.estado==="abierto";}).length;
+  var conteos = {
+    tablero: pendientes().length,
+    sesion: S.sesiones.length,
+    mundo: S.facciones.length + S.npcs.length,
+    hilos: abiertos,
+    datos: 0
+  };
+
+  var t = "";
+  for(var i=0;i<TABS.length;i++){
+    var tb = TABS[i];
+    var alarma = tb.id==="tablero" && venc>0;
+    t += '<button class="tab' + (alarma ? " alarm" : "") + '" role="tab" data-tab="' + tb.id + '" aria-selected="' + (tabActual===tb.id) + '">' +
+         esc(tb.n) + (conteos[tb.id] ? '<span class="cnt">' + conteos[tb.id] + "</span>" : "") + "</button>";
+  }
+  document.getElementById("tabs").innerHTML = t;
+
+  var v = document.getElementById("view");
+  if(tabActual==="tablero") v.innerHTML = vistaTablero();
+  else if(tabActual==="sesion") v.innerHTML = vistaSesion();
+  else if(tabActual==="mundo") v.innerHTML = vistaMundo();
+  else if(tabActual==="hilos") v.innerHTML = vistaHilos();
+  else v.innerHTML = vistaDatos();
+
+  var fs = document.getElementById("foot-state");
+  fs.textContent = venc
+    ? venc + " consecuencia(s) ya vencida(s): el mundo se está haciendo esperar."
+    : "Los datos viven en este navegador. Bajá un respaldo cada tanto.";
+}
+
+/* Diálogos propios: los del navegador pueden estar bloqueados dentro del visor. */
+function modal(spec){
+  return new Promise(function(resolve){
+    var root = document.getElementById("modal-root");
+    var campos = spec.campos || [];
+    var h = '<div class="overlay"><form class="modal" novalidate>';
+    h += "<h3>" + esc(spec.titulo) + "</h3>";
+    if(spec.texto) h += '<p class="mtxt">' + esc(spec.texto) + "</p>";
+    if(campos.length){
+      h += '<div class="mfields">';
+      for(var i=0;i<campos.length;i++){
+        var c = campos[i];
+        h += '<label class="field"><span>' + esc(c.label) + "</span>";
+        if(c.tipo === "select"){
+          h += '<select data-k="' + esc(c.k) + '">';
+          for(var j=0;j<c.opciones.length;j++){
+            var o = c.opciones[j];
+            h += '<option value="' + esc(o.v) + '"' + (String(o.v)===String(c.valor) ? " selected" : "") + ">" +
+                 esc(o.n) + "</option>";
+          }
+          h += "</select>";
+          if(c.opciones.some(function(o){ return o.g; })){
+            h += '<span class="mopt" data-help="' + esc(c.k) + '"></span>';
+          }
+        } else if(c.tipo === "textarea"){
+          h += '<textarea data-k="' + esc(c.k) + '" rows="3"></textarea>';
+        } else {
+          h += '<input type="' + (c.tipo==="number" ? "number" : "text") + '" data-k="' + esc(c.k) + '"' +
+               (c.tipo==="number" ? ' min="' + (c.min!=null?c.min:0) + '"' : "") +
+               ' value="' + esc(c.valor==null ? "" : c.valor) + '">';
+        }
+        if(c.hint) h += '<span class="mopt">' + esc(c.hint) + "</span>";
+        h += "</label>";
+      }
+      h += "</div>";
+    }
+    h += '<div class="macts">';
+    h += '<button type="button" class="btn quiet" data-m="no">' + esc(spec.cancelar || "Cancelar") + "</button>";
+    h += '<button type="submit" class="btn ' + (spec.peligro ? "danger" : "primary") + '">' + esc(spec.ok || "Guardar") + "</button>";
+    h += "</div></form></div>";
+    root.innerHTML = h;
+
+    var overlay = root.querySelector(".overlay");
+    var form = root.querySelector("form");
+
+    /* textareas y ayudas de select no se pueden poblar por atributo */
+    for(var t=0;t<campos.length;t++){
+      var cc = campos[t];
+      if(cc.tipo === "textarea"){
+        var ta = form.querySelector('[data-k="' + cc.k + '"]');
+        if(ta) ta.value = cc.valor == null ? "" : cc.valor;
+      }
+      if(cc.tipo === "select") pintarAyuda(cc);
+    }
+    function pintarAyuda(c){
+      var sel = form.querySelector('select[data-k="' + c.k + '"]');
+      var help = form.querySelector('[data-help="' + c.k + '"]');
+      if(!sel || !help) return;
+      var refrescar = function(){
+        var o = null;
+        for(var q=0;q<c.opciones.length;q++) if(String(c.opciones[q].v) === sel.value) o = c.opciones[q];
+        help.textContent = o && o.g ? o.g : "";
+      };
+      sel.addEventListener("change", refrescar);
+      refrescar();
+    }
+
+    function cerrar(valor){
+      document.removeEventListener("keydown", onKey);
+      root.innerHTML = "";
+      resolve(valor);
+    }
+    function onKey(e){ if(e.key === "Escape") cerrar(null); }
+    document.addEventListener("keydown", onKey);
+
+    overlay.addEventListener("mousedown", function(e){ if(e.target === overlay) cerrar(null); });
+    form.querySelector('[data-m="no"]').addEventListener("click", function(){ cerrar(null); });
+    form.addEventListener("submit", function(e){
+      e.preventDefault();
+      var out = {};
+      var ctrls = form.querySelectorAll("[data-k]");
+      for(var i=0;i<ctrls.length;i++){
+        var el = ctrls[i];
+        var k = el.getAttribute("data-k");
+        out[k] = el.type === "number" ? (el.value === "" ? null : Number(el.value)) : el.value.trim();
+      }
+      cerrar(out);
+    });
+
+    var first = form.querySelector("input,select,textarea") || form.querySelector('button[type="submit"]');
+    if(first) first.focus();
+    if(first && first.select) try{ first.select(); }catch(e){}
+  });
+}
+
+function confirmar(titulo, texto, ok){
+  return modal({titulo:titulo, texto:texto, ok:ok || "Sí, dale", cancelar:"No", peligro:true, campos:[]})
+    .then(function(r){ return r !== null; });
+}
+
+function opcionesDe(mapa){
+  var out = [];
+  for(var k in mapa) out.push({v:k, n:mapa[k].n, g:mapa[k].g});
+  return out;
+}
+
+function toast(msg){
+  var old = document.querySelector(".toast");
+  if(old) old.remove();
+  var d = document.createElement("div");
+  d.className = "toast";
+  d.textContent = msg;
+  document.body.appendChild(d);
+  setTimeout(function(){ if(d.parentNode) d.remove(); }, 3200);
+}
+
+/* =========================================================================
+   ACCIONES
+   ========================================================================= */
+
+function irA(tab){ tabActual = tab; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+
+function leerBitacora(){
+  var txt = (document.getElementById("in-log")||{}).value || "";
+  var dias = parseInt((document.getElementById("in-dias")||{}).value, 10);
+  var titulo = ((document.getElementById("in-titulo")||{}).value || "").trim();
+  var brutas = txt.split("\n").map(function(s){ return s.trim(); }).filter(function(s){ return s.length > 3; });
+  if(!brutas.length){ toast("Escribí al menos una línea de lo que hicieron."); return; }
+
+  lineasLeidas = brutas.map(function(t){
+    return {
+      texto: t,
+      tipo: clasificar(t),
+      actorId: adivinarActor(t),
+      gravedad: adivinarGravedad(t)
+    };
+  });
+  lineasLeidas.dias = isNaN(dias) ? 7 : Math.max(0, dias);
+  lineasLeidas.titulo = titulo;
+  render();
+}
+
+function adivinarActor(texto){
+  var t = texto.toLowerCase();
+  var todos = S.facciones.concat(S.npcs);
+  var mejor = "", largo = 0;
+  for(var i=0;i<todos.length;i++){
+    var partes = todos[i].nombre.toLowerCase().split(/\s+/);
+    for(var j=0;j<partes.length;j++){
+      var p = partes[j].replace(/[^a-záéíóúñü]/gi,"");
+      if(p.length < 4) continue;
+      if(t.indexOf(p) >= 0 && p.length > largo){ largo = p.length; mejor = todos[i].id; }
+    }
+  }
+  return mejor;
+}
+function adivinarGravedad(texto){
+  var t = texto.toLowerCase();
+  if(/mat|asesin|degoll|masacr|quem|incendi|destruy|reliquia|traicion|traición/.test(t)) return 4;
+  if(/rob|hirier|amenaz|romp/.test(t)) return 3;
+  return 2;
+}
+
+function cerrarSesion(){
+  var filas = document.querySelectorAll(".linerow");
+  var nuevos = [], lineas = [];
+  for(var i=0;i<filas.length;i++){
+    var f = filas[i];
+    var texto = f.querySelector('[data-f="texto"]').value.trim();
+    if(!texto) continue;
+    lineas.push(texto);
+    var tipo = f.querySelector('[data-f="tipo"]').value;
+    var actorId = f.querySelector('[data-f="actorId"]').value;
+    var grav = parseInt(f.querySelector('[data-f="gravedad"]').value, 10) || 3;
+    if(!actorId) continue;
+    nuevos.push({tipo:tipo, actorId:actorId, gravedad:grav, titulo:texto});
+  }
+  if(!lineas.length){ toast("No quedó ninguna línea."); return; }
+
+  var dias = lineasLeidas.dias || 0;
+  S.campana.dia += dias;
+  var n = S.sesiones.length + 1;
+  S.sesiones.push({
+    id: uid("s"), n: n, dia: S.campana.dia, duracion: dias,
+    titulo: lineasLeidas.titulo || "", lineas: lineas
+  });
+
+  for(var k=0;k<nuevos.length;k++){
+    var x = nuevos[k];
+    S.hilos.push({
+      id: uid("h"), titulo: x.titulo, tipo: x.tipo, actorId: x.actorId,
+      gravedad: x.gravedad, diaOrigen: S.campana.dia, sesionN: n,
+      estado: "abierto", vueltas: 0, evitadas: []
+    });
+    var a = actor(x.actorId);
+    if(a){
+      var delta = TIPOS[x.tipo] && TIPOS[x.tipo].bueno ? 1 : -1;
+      a.animo = Math.max(-3, Math.min(3, (a.animo||0) + delta));
+    }
+  }
+
+  S.ejemplo = false;
+  lineasLeidas = null;
+  guardar();
+  generar(4);
+  irA("tablero");
+  toast(nuevos.length + " hilo(s) nuevo(s). " + propuestas.length + " consecuencia(s) propuesta(s).");
+}
+
+function anotar(id){
+  for(var i=0;i<propuestas.length;i++){
+    if(propuestas[i].id===id){
+      var c = propuestas[i];
+      c.estado = "pendiente";
+      S.consecuencias.push(c);
+      propuestas.splice(i,1);
+      guardar(); render();
+      return;
+    }
+  }
+}
+function tirarPropuesta(id){
+  for(var i=0;i<propuestas.length;i++){
+    if(propuestas[i].id===id){
+      var h = hilo(propuestas[i].hiloId);
+      if(h){ h.evitadas = h.evitadas || []; h.evitadas.push(propuestas[i].formaId); }
+      propuestas.splice(i,1);
+      guardar(); render();
+      return;
+    }
+  }
+}
+function rerollPropuesta(id){
+  for(var i=0;i<propuestas.length;i++){
+    if(propuestas[i].id===id){
+      var h = hilo(propuestas[i].hiloId);
+      if(!h) return;
+      h.evitadas = h.evitadas || [];
+      h.evitadas.push(propuestas[i].formaId);
+      var nueva = proponer(h);
+      if(nueva) propuestas[i] = nueva; else propuestas.splice(i,1);
+      guardar(); render();
+      return;
+    }
+  }
+}
+
+function consecuencia(id){
+  for(var i=0;i<S.consecuencias.length;i++) if(S.consecuencias[i].id===id) return S.consecuencias[i];
+  return null;
+}
+
+function usarConsecuencia(id){
+  var c = consecuencia(id); if(!c) return;
+  c.estado = "usada";
+  var h = hilo(c.hiloId);
+  if(h){
+    h.vueltas = (h.vueltas||0) + 1;
+    if(h.vueltas >= 3 && h.gravedad < 5) h.gravedad++;
+  }
+  guardar(); render();
+  toast("Anotada como usada. El hilo vuelve más fuerte la próxima.");
+}
+function descartarConsecuencia(id){
+  var c = consecuencia(id); if(!c) return;
+  var h = hilo(c.hiloId);
+  if(h){ h.evitadas = h.evitadas || []; h.evitadas.push(c.formaId); }
+  S.consecuencias = S.consecuencias.filter(function(x){ return x.id !== id; });
+  guardar(); render();
+  toast("Descartada. El hilo sigue abierto y va a volver con otra forma.");
+}
+function posponerConsecuencia(id){
+  var c = consecuencia(id); if(!c) return;
+  modal({
+    titulo:"Posponer",
+    texto:"Vence el día " + c.diaVence + ". Hoy es el día " + S.campana.dia + ".",
+    ok:"Correr la fecha",
+    campos:[{k:"dias", label:"Cuántos días de juego la corro", tipo:"number", valor:14, min:-365}]
+  }).then(function(r){
+    if(!r || r.dias == null) return;
+    c.diaVence = Math.max(S.campana.dia, c.diaVence + r.dias);
+    guardar(); render();
+  });
+}
+function otraForma(id){
+  var c = consecuencia(id); if(!c) return;
+  var h = hilo(c.hiloId); if(!h) return;
+  h.evitadas = h.evitadas || [];
+  h.evitadas.push(c.formaId);
+  var nueva = proponer(h);
+  if(!nueva){ toast("No me quedan más formas para este hilo."); return; }
+  nueva.estado = "pendiente";
+  nueva.diaVence = c.diaVence;
+  S.consecuencias = S.consecuencias.filter(function(x){ return x.id !== id; });
+  S.consecuencias.push(nueva);
+  guardar(); render();
+}
+
+/* ---------- afinar con IA (opcional) ---------- */
+function afinar(id){
+  var c = consecuencia(id); if(!c || !sample) return;
+  var h = hilo(c.hiloId);
+  var a = h ? actor(h.actorId) : null;
+  var p = perfil(a);
+  var btn = document.querySelector('[data-act="afinar"][data-c="'+id+'"]');
+  if(btn){ btn.disabled = true; btn.textContent = "Afinando…"; }
+
+  var ultimas = [];
+  for(var i=Math.max(0,S.sesiones.length-3); i<S.sesiones.length; i++)
+    ultimas = ultimas.concat(S.sesiones[i].lineas);
+
+  var pedido = [
+    "Sos asistente de un DM. Reescribí una consecuencia de campaña para que use los nombres propios de esta mesa.",
+    "",
+    "Campaña: " + (S.campana.nombre||"sin nombre") + ". Lugar principal: " + (S.campana.lugar||"la ciudad") + ".",
+    "Actor: " + (a?a.nombre:"desconocido") + " (" + (TEMPLES[p.temple]||{}).n + ", alcance " + p.alcance + ").",
+    "Causa abierta: " + (h?h.titulo:"") + " (" + (h?(TIPOS[h.tipo]||{}).n:"") + ").",
+    "Vence el día " + c.diaVence + " y hoy es el día " + S.campana.dia + ".",
+    "Lo que hicieron los jugadores últimamente:",
+    ultimas.map(function(l){ return "- " + l; }).join("\n"),
+    "",
+    "Texto genérico a reescribir:",
+    c.titulo + ": " + c.cuerpo,
+    "",
+    "Reglas: dos oraciones como máximo, en español rioplatense neutro, en presente.",
+    "Nombrá al actor y a la causa concreta. Describí SOLO la presión que llega y su forma;",
+    "NO resuelvas nada, no inventes nombres nuevos, no digas cómo reaccionan los jugadores,",
+    "no agregues diálogo ni tiradas. Devolvé solo el texto, sin comillas ni título."
+  ].join("\n");
+
+  sample(pedido, {modelTier:"quick"}).then(function(r){
+    var txt = (r && r.text ? r.text : "").trim();
+    if(txt){
+      c.cuerpoOriginal = c.cuerpoOriginal || c.cuerpo;
+      c.cuerpo = txt;
+      c.afinada = true;
+      guardar();
+    }
+    render();
+  }).catch(function(e){
+    render();
+    var code = e && e.code;
+    if(code === "not_granted") toast("Para afinar hace falta permitir que la página le pregunte a Claude.");
+    else if(code === "rate_limited") toast("Demasiados pedidos seguidos. Probá en un rato.");
+    else toast("No se pudo afinar el texto. El original sigue intacto.");
+  });
+}
+
+/* ---------- mundo: alta y edición ---------- */
+function editorActor(kind, existente){
+  var a = existente || null;
+  var esF = kind === "faccion";
+  var animos = [
+    {v:"-3", n:"Hostil"}, {v:"-2", n:"Con bronca"}, {v:"-1", n:"Recelosa"},
+    {v:"0", n:"Indiferente"}, {v:"1", n:"Cordial"}, {v:"2", n:"Agradecida"}, {v:"3", n:"Leal"}
+  ];
+  var campos;
+
+  if(esF){
+    campos = [
+      {k:"nombre", label:"Nombre de la facción", valor:a?a.nombre:"", hint:"Casa Renaldi, Guardia del Puerto, el Culto…"},
+      {k:"temple", label:"Temperamento", tipo:"select", opciones:opcionesDe(TEMPLES), valor:a?a.temple:"calculador"},
+      {k:"alcance", label:"Alcance", tipo:"select", opciones:opcionesDe(ALCANCES), valor:a?a.alcance:"local"},
+      {k:"animo", label:"Cómo ven al grupo", tipo:"select", opciones:animos, valor:String(a?(a.animo||0):0)},
+      {k:"notas", label:"Una línea de contexto (opcional)", tipo:"textarea", valor:a?(a.notas||""):""}
+    ];
+  } else {
+    var fops = [{v:"", n:"— ninguna —"}];
+    for(var i=0;i<S.facciones.length;i++) fops.push({v:S.facciones[i].id, n:S.facciones[i].nombre});
+    campos = [
+      {k:"nombre", label:"Nombre del NPC", valor:a?a.nombre:""},
+      {k:"rol", label:"Qué es o qué hace", valor:a?(a.rol||""):"", hint:"Prestamista, informante del muelle, capitán…"},
+      {k:"faccionId", label:"Facción a la que responde", tipo:"select", opciones:fops, valor:a?(a.faccionId||""):""},
+      {k:"estado", label:"Estado", tipo:"select", valor:a?(a.estado||"vivo"):"vivo",
+       opciones:[{v:"vivo",n:"Vivo"},{v:"muerto",n:"Muerto"},{v:"desaparecido",n:"Desaparecido"},{v:"hostil",n:"Hostil"}]},
+      {k:"animo", label:"Cómo ve al grupo", tipo:"select", opciones:animos, valor:String(a?(a.animo||0):0)},
+      {k:"notas", label:"Una línea de contexto (opcional)", tipo:"textarea", valor:a?(a.notas||""):""}
+    ];
+  }
+
+  modal({
+    titulo: a ? "Editar " + a.nombre : (esF ? "Nueva facción" : "Nuevo NPC"),
+    texto: esF ? "El temperamento decide cómo vuelve; el alcance, cuánto tarda." : "Si no tiene facción propia, hereda el temperamento de la suya.",
+    ok: a ? "Guardar cambios" : "Agregar",
+    campos: campos
+  }).then(function(r){
+    if(!r || !r.nombre) return;
+    var animo = parseInt(r.animo, 10) || 0;
+    if(esF){
+      if(a){ a.nombre=r.nombre; a.temple=r.temple; a.alcance=r.alcance; a.animo=animo; a.notas=r.notas; }
+      else S.facciones.push({id:uid("f"), nombre:r.nombre, temple:r.temple, alcance:r.alcance, animo:animo, notas:r.notas});
+    } else {
+      if(a){ a.nombre=r.nombre; a.rol=r.rol; a.faccionId=r.faccionId; a.estado=r.estado; a.animo=animo; a.notas=r.notas; }
+      else S.npcs.push({id:uid("n"), nombre:r.nombre, rol:r.rol, faccionId:r.faccionId, estado:r.estado, animo:animo, notas:r.notas});
+    }
+    S.ejemplo = false;
+    guardar(); render();
+  });
+}
+
+function borrarActor(id){
+  var a = actor(id); if(!a) return;
+  var hilosDe = S.hilos.filter(function(h){ return h.actorId===id; }).length;
+  confirmar("¿Borrar a " + a.nombre + "?",
+    hilosDe ? "Tiene " + hilosDe + " hilo(s) abiertos que van a quedar sin actor." : "No tiene hilos asociados.",
+    "Borrar"
+  ).then(function(ok){
+    if(!ok) return;
+    S.facciones = S.facciones.filter(function(x){ return x.id!==id; });
+    S.npcs = S.npcs.filter(function(x){ return x.id!==id; });
+    guardar(); render();
+  });
+}
+
+/* ---------- hilos ---------- */
+function actoresOpciones(){
+  var out = [];
+  var todos = S.facciones.concat(S.npcs);
+  for(var i=0;i<todos.length;i++) out.push({v:todos[i].id, n:todos[i].nombre});
+  return out;
+}
+var GRAVEDADES = [
+  {v:"1", n:"1 — una molestia"},
+  {v:"2", n:"2 — les va a costar"},
+  {v:"3", n:"3 — se acuerdan"},
+  {v:"4", n:"4 — no lo perdonan"},
+  {v:"5", n:"5 — es personal para siempre"}
+];
+
+function editorHilo(existente){
+  var t = existente || null;
+  if(!S.facciones.length && !S.npcs.length){ toast("Primero cargá al menos una facción o un NPC."); return; }
+  modal({
+    titulo: t ? "Editar hilo" : "Hilo nuevo",
+    texto: t ? "" : "Una causa sin saldar que el mundo todavía tiene anotada.",
+    ok: t ? "Guardar" : "Abrir el hilo",
+    campos:[
+      {k:"titulo", label:"Qué pasó, en una línea", valor:t?t.titulo:"",
+       hint:"Mataron al capitán de la guardia en la taberna."},
+      {k:"tipo", label:"Tipo de hilo", tipo:"select", opciones:opcionesDe(TIPOS), valor:t?t.tipo:"deuda"},
+      {k:"actorId", label:"Con quién", tipo:"select", opciones:actoresOpciones(), valor:t?t.actorId:""},
+      {k:"gravedad", label:"Gravedad", tipo:"select", opciones:GRAVEDADES, valor:String(t?(t.gravedad||3):3)}
+    ]
+  }).then(function(r){
+    if(!r || !r.titulo) return;
+    var g = Math.max(1, Math.min(5, parseInt(r.gravedad,10) || 3));
+    if(t){
+      t.titulo = r.titulo; t.tipo = r.tipo; t.actorId = r.actorId; t.gravedad = g;
+    } else {
+      S.hilos.push({
+        id: uid("h"), titulo: r.titulo, tipo: r.tipo, actorId: r.actorId,
+        gravedad: g, diaOrigen: S.campana.dia, sesionN: S.sesiones.length,
+        estado: "abierto", vueltas: 0, evitadas: []
+      });
+    }
+    S.ejemplo = false;
+    guardar(); render();
+  });
+}
+
+function forzarHilo(id){
+  var t = hilo(id); if(!t) return;
+  var c = proponer(t);
+  if(!c){ toast("No me quedan formas nuevas para este hilo."); return; }
+  propuestas = propuestas.filter(function(p){ return p.hiloId !== id; });
+  propuestas.push(c);
+  irA("tablero");
+}
+
+/* ---------- respaldo ---------- */
+function exportarJSON(){
+  var txt = JSON.stringify(S, null, 2);
+  var nombre = (S.campana.nombre||"campana").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"") || "campana";
+  guardarArchivo(nombre + "-sesion" + S.sesiones.length + ".json", txt, function(){
+    S.ultimoRespaldo = {sesion: S.sesiones.length, cuando: Date.now()};
+    guardar(); render();
+  });
+}
+
+function notasMarkdown(){
+  var ps = pendientes();
+  var L = [];
+  L.push("# " + (S.campana.nombre||"Campaña") + " — notas para la próxima sesión");
+  L.push("");
+  L.push("Día de campaña: " + S.campana.dia + " · sesiones jugadas: " + S.sesiones.length);
+  L.push("");
+  L.push("## Lo que vuelve");
+  if(!ps.length) L.push("_Nada pendiente._");
+  for(var i=0;i<ps.length;i++){
+    var c = ps[i];
+    var h = hilo(c.hiloId);
+    var a = h ? actor(h.actorId) : null;
+    var st = estadoVenc(c);
+    L.push("");
+    L.push("### Día " + c.diaVence + " — " + c.titulo + " (" + st.txt + ", " + st.det + ")");
+    L.push("- **Quién:** " + (a ? a.nombre : "—"));
+    if(h) L.push("- **Por qué:** " + h.titulo);
+    L.push("- " + c.cuerpo);
+    L.push("- _" + c.tono + "_");
+    if(c.ignorar) L.push("- **Si lo dejan pasar:** " + c.ignorar);
+  }
+  L.push("");
+  L.push("## Hilos abiertos");
+  var ab = S.hilos.filter(function(x){return x.estado==="abierto";});
+  for(var j=0;j<ab.length;j++){
+    var t = ab[j], ac = actor(t.actorId);
+    L.push("- [" + (TIPOS[t.tipo]||{n:t.tipo}).n + "] " + t.titulo + " — " + (ac?ac.nombre:"—") +
+           " (gravedad " + (t.gravedad||3) + ", " + (t.vueltas||0) + " vueltas)");
+  }
+  var nombre = (S.campana.nombre||"campana").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"") || "campana";
+  guardarArchivo(nombre + "-notas.md", L.join("\n"), null);
+}
+
+function guardarArchivo(filename, texto, onOk){
+  if(downloads){
+    downloads.save({filename: filename, data: texto}).then(function(){
+      toast("Archivo guardado.");
+      if(onOk) onOk();
+    }).catch(function(e){
+      if(e && e.code === "declined") return;
+      mostrarTexto(filename, texto);
+    });
+  } else {
+    mostrarTexto(filename, texto);
+  }
+}
+
+function mostrarTexto(filename, texto){
+  tabActual = "datos";
+  render();
+  var out = document.getElementById("json-out");
+  if(!out) return;
+  out.innerHTML = '<div class="sectitle">' + esc(filename) + "</div>" +
+    '<p class="hint" style="margin-bottom:8px">Copiá esto y guardalo en un archivo.</p>' +
+    '<textarea rows="10" id="out-area"></textarea>';
+  var ta = document.getElementById("out-area");
+  ta.value = texto;
+  ta.focus();
+  ta.select();
+  out.scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+function importarJSON(){
+  var el = document.getElementById("in-import");
+  var raw = el ? el.value.trim() : "";
+  if(!raw){ toast("Pegá el contenido del respaldo."); return; }
+  var d;
+  try{ d = JSON.parse(raw); }
+  catch(e){ toast("Ese texto no es un respaldo válido."); return; }
+  if(!d || d.v !== 1 || !d.campana){ toast("Ese respaldo no tiene el formato esperado."); return; }
+  confirmar("Cargar " + (d.campana.nombre || "esa campaña"),
+    "Reemplaza todo lo que tenés cargado ahora. Si no bajaste respaldo, esto se pierde.",
+    "Reemplazar").then(function(ok){
+      if(!ok) return;
+      S = normalizar(d);
+      propuestas = [];
+      guardar();
+      irA("tablero");
+      toast("Campaña cargada: " + (S.campana.nombre||"sin nombre"));
+    });
+}
+
+function resetear(){
+  modal({
+    titulo:"Campaña nueva",
+    texto:"Borra facciones, NPCs, hilos, sesiones y consecuencias. No se puede deshacer.",
+    ok:"Vaciar y empezar", peligro:true,
+    campos:[
+      {k:"nombre", label:"Nombre de la campaña", valor:"", hint:"El que usen en la mesa."},
+      {k:"lugar", label:"Plaza principal", valor:"", hint:"La ciudad o región donde arranca todo."}
+    ]
+  }).then(function(r){
+    if(!r) return;
+    S = {
+      v:1, ejemplo:false,
+      campana:{nombre:r.nombre || "Campaña nueva", lugar:r.lugar || "la ciudad", dia:1},
+      facciones:[], npcs:[], hilos:[], sesiones:[], consecuencias:[], ultimoRespaldo:null
+    };
+    propuestas = [];
+    guardar();
+    irA("mundo");
+    toast("Campaña vacía. Empezá cargando las facciones.");
+  });
+}
+
+function avanzarDias(){
+  modal({
+    titulo:"Avanzar el reloj",
+    texto:"Hoy es el día " + S.campana.dia + " de campaña. Esto mueve el tiempo sin cargar una sesión.",
+    ok:"Avanzar",
+    campos:[{k:"dias", label:"Días de tiempo de juego", tipo:"number", valor:7, min:1}]
+  }).then(function(r){
+    if(!r || !r.dias || r.dias <= 0) return;
+    S.campana.dia += r.dias;
+    guardar(); render();
+    var v = vencidasCount();
+    toast("Día " + S.campana.dia + (v ? " · " + v + " consecuencia(s) ya vencida(s)" : ""));
+  });
+}
+
+/* =========================================================================
+   EVENTOS
+   ========================================================================= */
+
+document.getElementById("tabs").addEventListener("click", function(e){
+  var b = e.target.closest("[data-tab]");
+  if(b) irA(b.getAttribute("data-tab"));
+});
+document.getElementById("btn-advance").addEventListener("click", avanzarDias);
+
+document.getElementById("view").addEventListener("click", function(e){
+  var b = e.target.closest("button");
+  if(!b) return;
+  var act = b.getAttribute("data-act");
+  var id = b.getAttribute("data-c") || b.getAttribute("data-p") || b.getAttribute("data-h") || b.getAttribute("data-id");
+
+  if(b.id === "go-generar"){
+    var n = generar(4);
+    render();
+    toast(n.length ? n.length + " propuesta(s). Anotá las que sirvan." : "No hay hilos abiertos esperando turno.");
+    return;
+  }
+  if(b.id === "go-sesion"){ irA("sesion"); return; }
+  if(b.id === "btn-leer"){ leerBitacora(); return; }
+  if(b.id === "btn-cerrar-sesion"){ cerrarSesion(); return; }
+  if(b.id === "btn-cancelar-lectura"){ lineasLeidas = null; render(); return; }
+
+  switch(act){
+    case "anotar": anotar(id); break;
+    case "tirar": tirarPropuesta(id); break;
+    case "reroll": rerollPropuesta(id); break;
+    case "usar": usarConsecuencia(id); break;
+    case "descartar": descartarConsecuencia(id); break;
+    case "posponer": posponerConsecuencia(id); break;
+    case "otra": otraForma(id); break;
+    case "afinar": afinar(id); break;
+    case "nueva-faccion": editorActor("faccion", null); break;
+    case "nuevo-npc": editorActor("npc", null); break;
+    case "editar-actor": {
+      var a = actor(id);
+      if(a) editorActor(esNpc(a) ? "npc" : "faccion", a);
+      break;
+    }
+    case "borrar-actor": borrarActor(id); break;
+    case "nuevo-hilo": editorHilo(null); break;
+    case "editar-hilo": editorHilo(hilo(id)); break;
+    case "borrar-hilo": {
+      var ht = hilo(id);
+      confirmar("¿Borrar este hilo?", ht ? ht.titulo : "", "Borrar").then(function(ok){
+        if(!ok) return;
+        S.hilos = S.hilos.filter(function(x){ return x.id!==id; });
+        S.consecuencias = S.consecuencias.filter(function(x){ return x.hiloId!==id; });
+        guardar(); render();
+      });
+      break;
+    }
+    case "saldar": { var t1 = hilo(id); if(t1){ t1.estado = "saldado"; guardar(); render(); } break; }
+    case "reabrir": { var t2 = hilo(id); if(t2){ t2.estado = "abierto"; guardar(); render(); } break; }
+    case "forzar": forzarHilo(id); break;
+    case "exportar": exportarJSON(); break;
+    case "notas": notasMarkdown(); break;
+    case "mostrar-json": mostrarTexto("respaldo.json", JSON.stringify(S, null, 2)); break;
+    case "importar": importarJSON(); break;
+    case "reset": resetear(); break;
+    case "guardar-campana": {
+      var nm = document.getElementById("in-camp").value.trim();
+      var lg = document.getElementById("in-lugar").value.trim();
+      var dd = parseInt(document.getElementById("in-dia").value, 10);
+      if(nm) S.campana.nombre = nm;
+      S.campana.lugar = lg || "la ciudad";
+      if(!isNaN(dd) && dd > 0) S.campana.dia = dd;
+      S.ejemplo = false;
+      guardar(); render();
+      toast("Guardado.");
+      break;
+    }
+  }
+});
+
+/* =========================================================================
+   ARRANQUE
+   ========================================================================= */
+
+function normalizar(d){
+  d.v = 1;
+  d.campana = d.campana || {nombre:"Campaña", lugar:"la ciudad", dia:1};
+  d.campana.dia = d.campana.dia || 1;
+  d.facciones = d.facciones || [];
+  d.npcs = d.npcs || [];
+  d.hilos = d.hilos || [];
+  d.sesiones = d.sesiones || [];
+  d.consecuencias = d.consecuencias || [];
+  for(var i=0;i<d.hilos.length;i++){
+    d.hilos[i].evitadas = d.hilos[i].evitadas || [];
+    d.hilos[i].vueltas = d.hilos[i].vueltas || 0;
+  }
+  return d;
+}
+
+function ejemplo(){
+  var fGremio = {id:"f_renaldi", nombre:"Casa Renaldi", temple:"codicioso", alcance:"regional", animo:-2,
+    notas:"Presta plata a los que no tienen a quién más pedirle. Lleva libros impecables."};
+  var fGuardia = {id:"f_guardia", nombre:"Guardia del Puerto", temple:"burocratico", alcance:"local", animo:-2,
+    notas:"Mal paga y peor entrenada, pero son muchos y tienen las llaves de todas las puertas."};
+  var fCulto = {id:"f_marea", nombre:"Culto de la Marea Baja", temple:"devoto", alcance:"local", animo:-3,
+    notas:"Creen que el mar devuelve lo que se le debe. Nunca cobran en plata."};
+  var fPesca = {id:"f_pesca", nombre:"Cofradía de Pescadores", temple:"paciente", alcance:"local", animo:2,
+    notas:"No tienen poder ni plata, pero ven todo lo que pasa en el agua."};
+
+  var nSarna = {id:"n_sarna", nombre:"Sarna Renaldi", rol:"Prestamista, lleva los libros", faccionId:"f_renaldi",
+    estado:"vivo", animo:-2, notas:"Anota todo en un libro rojo. Nunca levanta la voz."};
+  var nVares = {id:"n_vares", nombre:"Capitán Dolio Vares", rol:"Capitán de la guardia", faccionId:"f_guardia",
+    estado:"muerto", animo:-3, notas:"Lo mataron en una pelea de taberna en la sesión 2."};
+  var nBruna = {id:"n_bruna", nombre:"Bruna la Sorda", rol:"Informante del muelle", faccionId:"",
+    estado:"hostil", animo:-3, notas:"Los cubrió ante la guardia y el grupo la dejó sola con la cuenta."};
+  var nOstro = {id:"n_ostro", nombre:"Padre Ostro", rol:"Custodio del altar", faccionId:"f_marea",
+    estado:"vivo", animo:-3, notas:"Vio quién se llevó la reliquia. No hizo la denuncia: fue al agua a preguntar."};
+
+  var hilos = [
+    {id:"h_1", titulo:"Le deben 340 monedas a la Casa Renaldi y el plazo ya venció", tipo:"deuda",
+     actorId:"f_renaldi", gravedad:3, diaOrigen:4, sesionN:1, estado:"abierto", vueltas:1, evitadas:[]},
+    {id:"h_2", titulo:"Mataron al capitán Vares en la taberna del Ancla", tipo:"sangre",
+     actorId:"f_guardia", gravedad:5, diaOrigen:12, sesionN:2, estado:"abierto", vueltas:0, evitadas:[]},
+    {id:"h_3", titulo:"Se llevaron la reliquia del altar de la Marea Baja", tipo:"robo",
+     actorId:"f_marea", gravedad:4, diaOrigen:12, sesionN:2, estado:"abierto", vueltas:0, evitadas:[]},
+    {id:"h_4", titulo:"Dejaron a Bruna la Sorda pagando el frente ante la guardia", tipo:"traicion",
+     actorId:"n_bruna", gravedad:4, diaOrigen:19, sesionN:3, estado:"abierto", vueltas:0, evitadas:[]},
+    {id:"h_5", titulo:"Sacaron a los pescadores del muelle antes del derrumbe", tipo:"alianza",
+     actorId:"f_pesca", gravedad:3, diaOrigen:19, sesionN:3, estado:"abierto", vueltas:0, evitadas:[]}
+  ];
+
+  var ses = [
+    {id:"s1", n:1, dia:4, duracion:3, titulo:"Llegada a Porto Vieja", lineas:[
+      "Le pidieron 340 monedas prestadas a la Casa Renaldi para pagar el pasaje.",
+      "Prometieron devolverlas antes de la luna llena."
+    ]},
+    {id:"s2", n:2, dia:12, duracion:8, titulo:"La noche del Ancla", lineas:[
+      "Mataron al capitán Vares de la guardia del puerto en una pelea de taberna.",
+      "Se llevaron la reliquia del altar del Culto de la Marea Baja."
+    ]},
+    {id:"s3", n:3, dia:19, duracion:7, titulo:"El muelle que se cayó", lineas:[
+      "Bruna la Sorda los cubrió ante la guardia y la dejaron sola con la cuenta.",
+      "Sacaron a los pescadores del muelle antes de que se derrumbara."
+    ]}
+  ];
+
+  var cons = [
+    {id:"c_1", hiloId:"h_1", formaId:"d1", titulo:"Aviso de cobro",
+     cuerpo:"Casa Renaldi manda un papel antes que una persona: el monto, la fecha y con quién hablar. La cifra creció desde la última vez que la miraron.",
+     tono:TEMPLES.codicioso.tono,
+     ignorar:"Se acaba el papeleo y empieza la gente.",
+     presion:1, diaVence:17, creadaDia:4, sesionN:1, estado:"usada"},
+    {id:"c_2", hiloId:"h_1", formaId:"d2", titulo:"Cobrador a la puerta",
+     cuerpo:"Alguien de Casa Renaldi aparece donde duerme el grupo. No viene a negociar: viene con una cifra, un plazo corto y alguien esperando afuera.",
+     tono:TEMPLES.codicioso.tono,
+     ignorar:"El monto se duplica y la próxima visita no es de un cobrador.",
+     presion:2, diaVence:24, creadaDia:19, sesionN:3, estado:"pendiente"},
+    {id:"c_3", hiloId:"h_2", formaId:"s1", titulo:"El que ocupó el lugar",
+     cuerpo:"La Guardia del Puerto ya tiene reemplazo para el que mataron, y el reemplazo es peor: más joven, con menos escrúpulos y con algo que probar frente a los suyos.",
+     tono:TEMPLES.burocratico.tono,
+     ignorar:"El nuevo hace su nombre a costa del grupo.",
+     presion:1, diaVence:21, creadaDia:12, sesionN:2, estado:"pendiente"},
+    {id:"c_4", hiloId:"h_3", formaId:"r3", titulo:"El dueño anterior",
+     cuerpo:"El Culto de la Marea Baja no era el primer dueño. Alguien más viejo y más paciente también estuvo buscando esa pieza, y el robo le avisó dónde mirar.",
+     tono:TEMPLES.devoto.tono,
+     ignorar:"El más viejo llega primero y no viene a hablar.",
+     presion:2, diaVence:38, creadaDia:12, sesionN:2, estado:"pendiente"},
+    {id:"c_5", hiloId:"h_4", formaId:"t1", titulo:"Del otro lado de la mesa",
+     cuerpo:"Bruna la Sorda aparece trabajando para el bando contrario. No por convicción: porque el grupo le cerró la única otra puerta que tenía.",
+     tono:TEMPLES.calculador.tono,
+     ignorar:"Lleva al otro bando todo lo que sabe del grupo, que es bastante.",
+     presion:2, diaVence:26, creadaDia:19, sesionN:3, estado:"pendiente"},
+    {id:"c_6", hiloId:"h_5", formaId:"a3", titulo:"Aviso a tiempo",
+     cuerpo:"La Cofradía de Pescadores les hace llegar algo que no tenía ninguna obligación de contarles, y lo manda con alguien de confianza para que llegue antes.",
+     tono:TEMPLES.paciente.tono,
+     ignorar:"Si lo ignoran, el aviso era cierto igual.",
+     presion:1, diaVence:31, creadaDia:19, sesionN:3, estado:"pendiente"}
+  ];
+
+  return {
+    v:1, ejemplo:true,
+    campana:{nombre:"La Marca de Sal", lugar:"Porto Vieja", dia:19},
+    facciones:[fGremio, fGuardia, fCulto, fPesca],
+    npcs:[nSarna, nVares, nBruna, nOstro],
+    hilos:hilos, sesiones:ses, consecuencias:cons, ultimoRespaldo:null
+  };
+}
+
+S = cargar();
+if(!S){ S = ejemplo(); }
+S = normalizar(S);
+render();
+
+/* capacidades opcionales: la app funciona entera sin ellas */
+if(window.claude && typeof window.claude.use === "function"){
+  window.claude.use("downloads").then(function(d){ downloads = d; }).catch(function(){});
+  window.claude.use("sample").then(function(s){
+    sample = s;
+    if(tabActual === "tablero") render();
+  }).catch(function(){});
+}
+</script>
+</body>
+</html>
